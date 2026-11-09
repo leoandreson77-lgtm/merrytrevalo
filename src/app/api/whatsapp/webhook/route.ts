@@ -1,4 +1,4 @@
-﻿import { NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { connectToDatabase } from "@/lib/db";
 import { WhatsApp } from "@/models/WhatsApp";
 import { Lead } from "@/models/Lead";
