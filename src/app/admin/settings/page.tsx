@@ -177,7 +177,7 @@ export default function AdminSettingsPage() {
               <div>
                 <p className="text-slate-400 uppercase tracking-wider font-bold text-[10px]">Service Email</p>
                 <p className="text-sm font-bold text-blue-600 dark:text-blue-400 truncate mt-0.5">
-                  {session?.user?.email || "admin@skyswiftflights.com"}
+                  {session?.user?.email || "admin@jetwithfly.com"}
                 </p>
               </div>
               <div>

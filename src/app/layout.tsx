@@ -6,9 +6,14 @@ import { Toaster } from "@/components/ui/toaster";
 import { connectToDatabase, getDb } from "@/lib/db";
 import { siteConfig } from "@/lib/site-config";
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || siteConfig.url;
-const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME || siteConfig.name;
-const BRAND_NAME = process.env.NEXT_PUBLIC_BRAND_NAME || siteConfig.brandName;
+const rawBaseUrl = process.env.NEXT_PUBLIC_SITE_URL || siteConfig.url;
+const BASE_URL = (!rawBaseUrl || rawBaseUrl.toLowerCase().includes("skyswift")) ? "https://jetwithfly.com" : rawBaseUrl;
+
+const rawSiteName = process.env.NEXT_PUBLIC_SITE_NAME || siteConfig.name;
+const SITE_NAME = (!rawSiteName || rawSiteName.toLowerCase().includes("skyswift")) ? "JetWithFly" : rawSiteName;
+
+const rawBrandName = process.env.NEXT_PUBLIC_BRAND_NAME || siteConfig.brandName;
+const BRAND_NAME = (!rawBrandName || rawBrandName.toLowerCase().includes("skyswift")) ? "JetWithFly Flights" : rawBrandName;
 
 const inter = Inter({
   subsets: ["latin"],

@@ -116,8 +116,8 @@ const DEFAULT_CMS: CMSData = {
   heroBadgeText: "✈️ Best Price Guarantee",
   heroCtaText: "Search Flights Now",
   heroCtaUrl: "/search",
-  contactEmail: "support@skyswiftflights.com",
-  contactPhone: "+18882566747",
+  contactEmail: "support@jetwithfly.com",
+  contactPhone: "+1 877 371 7356",
   contactAddress: "United States",
   twitterUrl: "",
   facebookUrl: "",
@@ -477,7 +477,7 @@ export default function CMSSettingsPage() {
             <StyledInput
               value={cms.logoUrl}
               onChange={(v) => set("logoUrl", v)}
-              placeholder="https://cdn.skyswiftflights.com/logo.svg"
+              placeholder="https://cdn.jetwithfly.com/logo.svg"
               icon={ImageIcon}
             />
           </Field>
@@ -485,7 +485,7 @@ export default function CMSSettingsPage() {
             <StyledInput
               value={cms.faviconUrl}
               onChange={(v) => set("faviconUrl", v)}
-              placeholder="https://cdn.skyswiftflights.com/favicon.ico"
+              placeholder="https://cdn.jetwithfly.com/favicon.ico"
               icon={Star}
             />
           </Field>
@@ -539,7 +539,7 @@ export default function CMSSettingsPage() {
               <StyledInput
                 value={cms.ogImageUrl}
                 onChange={(v) => set("ogImageUrl", v)}
-                placeholder="https://cdn.skyswiftflights.com/og-image.jpg"
+                placeholder="https://cdn.jetwithfly.com/og-image.jpg"
                 icon={ImageIcon}
               />
               {cms.ogImageUrl && (
@@ -734,7 +734,7 @@ export default function CMSSettingsPage() {
             <StyledInput
               value={cms.contactEmail}
               onChange={(v) => set("contactEmail", v)}
-              placeholder="support@skyswiftflights.com"
+              placeholder="support@jetwithfly.com"
               type="email"
               icon={Mail}
             />
@@ -743,7 +743,7 @@ export default function CMSSettingsPage() {
             <StyledInput
               value={cms.contactPhone}
               onChange={(v) => set("contactPhone", v)}
-              placeholder="+18882566747"
+              placeholder="+1 877 371 7356"
               icon={Phone}
             />
           </Field>
@@ -768,11 +768,11 @@ export default function CMSSettingsPage() {
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {[
-            { key: "twitterUrl", label: "Twitter / X", icon: Twitter, placeholder: "https://twitter.com/skyswiftflights" },
-            { key: "facebookUrl", label: "Facebook", icon: Facebook, placeholder: "https://facebook.com/skyswiftflights" },
-            { key: "instagramUrl", label: "Instagram", icon: Instagram, placeholder: "https://instagram.com/skyswiftflights" },
-            { key: "youtubeUrl", label: "YouTube", icon: Youtube, placeholder: "https://youtube.com/@skyswiftflights" },
-            { key: "linkedinUrl", label: "LinkedIn", icon: Linkedin, placeholder: "https://linkedin.com/company/skyswiftflights" },
+            { key: "twitterUrl", label: "Twitter / X", icon: Twitter, placeholder: "https://twitter.com/jetwithfly" },
+            { key: "facebookUrl", label: "Facebook", icon: Facebook, placeholder: "https://facebook.com/jetwithfly" },
+            { key: "instagramUrl", label: "Instagram", icon: Instagram, placeholder: "https://instagram.com/jetwithfly" },
+            { key: "youtubeUrl", label: "YouTube", icon: Youtube, placeholder: "https://youtube.com/@jetwithfly" },
+            { key: "linkedinUrl", label: "LinkedIn", icon: Linkedin, placeholder: "https://linkedin.com/company/jetwithfly" },
           ].map(({ key, label, icon, placeholder }) => (
             <Field key={key} label={label}>
               <StyledInput

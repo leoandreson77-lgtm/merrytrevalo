@@ -1,9 +1,14 @@
+const rawSiteName = process.env.NEXT_PUBLIC_SITE_NAME || "JetWithFly";
+const rawBrandName = process.env.NEXT_PUBLIC_BRAND_NAME || "JetWithFly Flights";
+const rawUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://jetwithfly.com";
+const rawEmail = process.env.NEXT_PUBLIC_SUPPORT_EMAIL || process.env.EMAIL_USER || "support@jetwithfly.com";
+
 export const siteConfig = {
-  name: process.env.NEXT_PUBLIC_SITE_NAME || "JetWithFly",
-  brandName: process.env.NEXT_PUBLIC_BRAND_NAME || "JetWithFly Flights",
+  name: (!rawSiteName || rawSiteName.toLowerCase().includes("skyswift")) ? "JetWithFly" : rawSiteName,
+  brandName: (!rawBrandName || rawBrandName.toLowerCase().includes("skyswift")) ? "JetWithFly Flights" : rawBrandName,
   tagline: "Compare & Book Cheap Flights Across 500+ Airlines",
-  url: process.env.NEXT_PUBLIC_SITE_URL || "https://jetwithfly.com",
-  supportEmail: process.env.NEXT_PUBLIC_SUPPORT_EMAIL || process.env.EMAIL_USER || "support@jetwithfly.com",
+  url: (!rawUrl || rawUrl.toLowerCase().includes("skyswift")) ? "https://jetwithfly.com" : rawUrl,
+  supportEmail: (!rawEmail || rawEmail.toLowerCase().includes("skyswift")) ? "support@jetwithfly.com" : rawEmail,
   phone: process.env.NEXT_PUBLIC_COMPANY_PHONE || "+1 877 371 7356",
   formattedPhone: "+1 (877) 371-7356",
   address: "United States",

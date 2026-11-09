@@ -299,7 +299,7 @@ function buildBookingEmailHtml({
     <div style="background: #fef2f2; border-left: 4px solid #dc2626; padding: 20px; border-radius: 8px; margin: 20px 0;">
       <h3 style="margin: 0 0 10px 0; color: #dc2626; font-size: 18px;">${noticeTitle}</h3>
       <p style="margin: 0; color: #374151; font-size: 16px; font-weight: 600;">${noticeMessage}</p>
-      <p style="margin: 5px 0 0 0; color: #6b7280; font-size: 14px;">Support: +1 888 256 6747 | support@skyswiftflights.com</p>
+      <p style="margin: 5px 0 0 0; color: #6b7280; font-size: 14px;">Support: +1 877 371 7356 | support@jetwithfly.com</p>
     </div>
 
     <div style="text-align: center; margin-top: 20px;">
@@ -309,7 +309,7 @@ function buildBookingEmailHtml({
 
   <div class="footer">
     <p>This is an automated message. Please do not reply to this email.</p>
-    <p style="margin-top: 10px;">© ${new Date().getFullYear()} SkySwift Flights. All rights reserved.</p>
+    <p style="margin-top: 10px;">© ${new Date().getFullYear()} JetWithFly Flights. All rights reserved.</p>
   </div>
 </body>
 </html>
@@ -368,14 +368,14 @@ ${noticeMessage}
 
 ${closingText}
 
-Support: +18882566747 | support@skyswiftflights.com
-SkySwift Flights
+Support: +1 877 371 7356 | support@jetwithfly.com
+JetWithFly Flights
   `.trim();
 }
 
 async function sendTemplateMail({ to, subject, html, text }) {
   return transporter.sendMail({
-    from: `"SkySwift Flights" <${process.env.EMAIL_USER}>`,
+    from: `"JetWithFly Flights" <${process.env.EMAIL_USER}>`,
     replyTo: process.env.EMAIL_USER,
     to,
     subject,
@@ -473,7 +473,7 @@ export async function sendBookingConfirmation(booking, flight) {
     if (customerRecipient) {
       const customerHtml = buildBookingEmailHtml({
         title: "Query Received Successfully",
-        subtitle: "Thank you for contacting SkySwift Flights",
+        subtitle: "Thank you for contacting JetWithFly Flights",
         noticeTitle: "We Will Contact You Back",
         noticeMessage: "Our team will contact you shortly to confirm your booking details.",
         closingText: "Thank you for your patience and trust.",
@@ -489,7 +489,7 @@ export async function sendBookingConfirmation(booking, flight) {
 
       const customerText = buildBookingEmailText({
         title: "Query Received Successfully",
-        subtitle: "Thank you for contacting SkySwift Flights",
+        subtitle: "Thank you for contacting JetWithFly Flights",
         noticeTitle: "We Will Contact You Back",
         noticeMessage: "Our team will contact you shortly to confirm your booking details.",
         closingText: "Thank you for your patience and trust.",

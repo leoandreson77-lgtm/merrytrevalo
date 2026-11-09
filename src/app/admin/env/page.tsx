@@ -398,7 +398,7 @@ export default function AdminEnvConfigPage() {
                 id="emailUser"
                 value={config.emailUser}
                 onChange={e => handleChange("emailUser", e.target.value)}
-                placeholder="support@skyswiftflights.com or your-email@gmail.com"
+                placeholder="support@jetwithfly.com or your-email@gmail.com"
                 className="mt-1.5 font-medium"
               />
             </div>
@@ -445,7 +445,7 @@ export default function AdminEnvConfigPage() {
                 id="emailBookingsTo"
                 value={config.emailBookingsTo}
                 onChange={e => handleChange("emailBookingsTo", e.target.value)}
-                placeholder="bookings@skyswiftflights.com, owner@gmail.com"
+                placeholder="bookings@jetwithfly.com, owner@gmail.com"
                 className="mt-1.5 font-medium"
               />
               <p className="text-[11px] text-slate-400 mt-1">
@@ -461,7 +461,7 @@ export default function AdminEnvConfigPage() {
                 id="emailFrom"
                 value={config.emailFrom}
                 onChange={e => handleChange("emailFrom", e.target.value)}
-                placeholder='SkySwift Flights <support@skyswiftflights.com>'
+                placeholder='JetWithFly Flights <support@jetwithfly.com>'
                 className="mt-1.5 font-medium"
               />
             </div>
@@ -548,7 +548,7 @@ export default function AdminEnvConfigPage() {
 
         <CardContent className="p-6 space-y-5">
           <div className="p-4 rounded-xl bg-emerald-50/60 dark:bg-emerald-950/20 border border-emerald-200/60 dark:border-emerald-800/40 text-xs text-emerald-900 dark:text-emerald-300 leading-relaxed">
-            💡 <strong>How It Works:</strong> When enabled, SkySwift dynamically injects <code>gtag.js</code> and initializes your measurement ID across all customer pages. You can also disable it anytime with zero code modifications.
+            💡 <strong>How It Works:</strong> When enabled, JetWithFly dynamically injects <code>gtag.js</code> and initializes your measurement ID across all customer pages. You can also disable it anytime with zero code modifications.
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -654,7 +654,7 @@ export default function AdminEnvConfigPage() {
                 id="supportEmail"
                 value={config.supportEmail}
                 onChange={e => handleChange("supportEmail", e.target.value)}
-                placeholder="support@skyswiftflights.com"
+                placeholder="support@jetwithfly.com"
                 className="mt-1.5 font-medium"
               />
             </div>
@@ -669,7 +669,7 @@ export default function AdminEnvConfigPage() {
                 id="brandName"
                 value={config.brandName}
                 onChange={e => handleChange("brandName", e.target.value)}
-                placeholder="SkySwift Flights"
+                placeholder="JetWithFly Flights"
                 className="mt-1.5 font-medium"
               />
             </div>
@@ -682,7 +682,7 @@ export default function AdminEnvConfigPage() {
                 id="siteName"
                 value={config.siteName}
                 onChange={e => handleChange("siteName", e.target.value)}
-                placeholder="SkySwift"
+                placeholder="JetWithFly"
                 className="mt-1.5 font-medium"
               />
             </div>
@@ -695,7 +695,7 @@ export default function AdminEnvConfigPage() {
                 id="siteUrl"
                 value={config.siteUrl}
                 onChange={e => handleChange("siteUrl", e.target.value)}
-                placeholder="https://skyswiftflights.com"
+                placeholder="https://jetwithfly.com"
                 className="mt-1.5 font-medium"
               />
             </div>

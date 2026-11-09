@@ -812,7 +812,7 @@ export default function AdminLandingPagesPage() {
                       placeholder="cheap-flights-paris"
                       className="bg-slate-900 border-slate-700 text-white placeholder:text-slate-500"
                     />
-                    <p className="text-[11px] text-slate-500">skyswiftflights.com/lp/your-slug</p>
+                    <p className="text-[11px] text-slate-500">jetwithfly.com/lp/your-slug</p>
                   </div>
                   <div className="space-y-1">
                     <Label className="text-slate-300 flex items-center gap-1">
@@ -842,7 +842,7 @@ export default function AdminLandingPagesPage() {
                     <Label className="text-slate-300 text-xs">SEO Title (optional)</Label>
                     <Input
                       name="seoTitle"
-                      placeholder="Cheap Flights to Paris | SkySwift Flights"
+                      placeholder="Cheap Flights to Paris | JetWithFly Flights"
                       className="bg-slate-900 border-slate-700 text-white placeholder:text-slate-500 text-sm"
                     />
                   </div>

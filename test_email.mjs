@@ -1,4 +1,4 @@
-// SkySwift Flights - SMTP Test Script
+// JetWithFly Flights - SMTP Test Script
 // Run: node test_email.mjs [recipient_email]
 
 import nodemailer from "nodemailer";
@@ -14,7 +14,7 @@ const EMAIL_PASS = process.env.EMAIL_PASS;
 const recipient = process.argv[2] || EMAIL_USER;
 
 console.log("\n==========================================");
-console.log("✈️  SkySwift Flights - Email Configuration Test");
+console.log("✈️  JetWithFly Flights - Email Configuration Test");
 console.log("==========================================");
 console.log(`Host:    ${EMAIL_HOST}`);
 console.log(`Port:    ${EMAIL_PORT} (${EMAIL_SECURE ? "SSL" : "STARTTLS"})`);
@@ -50,16 +50,16 @@ async function runTest() {
     if (recipient) {
       console.log(`⏳ Sending test email to ${recipient}...`);
       const info = await transporter.sendMail({
-        from: `"SkySwift Flights" <${EMAIL_USER}>`,
+        from: `"JetWithFly Flights" <${EMAIL_USER}>`,
         to: recipient,
-        subject: "✈️ SkySwift Flights - SMTP Test Email",
+        subject: "✈️ JetWithFly Flights - SMTP Test Email",
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 500px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 12px; background: #ffffff;">
             <div style="background: #2563eb; color: #ffffff; padding: 16px; border-radius: 8px; text-align: center;">
               <h2 style="margin: 0;">SMTP Test Successful!</h2>
             </div>
             <p style="color: #334155; margin-top: 16px;">
-              Your backend email configuration for <strong>SkySwift Flights</strong> is working properly.
+              Your backend email configuration for <strong>JetWithFly Flights</strong> is working properly.
             </p>
             <ul style="color: #64748b; font-size: 13px;">
               <li><strong>Host:</strong> ${EMAIL_HOST}</li>
@@ -72,7 +72,7 @@ async function runTest() {
             </p>
           </div>
         `,
-        text: `SkySwift Flights SMTP Test Successful!\n\nYour backend email configuration is working properly.\nHost: ${EMAIL_HOST}\nPort: ${EMAIL_PORT}\nSender: ${EMAIL_USER}`,
+        text: `JetWithFly Flights SMTP Test Successful!\n\nYour backend email configuration is working properly.\nHost: ${EMAIL_HOST}\nPort: ${EMAIL_PORT}\nSender: ${EMAIL_USER}`,
       });
 
       console.log(`🎉 Email delivered successfully! Message ID: ${info.messageId}`);
