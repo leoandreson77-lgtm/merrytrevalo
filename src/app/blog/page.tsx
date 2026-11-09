@@ -12,18 +12,24 @@ interface SearchProps {
 export default async function BlogIndexPage({ searchParams }: SearchProps) {
   const categoryFilter = searchParams.category || "";
 
-  await connectToDatabase();
-
-  const query: any = {
-    status: "published",
-    publishedAt: { $lte: new Date() },
-  };
-
-  if (categoryFilter) {
-    query.category = categoryFilter;
+  let articles: any[] = [];
+  try {
+    const dbPromise = (async () => {
+      await connectToDatabase();
+      const query: any = {
+        status: "published",
+        publishedAt: { $lte: new Date() },
+      };
+      if (categoryFilter) {
+        query.category = categoryFilter;
+      }
+      return Blog.find(query).sort({ publishedAt: -1 }).lean();
+    })();
+    const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error("DB Timeout")), 1500));
+    articles = ((await Promise.race([dbPromise, timeoutPromise])) as any[]) || [];
+  } catch {
+    articles = [];
   }
-
-  const articles = await Blog.find(query).sort({ publishedAt: -1 });
 
   const categories = ["Travel Tips", "Airline News", "Destinations", "Packing Guides"];
 

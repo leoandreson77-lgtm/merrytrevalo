@@ -13,24 +13,42 @@ interface PageProps {
 
 // Generate dynamic metadata for blog SEO tags indexing
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  await connectToDatabase();
-  const article = await Blog.findOne({ slug: params.slug, status: "Published" });
+  let article: any = null;
+  try {
+    const dbPromise = (async () => {
+      await connectToDatabase();
+      return Blog.findOne({ slug: params.slug, status: "Published" }).lean();
+    })();
+    const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error("DB Timeout")), 1500));
+    article = await Promise.race([dbPromise, timeoutPromise]);
+  } catch {
+    article = null;
+  }
   if (!article) return {};
 
   return {
     title: `${article.title} | ${siteConfig.brandName} Blog`,
-    description: article.seoDescription || article.content.substring(0, 150),
+    description: article.seoDescription || article.content?.substring(0, 150),
     openGraph: {
       title: article.title,
-      description: article.seoDescription || article.content.substring(0, 150),
+      description: article.seoDescription || article.content?.substring(0, 150),
       images: article.featuredImage ? [{ url: article.featuredImage }] : [],
     },
   };
 }
 
 export default async function BlogDetailPage({ params }: PageProps) {
-  await connectToDatabase();
-  const article = await Blog.findOne({ slug: params.slug, status: "Published" });
+  let article: any = null;
+  try {
+    const dbPromise = (async () => {
+      await connectToDatabase();
+      return Blog.findOne({ slug: params.slug, status: "Published" }).lean();
+    })();
+    const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error("DB Timeout")), 1500));
+    article = await Promise.race([dbPromise, timeoutPromise]);
+  } catch {
+    article = null;
+  }
 
   if (!article) {
     notFound();

@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React, { Suspense } from "react";
 import { SearchWidget } from "@/components/search-widget";

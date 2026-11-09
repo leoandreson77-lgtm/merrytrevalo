@@ -34,23 +34,40 @@ const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME || siteConfig.name;
 const BRAND_NAME = process.env.NEXT_PUBLIC_BRAND_NAME || siteConfig.brandName;
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  await connectToDatabase();
-  const page = await LandingPage.findOne({ slug: params.slug, isPublished: true }).lean() as any;
-  if (!page) return {};
+  let page: any = null;
+  try {
+    const dbPromise = (async () => {
+      await connectToDatabase();
+      return LandingPage.findOne({ slug: params.slug, isPublished: true }).lean();
+    })();
+    const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error("DB Timeout")), 1500));
+    page = (await Promise.race([dbPromise, timeoutPromise])) as any;
+  } catch {
+    // Fail silently when database is unavailable, dynamic fallback used below
+  }
 
-  const title = page.seoTitle || `${page.title} | ${BRAND_NAME}`;
+  const slug = (params.slug || "").toLowerCase();
+  let defaultTitle = "Exclusive Flight Deal & Phone Reservation";
+  if (slug.includes("miami")) defaultTitle = "Cheap Flights to Miami (MIA)";
+  else if (slug.includes("london")) defaultTitle = "Fly to London Heathrow (LHR)";
+  else if (slug.includes("new-york") || slug.includes("nyc")) defaultTitle = "New York Nonstop Deals (NYC)";
+  else if (slug.includes("los-angeles") || slug.includes("lax")) defaultTitle = "Los Angeles Flight Getaways (LAX)";
+  else if (slug.includes("paris")) defaultTitle = "Fly to Paris (CDG)";
+  else if (slug.includes("dubai")) defaultTitle = "Dubai Flight Deals (DXB)";
+
+  const title = page?.seoTitle || (page?.title ? `${page.title} | ${BRAND_NAME}` : `${defaultTitle} | ${BRAND_NAME}`);
   const description =
-    page.seoDescription ||
-    page.description ||
-    `Book ${page.title} at the lowest price. Call +1 877 371 7356 for exclusive deals and instant booking.`;
+    page?.seoDescription ||
+    page?.description ||
+    `Book ${title} at the lowest price. Call +1 877 371 7356 for exclusive deals and instant booking.`;
 
-  const pageUrl = `${BASE_URL}/lp/${page.slug}`;
+  const pageUrl = `${BASE_URL}/lp/${page?.slug || params.slug}`;
 
   return {
     title,
     description,
     keywords: [
-      page.title,
+      page?.title || defaultTitle,
       "cheap flights",
       "flight deals",
       "book airline tickets",
@@ -70,7 +87,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       locale: "en_US",
       images: [
         {
-          url: `/api/og?title=${encodeURIComponent(page.title)}&slug=${page.slug}`,
+          url: `/api/og?title=${encodeURIComponent(page?.title || defaultTitle)}&slug=${params.slug}`,
           width: 1200,
           height: 630,
           alt: title,
@@ -81,7 +98,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       card: "summary_large_image",
       title,
       description,
-      images: [`/api/og?title=${encodeURIComponent(page.title)}&slug=${page.slug}`],
+      images: [`/api/og?title=${encodeURIComponent(page?.title || defaultTitle)}&slug=${params.slug}`],
     },
     robots: {
       index: true,
@@ -93,8 +110,17 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 
 export default async function DynamicLandingPage({ params }: PageProps) {
-  await connectToDatabase();
-  let page: any = await LandingPage.findOne({ slug: params.slug, isPublished: true });
+  let page: any = null;
+  try {
+    const dbPromise = (async () => {
+      await connectToDatabase();
+      return LandingPage.findOne({ slug: params.slug, isPublished: true }).lean();
+    })();
+    const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error("DB Timeout")), 1500));
+    page = (await Promise.race([dbPromise, timeoutPromise])) as any;
+  } catch (err: any) {
+    console.warn("[DynamicLandingPage] DB lookup timed out or unavailable, serving instant dynamic fallback:", err?.message);
+  }
 
   if (!page) {
     // Generate dynamic rich landing page for deal cards
@@ -163,13 +189,22 @@ export default async function DynamicLandingPage({ params }: PageProps) {
   }
 
   // Load any associated form schema
-  const formBlock = page.blocks.find((b: any) => b.type === "form");
+  const formBlock = Array.isArray(page?.blocks) ? page.blocks.find((b: any) => b?.type === "form") : null;
   let formSchema = null;
   if (formBlock?.content?.formId) {
-    formSchema = await Form.findById(formBlock.content.formId);
+    try {
+      formSchema = await Form.findById(formBlock.content.formId).lean();
+    } catch {
+      // ignore
+    }
   }
 
-  const callPhone: string = await getGlobalCallNumber(params.slug);
+  let callPhone = "+1 877 371 7356";
+  try {
+    callPhone = await getGlobalCallNumber(params.slug);
+  } catch {
+    callPhone = process.env.NEXT_PUBLIC_COMPANY_PHONE || "+1 877 371 7356";
+  }
   const callPhoneDisplay = callPhone.replace(/^\+1/, "+1 ").replace(/(\d{3})(\d{3})(\d{4})$/, "$1 $2 $3");
   const waLink = `https://wa.me/${callPhone.replace(/[^0-9]/g, "")}`;
 
@@ -295,7 +330,7 @@ export default async function DynamicLandingPage({ params }: PageProps) {
 
       {/* ── Dynamic Blocks ── */}
       <div className="flex-1">
-        {(page as any).blocks.map((block: any, i: number) => {
+        {Array.isArray((page as any)?.blocks) && (page as any).blocks.map((block: any, i: number) => {
           const content = block.content || {};
 
           /* ────── BOARDING PASS HERO BLOCK ────── */
