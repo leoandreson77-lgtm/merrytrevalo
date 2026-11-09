@@ -1,0 +1,18 @@
+node_modules
+dist
+.DS_Store
+server/public
+vite.config.ts.*
+*.tar.gz
+.env
+.env.local
+.env.production
+VERCEL_ENV_VARS.txt
+*.log
+
+# Exclude Next.js app from deployment
+nextjs-app/
+.next/
+out/
+build/
+.next-env.d.ts

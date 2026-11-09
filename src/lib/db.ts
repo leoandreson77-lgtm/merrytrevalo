@@ -1,0 +1,87 @@
+import mongoose from "mongoose";
+import dns from "dns";
+
+// Force Node's DNS resolver to use Google/Cloudflare DNS to bypass local network DNS failures in local dev
+if (!process.env.VERCEL) {
+  try {
+    dns.setServers(["8.8.8.8", "1.1.1.1"]);
+    if (typeof dns.setDefaultResultOrder === "function") {
+      dns.setDefaultResultOrder("ipv4first");
+    }
+  } catch (err) {
+    console.warn("Could not set custom DNS servers:", err);
+  }
+}
+
+function convertSrvToStandard(uri: string): string {
+  if (!uri.startsWith("mongodb+srv://")) {
+    return uri;
+  }
+  const match = uri.match(/^mongodb\+srv:\/\/([^:]+):([^@]+)@cluster0\.s3oneko\.mongodb\.net(?:\/([^?]*))?(?:\?(.*))?$/);
+  if (!match) {
+    return uri;
+  }
+  const [_, user, password, dbName = "", options = ""] = match;
+  const hosts = [
+    "ac-5fnnvn1-shard-00-00.s3oneko.mongodb.net:27017",
+    "ac-5fnnvn1-shard-00-01.s3oneko.mongodb.net:27017",
+    "ac-5fnnvn1-shard-00-02.s3oneko.mongodb.net:27017"
+  ].join(",");
+  
+  return `mongodb://${user}:${password}@${hosts}/${dbName}?authSource=admin&replicaSet=atlas-zphce6-shard-0&ssl=true`;
+}
+
+function getMongoUri(): string {
+  const rawUri = process.env.DATABASE_URL || process.env.MONGODB_URI || "";
+  return convertSrvToStandard(rawUri);
+}
+
+interface MongooseCache {
+  conn: typeof mongoose | null;
+  promise: Promise<typeof mongoose> | null;
+}
+
+declare global {
+  var mongooseCache: MongooseCache | undefined;
+}
+
+const cached: MongooseCache = global.mongooseCache || (global.mongooseCache = { conn: null, promise: null });
+
+export async function connectToDatabase() {
+  if (cached.conn) {
+    return cached.conn;
+  }
+
+  if (!cached.promise) {
+    const opts = {
+      bufferCommands: false,
+    };
+
+    const uri = getMongoUri();
+    if (!uri) {
+      throw new Error("DATABASE_URL is not defined in environment variables");
+    }
+
+    cached.promise = mongoose.connect(uri, opts).then((mongooseInstance) => {
+      console.log("Connected to MongoDB database");
+      return mongooseInstance;
+    });
+  }
+
+  try {
+    cached.conn = await cached.promise;
+  } catch (e) {
+    cached.promise = null;
+    throw e;
+  }
+
+  return cached.conn;
+}
+
+export async function getDb() {
+  const conn = await connectToDatabase();
+  if (!conn.connection.db) {
+    throw new Error("Database connection not established");
+  }
+  return conn.connection.db;
+}

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="swoopGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="50%" stop-color="#2563eb"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background Card -->
+  <rect width="512" height="512" rx="112" fill="url(#bgGrad)"/>
+  
+  <!-- Outer Swoop Arc -->
+  <path d="M 256,72 A 184,184 0 1,1 92,310" fill="none" stroke="url(#swoopGrad)" stroke-width="36" stroke-linecap="round"/>
+
+  <!-- Inner Speed Trails -->
+  <path d="M 120,340 C 170,280 240,220 340,160" fill="none" stroke="#38bdf8" stroke-width="22" stroke-linecap="round"/>
+  <path d="M 150,380 C 195,330 255,275 340,215" fill="none" stroke="#60a5fa" stroke-width="16" stroke-linecap="round"/>
+
+  <!-- Ascending Airplane Silhouette -->
+  <path d="M345 110 L280 185 L180 160 L230 220 L160 270 L120 250 L140 290 L210 300 L290 380 L305 370 L285 275 L375 170 Z" fill="#ffffff"/>
+</svg>
