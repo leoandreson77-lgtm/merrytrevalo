@@ -21,7 +21,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
             </div>
             <div className="flex flex-col">
               <span className="font-black text-lg sm:text-xl text-slate-900 dark:text-white tracking-tight leading-none">
-                {siteName}<span className="text-blue-600">.</span>
+                JetWithFly<span className="text-blue-600">.</span>
               </span>
               <span className="text-[10px] font-bold text-slate-400 tracking-wider uppercase">
                 Flights & Travel
@@ -65,7 +65,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                   <Plane className="w-4 h-4 -rotate-45" />
                 </div>
                 <span className="font-black text-lg text-slate-900 dark:text-white tracking-tight">
-                  {brandName}
+                  JetWithFly Flights
                 </span>
               </div>
               <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm leading-relaxed">
@@ -97,10 +97,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
           </div>
           <div className="mt-12 pt-8 border-t border-slate-100 dark:border-slate-800 text-center text-xs text-slate-400 space-y-3">
             <p className="max-w-4xl mx-auto leading-relaxed">
-              Disclaimer: {siteName} is an independent online travel portal and is not directly affiliated with Delta Air Lines, American Airlines, United, or any specific carrier. All trademarks and brand names belong to their respective registered owners.
+              Disclaimer: JetWithFly is an independent online travel portal and is not directly affiliated with Delta Air Lines, American Airlines, United, or any specific carrier. All trademarks and brand names belong to their respective registered owners.
             </p>
             <p>
-              © {new Date().getFullYear()} {brandName}. All rights reserved.
+              © {new Date().getFullYear()} JetWithFly Flights. All rights reserved.
             </p>
           </div>
         </div>
