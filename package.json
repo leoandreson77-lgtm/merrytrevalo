@@ -9,7 +9,6 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "vercel-build": "next build",
     "start": "next start",
     "check": "tsc --noEmit",
     "db:push": "drizzle-kit push"
