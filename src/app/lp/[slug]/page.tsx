@@ -277,7 +277,7 @@ export default async function DynamicLandingPage({ params }: PageProps) {
 
       <nav className="h-16 bg-white/95 backdrop-blur border-b border-slate-100 flex items-center justify-between px-6 md:px-14 sticky top-0 z-50 shadow-sm">
         <Link href="/" className="flex items-center gap-2">
-          <img src="/logo.png" alt="SkySwift" className="h-9 sm:h-10 w-auto object-contain" />
+          <img src="/logo.png" alt="JetWithFly" className="h-9 sm:h-10 w-auto object-contain" />
         </Link>
         <div className="flex items-center gap-3">
           <LanguageSelector />
@@ -1036,7 +1036,7 @@ export default async function DynamicLandingPage({ params }: PageProps) {
       <footer className="py-12 bg-slate-900 border-t border-slate-800 text-center text-slate-500 text-xs px-6 space-y-4">
         <div className="flex items-center justify-center gap-2 mb-2">
           <div className="bg-white/95 backdrop-blur px-3 py-1.5 rounded-lg inline-flex items-center">
-            <img src="/logo.png" alt="SkySwift" className="h-7 w-auto object-contain" />
+            <img src="/logo.png" alt="JetWithFly" className="h-7 w-auto object-contain" />
           </div>
         </div>
         <p className="max-w-3xl mx-auto text-slate-500 leading-relaxed text-[11px]">

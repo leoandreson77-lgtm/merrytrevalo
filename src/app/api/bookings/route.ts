@@ -181,7 +181,7 @@ export async function POST(request: Request) {
       } else {
         flight = {
           id: flightId,
-          airline: "SkySwift Airline Partner",
+          airline: "JetWithFly Airline Partner",
           origin: "JFK",
           destination: "LAX",
           departureTime: new Date().toISOString(),

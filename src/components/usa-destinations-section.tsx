@@ -150,7 +150,7 @@ export function UsaDestinationsSection() {
         body: JSON.stringify({
           name: formData.name,
           phone: formData.phone,
-          email: formData.email || `${formData.phone.replace(/\D/g, "")}@guest.skyswiftflights.com`,
+          email: formData.email || `${formData.phone.replace(/\D/g, "")}@guest.jetwithfly.com`,
           origin: formData.origin || "NYC",
           destination: selectedDest?.code || "USA",
           departureDate: formData.departureDate,

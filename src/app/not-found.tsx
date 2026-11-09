@@ -126,7 +126,7 @@ export default function NotFound() {
 
         {/* Brand badge */}
         <div className="flex items-center gap-2 mb-8 bg-white/95 backdrop-blur-md px-4 py-2 rounded-full shadow-lg">
-          <span className="font-black text-sm text-slate-900 tracking-tight">SkySwift Flights</span>
+          <span className="font-black text-sm text-slate-900 tracking-tight">JetWithFly Flights</span>
         </div>
 
         {/* 404 Giant Number */}
@@ -269,7 +269,7 @@ export default function NotFound() {
 
         {/* Error code */}
         <p className="mt-8 text-[10px] text-slate-700 font-mono tracking-widest">
-          ERROR_CODE: PAGE_NOT_FOUND • HTTP_STATUS: 404 • SKYSWIFT_NAVIGATION_ENGINE
+          ERROR_CODE: PAGE_NOT_FOUND • HTTP_STATUS: 404 • JETWITHFLY_NAVIGATION_ENGINE
         </p>
       </div>
 

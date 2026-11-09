@@ -37,7 +37,7 @@ export default async function BlogIndexPage({ searchParams }: SearchProps) {
       {/* Navigation */}
       <nav className="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-6 md:px-12 sticky top-0 z-40 shadow-sm">
         <Link href="/" className="flex items-center gap-2">
-          <img src="/logo.png" alt="SkySwift" className="h-9 w-auto object-contain" />
+          <img src="/logo.png" alt="JetWithFly" className="h-9 w-auto object-contain" />
           <span className="text-xs font-extrabold bg-slate-100 text-slate-600 px-2 py-1 rounded">BLOG</span>
         </Link>
         <Link href="/" className="text-sm font-bold text-slate-600 hover:text-primary">

@@ -21,7 +21,7 @@ export async function POST(request: Request) {
     if (testRecipient && body.sendActualMail !== false) {
       const info = await sendMailWithFallback({
         to: testRecipient,
-        subject: `🧪 Test Email from ${process.env.NEXT_PUBLIC_BRAND_NAME || "SkySwift Flights"}`,
+        subject: `🧪 Test Email from ${process.env.NEXT_PUBLIC_BRAND_NAME || "JetWithFly Flights"}`,
         html: `
           <div style="font-family:sans-serif; padding:20px; background:#f8fafc; border-radius:12px;">
             <h2 style="color:#2563eb;">SMTP Configuration Verified!</h2>

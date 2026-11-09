@@ -60,7 +60,7 @@ export async function POST(request: Request) {
       title,
       slug: cleanSlug,
       content,
-      author: author || session.user?.name || "SkySwift Expert",
+      author: author || session.user?.name || "JetWithFly Expert",
       summary,
       category,
       thumbnail,

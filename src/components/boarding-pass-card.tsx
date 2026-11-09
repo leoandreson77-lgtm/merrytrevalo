@@ -48,7 +48,7 @@ export function BoardingPassCard({
         <div className="flex justify-between items-center pb-2 border-b border-slate-800">
           <div className="flex items-center gap-1.5 text-xs text-slate-400 font-bold uppercase tracking-widest">
             <Plane className="w-3.5 h-3.5 text-blue-500" />
-            <span>SkySwift VIP Pass</span>
+            <span>JetWithFly VIP Pass</span>
           </div>
           <span className="text-[9px] font-black text-amber-400 bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded">
             VIP HOLD

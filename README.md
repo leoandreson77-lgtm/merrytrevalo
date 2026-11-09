@@ -1,12 +1,12 @@
-# SkySwift Flights — Flight Booking & Management Platform
+# JetWithFly Flights — Flight Booking & Management Platform
 
 A modern, high-conversion flight search and booking platform built with Next.js 14, React 18, Tailwind CSS, MongoDB, Nodemailer, Duffel & Amadeus APIs, and a full Enterprise Admin Management Console.
 
 ## 🚀 Live Application
 
-- **Website:** http://localhost:3000
-- **Admin Console:** http://localhost:3000/admin
-- **Admin Login:** `admin@skyswiftflights.com` / `Admin@12345`
+- **Website:** https://jetwithfly.com (Local: http://localhost:3000)
+- **Admin Console:** https://jetwithfly.com/admin (Local: http://localhost:3000/admin)
+- **Admin Login:** `admin@jetwithfly.com` / `Admin@12345` (Fallback: `samm.aali12@gmail.com` / `Sameer123`)
 
 ## ✨ Features
 

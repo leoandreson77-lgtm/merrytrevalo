@@ -1,7 +1,7 @@
 {
-  "name": "SkySwift Flights — Cheap Flights",
-  "short_name": "SkySwift",
-  "description": "Compare and book cheap flights from 500+ airlines worldwide",
+  "name": "JetWithFly Flights — Cheap Flights",
+  "short_name": "JetWithFly",
+  "description": "Compare and book cheap flights from 500+ airlines worldwide on JetWithFly",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0f172a",

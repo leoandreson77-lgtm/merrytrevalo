@@ -75,11 +75,11 @@ export async function GET() {
       customHeadScript: getDynamicEnv("CUSTOM_HEAD_SCRIPT"),
 
       // Site Identity & Phone
-      siteName: getDynamicEnv("NEXT_PUBLIC_SITE_NAME", "SkySwift"),
-      brandName: getDynamicEnv("NEXT_PUBLIC_BRAND_NAME", "SkySwift Flights"),
-      siteUrl: getDynamicEnv("NEXT_PUBLIC_SITE_URL", "https://skyswiftflights.com"),
+      siteName: getDynamicEnv("NEXT_PUBLIC_SITE_NAME", "JetWithFly"),
+      brandName: getDynamicEnv("NEXT_PUBLIC_BRAND_NAME", "JetWithFly Flights"),
+      siteUrl: getDynamicEnv("NEXT_PUBLIC_SITE_URL", "https://jetwithfly.com"),
       companyPhone: getDynamicEnv("NEXT_PUBLIC_COMPANY_PHONE", "+1 877 371 7356"),
-      supportEmail: getDynamicEnv("NEXT_PUBLIC_SUPPORT_EMAIL", "support@skyswiftflights.com"),
+      supportEmail: getDynamicEnv("NEXT_PUBLIC_SUPPORT_EMAIL", "support@jetwithfly.com"),
 
       // APIs & Keys
       duffelToken: process.env.DUFFEL_ACCESS_TOKEN || "",

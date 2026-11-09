@@ -46,7 +46,7 @@ export default function WhatsAppPage() {
       id: "welcome_greeting_01",
       name: "Auto Welcome Greeting",
       category: "Utility",
-      body: "Hello! Thanks for contacting SkySwift Flights. We've received your request and an agent will follow up with custom flight quotes shortly.",
+      body: "Hello! Thanks for contacting JetWithFly Flights. We've received your request and an agent will follow up with custom flight quotes shortly.",
     },
     {
       id: "quote_followup_02",

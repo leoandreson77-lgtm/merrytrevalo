@@ -99,13 +99,13 @@ interface CMSData {
 }
 
 const DEFAULT_CMS: CMSData = {
-  siteName: "SkySwift",
+  siteName: "JetWithFly",
   siteTagline: "Book Cheap Flights Worldwide",
   logoUrl: "",
   faviconUrl: "",
-  metaTitle: "SkySwift - Book Cheap Flights Worldwide",
-  metaDescription: "Compare cheap flights from over 500 airlines and travel agents worldwide.",
-  metaKeywords: "delta airlines flights, american airlines flights, delta flights booking, american flights booking, delta flight deals, american airlines flight deals, book delta tickets, book american tickets, cheap flights, airline tickets, travel deals, SkySwift, book flight tickets, flight booking, flight reservations, airline reservations, airline booking, domestic flights, international flights, last minute flights, same day flight booking, refundable flight tickets, business class flights, first class flights, round trip flights, one way flights, multi city flights, flight booking assistance, airline booking help, travel booking support, flight reservation support, change flight booking, cancel flight booking, flight rebooking, flight itinerary assistance",
+  metaTitle: "JetWithFly - Book Cheap Flights Worldwide",
+  metaDescription: "Compare cheap flights from over 500 airlines and travel agents worldwide with JetWithFly.",
+  metaKeywords: "delta airlines flights, american airlines flights, delta flights booking, american flights booking, delta flight deals, american airlines flight deals, book delta tickets, book american tickets, cheap flights, airline tickets, travel deals, JetWithFly, jetwithfly.com, book flight tickets, flight booking, flight reservations, airline reservations, airline booking, domestic flights, international flights, last minute flights, same day flight booking, refundable flight tickets, business class flights, first class flights, round trip flights, one way flights, multi city flights, flight booking assistance, airline booking help, travel booking support, flight reservation support, change flight booking, cancel flight booking, flight rebooking, flight itinerary assistance",
   ogImageUrl: "",
   announcementEnabled: false,
   announcementText: "🎉 Limited-time deal! Save up to 40% on international flights this week.",
@@ -125,7 +125,7 @@ const DEFAULT_CMS: CMSData = {
   youtubeUrl: "",
   linkedinUrl: "",
   footerTagline: "Your trusted partner for affordable global travel.",
-  footerCopyright: `© ${new Date().getFullYear()} SkySwift Flights. All rights reserved.`,
+  footerCopyright: `© ${new Date().getFullYear()} JetWithFly Flights. All rights reserved.`,
   googleTagManagerId: "",
   googleAdsId: "",
   googleAdsSendTo: "",
@@ -461,7 +461,7 @@ export default function CMSSettingsPage() {
             <StyledInput
               value={cms.siteName}
               onChange={(v) => set("siteName", v)}
-              placeholder="SkySwift"
+              placeholder="JetWithFly"
               icon={Plane}
             />
           </Field>
@@ -505,7 +505,7 @@ export default function CMSSettingsPage() {
             <StyledInput
               value={cms.metaTitle}
               onChange={(v) => set("metaTitle", v)}
-              placeholder="SkySwift - Book Cheap Flights Worldwide"
+              placeholder="JetWithFly - Book Cheap Flights Worldwide"
             />
             <div className="flex justify-end mt-1">
               <span className={`text-[11px] font-mono ${cms.metaTitle.length > 60 ? "text-red-400" : "text-slate-500"}`}>
@@ -808,7 +808,7 @@ export default function CMSSettingsPage() {
             <StyledTextarea
               value={cms.footerCopyright}
               onChange={(v) => set("footerCopyright", v)}
-              placeholder={`© ${new Date().getFullYear()} SkySwift Flights. All rights reserved.`}
+              placeholder={`© ${new Date().getFullYear()} JetWithFly Flights. All rights reserved.`}
               rows={2}
             />
           </Field>

@@ -208,7 +208,7 @@ export function BookingSuccessPage() {
               <div className="hidden sm:block w-px h-12 bg-emerald-300"></div>
               <div className="text-center">
                 <p className="text-xs text-emerald-700 font-bold uppercase">Email Support</p>
-                <p className="text-base font-bold text-emerald-900">{process.env.NEXT_PUBLIC_SUPPORT_EMAIL || "support@skyswiftflights.com"}</p>
+                <p className="text-base font-bold text-emerald-900">{process.env.NEXT_PUBLIC_SUPPORT_EMAIL || "support@jetwithfly.com"}</p>
               </div>
             </div>
           </div>

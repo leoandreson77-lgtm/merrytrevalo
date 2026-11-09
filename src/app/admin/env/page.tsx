@@ -60,11 +60,11 @@ export default function AdminEnvConfigPage() {
     customHeadScript: "",
 
     // Brand & Phone
-    siteName: "SkySwift",
-    brandName: "SkySwift Flights",
-    siteUrl: "https://skyswiftflights.com",
+    siteName: "JetWithFly",
+    brandName: "JetWithFly Flights",
+    siteUrl: "https://jetwithfly.com",
     companyPhone: "+1 877 371 7356",
-    supportEmail: "support@skyswiftflights.com",
+    supportEmail: "support@jetwithfly.com",
 
     // APIs
     duffelToken: "",

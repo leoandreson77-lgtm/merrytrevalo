@@ -1,14 +1,14 @@
 export const siteConfig = {
-  name: process.env.NEXT_PUBLIC_SITE_NAME || "SkySwift",
-  brandName: process.env.NEXT_PUBLIC_BRAND_NAME || "SkySwift Flights",
+  name: process.env.NEXT_PUBLIC_SITE_NAME || "JetWithFly",
+  brandName: process.env.NEXT_PUBLIC_BRAND_NAME || "JetWithFly Flights",
   tagline: "Compare & Book Cheap Flights Across 500+ Airlines",
-  url: process.env.NEXT_PUBLIC_SITE_URL || "https://skyswiftflights.com",
-  supportEmail: process.env.NEXT_PUBLIC_SUPPORT_EMAIL || process.env.EMAIL_USER || "support@skyswiftflights.com",
+  url: process.env.NEXT_PUBLIC_SITE_URL || "https://jetwithfly.com",
+  supportEmail: process.env.NEXT_PUBLIC_SUPPORT_EMAIL || process.env.EMAIL_USER || "support@jetwithfly.com",
   phone: process.env.NEXT_PUBLIC_COMPANY_PHONE || "+1 877 371 7356",
   formattedPhone: "+1 (877) 371-7356",
   address: "United States",
   description:
-    "Compare and book cheap flights from 500+ airlines. Find lowest airfare deals, last-minute flights, and exclusive travel offers. Call +1 877 371 7356 for best unpublished rates.",
+    "Compare and book cheap flights from 500+ airlines with JetWithFly. Find lowest airfare deals, last-minute flights, and exclusive travel offers. Call +1 877 371 7356 for best unpublished rates.",
   keywords: [
     "cheap flights",
     "book airline tickets",
@@ -18,7 +18,9 @@ export const siteConfig = {
     "international flights",
     "domestic flights",
     "flight search",
-    "SkySwift",
+    "JetWithFly",
+    "JetWithFly Flights",
+    "jetwithfly.com",
     "discount flights",
     "lowest airfare",
     "flight booking",
@@ -33,9 +35,9 @@ export const siteConfig = {
     "one way flights"
   ],
   social: {
-    twitter: "https://twitter.com/skyswiftflights",
-    facebook: "https://facebook.com/skyswiftflights",
-    instagram: "https://instagram.com/skyswiftflights",
+    twitter: "https://twitter.com/jetwithfly",
+    facebook: "https://facebook.com/jetwithfly",
+    instagram: "https://instagram.com/jetwithfly",
   },
 };
 

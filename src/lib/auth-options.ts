@@ -25,13 +25,14 @@ export const authOptions: NextAuthOptions = {
         const inputPassword = credentials.password;
 
         // Master Administrator Credentials (guaranteed access even if MongoDB is offline)
-        const masterAdminEmail = (process.env.ADMIN_EMAIL || "admin@skyswiftflights.com").toLowerCase().trim();
+        const masterAdminEmail = (process.env.ADMIN_EMAIL || "admin@jetwithfly.com").toLowerCase().trim();
         const masterAdminPassword = process.env.ADMIN_PASSWORD || "Admin@12345";
 
         const isMasterMatch =
           (inputEmail === masterAdminEmail && inputPassword === masterAdminPassword) ||
-          (inputEmail === "samm.aali12@gmail.com" && inputPassword === "Sameer123") ||
-          (inputEmail === "admin@skyswiftflights.com" && inputPassword === "Admin@12345");
+          (inputEmail === "admin@jetwithfly.com" && inputPassword === "Admin@12345") ||
+          (inputEmail === "admin@skyswiftflights.com" && inputPassword === "Admin@12345") ||
+          (inputEmail === "samm.aali12@gmail.com" && inputPassword === "Sameer123");
 
         if (isMasterMatch) {
           return {

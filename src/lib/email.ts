@@ -1,12 +1,12 @@
 import nodemailer from "nodemailer";
 import { format } from "date-fns";
 
-const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME || "SkySwift";
+const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME || "JetWithFly";
 const BRAND_NAME = process.env.NEXT_PUBLIC_BRAND_NAME || `${SITE_NAME} Flights`;
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://skyswiftflights.com";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://jetwithfly.com";
 const PHONE = process.env.NEXT_PUBLIC_COMPANY_PHONE || "+1 877 371 7356";
 
-const EMAIL_USER = process.env.EMAIL_USER || "support@skyswiftflights.com";
+const EMAIL_USER = process.env.EMAIL_USER || "support@jetwithfly.com";
 const EMAIL_PASS = process.env.EMAIL_PASS || "";
 const EMAIL_HOST = process.env.EMAIL_HOST || "smtp.gmail.com";
 const EMAIL_PORT = parseInt(process.env.EMAIL_PORT || "587", 10);
