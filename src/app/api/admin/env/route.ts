@@ -5,8 +5,50 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth-options";
 import fs from "fs";
 import path from "path";
-import { connectToDatabase } from "@/lib/db";
+import { connectToDatabase, resetDbConnection } from "@/lib/db";
 import { CMSConfig } from "@/models/CMSConfig";
+
+const KNOWN_ENV_KEYS = new Set([
+  "MONGODB_URI",
+  "DATABASE_URL",
+  "NEXTAUTH_URL",
+  "NEXTAUTH_SECRET",
+  "NEXT_PUBLIC_SITE_NAME",
+  "NEXT_PUBLIC_BRAND_NAME",
+  "NEXT_PUBLIC_SITE_URL",
+  "NEXT_PUBLIC_COMPANY_PHONE",
+  "NEXT_PUBLIC_SUPPORT_EMAIL",
+  "SUPPORT_EMAIL",
+  "EMAIL_HOST",
+  "EMAIL_PORT",
+  "EMAIL_SECURE",
+  "EMAIL_USER",
+  "EMAIL_PASS",
+  "EMAIL_FROM",
+  "EMAIL_BOOKINGS_TO",
+  "EMAIL_OWNER",
+  "DISABLE_BOOKING_EMAILS",
+  "NEXT_PUBLIC_GOOGLE_TAG_ENABLED",
+  "NEXT_PUBLIC_GOOGLE_TAG_ID",
+  "NEXT_PUBLIC_GTM_ID",
+  "NEXT_PUBLIC_GOOGLE_ADS_ID",
+  "CUSTOM_HEAD_SCRIPT",
+  "DUFFEL_ACCESS_TOKEN",
+  "DUFFEL_API_KEY",
+  "AMADEUS_CLIENT_ID",
+  "AMADEUS_CLIENT_SECRET",
+  "GOOGLE_SHEETS_ID",
+  "GOOGLE_SERVICE_ACCOUNT_EMAIL",
+  "GOOGLE_PRIVATE_KEY",
+  "UPSTASH_REDIS_REST_URL",
+  "UPSTASH_REDIS_REST_TOKEN",
+  "TWILIO_ACCOUNT_SID",
+  "TWILIO_AUTH_TOKEN",
+  "WHATSAPP_SENDER_NUMBER",
+  "PORT",
+  "HOST",
+  "NODE_ENV",
+]);
 
 function getDynamicEnv(key: string, fallback: string = ""): string {
   return (process.env as Record<string, string | undefined>)[key] || fallback;
@@ -16,7 +58,33 @@ function setProcessEnv(key: string, value: string) {
   (process.env as Record<string, string | undefined>)[key] = value;
 }
 
-function updateEnvFile(updates: Record<string, string>) {
+function parseEnvFile(): Record<string, string> {
+  const envPath = path.join(process.cwd(), ".env");
+  if (!fs.existsSync(envPath)) return {};
+  try {
+    const content = fs.readFileSync(envPath, "utf-8");
+    const result: Record<string, string> = {};
+    for (const rawLine of content.split("\n")) {
+      const line = rawLine.trim();
+      if (!line || line.startsWith("#")) continue;
+      const eqIdx = line.indexOf("=");
+      if (eqIdx > 0) {
+        const key = line.slice(0, eqIdx).trim();
+        let val = line.slice(eqIdx + 1).trim();
+        if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
+          val = val.slice(1, -1);
+        }
+        result[key] = val;
+      }
+    }
+    return result;
+  } catch (err) {
+    console.warn("Could not read .env file:", err);
+    return {};
+  }
+}
+
+function updateEnvFile(updates: Record<string, string>, customVariables?: Array<{ key: string; value: string }>) {
   try {
     const envPath = path.join(process.cwd(), ".env");
     let content = "";
@@ -24,9 +92,21 @@ function updateEnvFile(updates: Record<string, string>) {
       content = fs.readFileSync(envPath, "utf-8");
     }
 
-    for (const [key, value] of Object.entries(updates)) {
+    const allUpdates: Record<string, string> = { ...updates };
+
+    if (customVariables && Array.isArray(customVariables)) {
+      for (const item of customVariables) {
+        if (item.key && typeof item.key === "string") {
+          const sanitizedKey = item.key.trim().toUpperCase().replace(/[^A-Z0-9_]/g, "_");
+          if (sanitizedKey) {
+            allUpdates[sanitizedKey] = item.value || "";
+          }
+        }
+      }
+    }
+
+    for (const [key, value] of Object.entries(allUpdates)) {
       if (value === undefined || value === null) continue;
-      // Skip placeholder passwords
       if (key === "EMAIL_PASS" && value === "••••••••••••") continue;
 
       const escapedValue = String(value).replace(/"/g, '\\"');
@@ -46,13 +126,15 @@ function updateEnvFile(updates: Record<string, string>) {
   }
 }
 
-// GET: Retrieve current system ENV & Integration configurations
+// GET: Retrieve all system ENV & Integration configurations + dynamic custom variables
 export async function GET() {
   try {
     const session = await getServerSession(authOptions);
     if (!session) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
+
+    const fileEnv = parseEnvFile();
 
     let dbEnv: Record<string, any> = {};
     try {
@@ -65,38 +147,83 @@ export async function GET() {
       console.warn("Could not load env_settings from database:", err);
     }
 
+    // Merge custom variables from database and from .env file
+    const customVarsMap = new Map<string, string>();
+
+    // 1. First add any custom variables saved in database
+    if (Array.isArray(dbEnv.customVariables)) {
+      for (const item of dbEnv.customVariables) {
+        if (item?.key) {
+          customVarsMap.set(item.key.trim().toUpperCase(), String(item.value || ""));
+        }
+      }
+    }
+
+    // 2. Then add any extra non-standard variables present in .env
+    for (const [key, val] of Object.entries(fileEnv)) {
+      if (!KNOWN_ENV_KEYS.has(key) && !customVarsMap.has(key)) {
+        customVarsMap.set(key, val);
+      }
+    }
+
+    const customVariables = Array.from(customVarsMap.entries()).map(([key, value]) => ({
+      key,
+      value,
+    }));
+
     const config = {
-      // SMTP Email
-      emailHost: dbEnv.emailHost || process.env.EMAIL_HOST || "smtp.gmail.com",
-      emailPort: dbEnv.emailPort || process.env.EMAIL_PORT || "587",
-      emailSecure: dbEnv.emailSecure !== undefined ? Boolean(dbEnv.emailSecure) : (process.env.EMAIL_SECURE === "true" || process.env.EMAIL_PORT === "465"),
-      emailUser: dbEnv.emailUser || process.env.EMAIL_USER || "",
-      emailPass: (dbEnv.emailPass && dbEnv.emailPass !== "••••••••••••") || process.env.EMAIL_PASS ? "••••••••••••" : "",
-      hasEmailPass: Boolean(dbEnv.emailPass || process.env.EMAIL_PASS),
-      emailFrom: dbEnv.emailFrom || process.env.EMAIL_FROM || "",
-      emailBookingsTo: dbEnv.emailBookingsTo || process.env.EMAIL_BOOKINGS_TO || "",
-      emailOwner: dbEnv.emailOwner || process.env.EMAIL_OWNER || "",
-      disableBookingEmails: dbEnv.disableBookingEmails !== undefined ? Boolean(dbEnv.disableBookingEmails) : (process.env.DISABLE_BOOKING_EMAILS === "true"),
+      // 1. Database
+      mongodbUri: dbEnv.mongodbUri || fileEnv.MONGODB_URI || process.env.MONGODB_URI || "",
+      databaseUrl: dbEnv.databaseUrl || fileEnv.DATABASE_URL || process.env.DATABASE_URL || "",
 
-      // Google Tag & Tracking
+      // 2. Auth & Security
+      nextauthUrl: dbEnv.nextauthUrl || fileEnv.NEXTAUTH_URL || process.env.NEXTAUTH_URL || "https://jetwithfly.com",
+      nextauthSecret: dbEnv.nextauthSecret || fileEnv.NEXTAUTH_SECRET || process.env.NEXTAUTH_SECRET || "",
+
+      // 3. SMTP Email
+      emailHost: dbEnv.emailHost || fileEnv.EMAIL_HOST || process.env.EMAIL_HOST || "smtp.gmail.com",
+      emailPort: dbEnv.emailPort || fileEnv.EMAIL_PORT || process.env.EMAIL_PORT || "587",
+      emailSecure: dbEnv.emailSecure !== undefined ? Boolean(dbEnv.emailSecure) : (process.env.EMAIL_SECURE === "true" || process.env.EMAIL_PORT === "465" || fileEnv.EMAIL_PORT === "465"),
+      emailUser: dbEnv.emailUser || fileEnv.EMAIL_USER || process.env.EMAIL_USER || "",
+      emailPass: (dbEnv.emailPass && dbEnv.emailPass !== "••••••••••••") || fileEnv.EMAIL_PASS || process.env.EMAIL_PASS ? "••••••••••••" : "",
+      hasEmailPass: Boolean(dbEnv.emailPass || fileEnv.EMAIL_PASS || process.env.EMAIL_PASS),
+      emailFrom: dbEnv.emailFrom || fileEnv.EMAIL_FROM || process.env.EMAIL_FROM || "",
+      emailBookingsTo: dbEnv.emailBookingsTo || fileEnv.EMAIL_BOOKINGS_TO || process.env.EMAIL_BOOKINGS_TO || "",
+      emailOwner: dbEnv.emailOwner || fileEnv.EMAIL_OWNER || process.env.EMAIL_OWNER || "",
+      disableBookingEmails: dbEnv.disableBookingEmails !== undefined ? Boolean(dbEnv.disableBookingEmails) : (process.env.DISABLE_BOOKING_EMAILS === "true" || fileEnv.DISABLE_BOOKING_EMAILS === "true"),
+
+      // 4. Google Tag & Tracking
       googleTagEnabled: getDynamicEnv("NEXT_PUBLIC_GOOGLE_TAG_ENABLED") === "true" || Boolean(getDynamicEnv("NEXT_PUBLIC_GOOGLE_TAG_ID")),
-      googleTagId: getDynamicEnv("NEXT_PUBLIC_GOOGLE_TAG_ID"),
-      gtmId: getDynamicEnv("NEXT_PUBLIC_GTM_ID"),
-      googleAdsId: getDynamicEnv("NEXT_PUBLIC_GOOGLE_ADS_ID"),
-      customHeadScript: getDynamicEnv("CUSTOM_HEAD_SCRIPT"),
+      googleTagId: getDynamicEnv("NEXT_PUBLIC_GOOGLE_TAG_ID") || fileEnv.NEXT_PUBLIC_GOOGLE_TAG_ID || "",
+      gtmId: getDynamicEnv("NEXT_PUBLIC_GTM_ID") || fileEnv.NEXT_PUBLIC_GTM_ID || "",
+      googleAdsId: getDynamicEnv("NEXT_PUBLIC_GOOGLE_ADS_ID") || fileEnv.NEXT_PUBLIC_GOOGLE_ADS_ID || "",
+      customHeadScript: getDynamicEnv("CUSTOM_HEAD_SCRIPT") || fileEnv.CUSTOM_HEAD_SCRIPT || "",
 
-      // Site Identity & Phone
+      // 5. Site Identity & Phone
       siteName: getDynamicEnv("NEXT_PUBLIC_SITE_NAME", "JetWithFly"),
       brandName: getDynamicEnv("NEXT_PUBLIC_BRAND_NAME", "JetWithFly Flights"),
       siteUrl: getDynamicEnv("NEXT_PUBLIC_SITE_URL", "https://jetwithfly.com"),
       companyPhone: getDynamicEnv("NEXT_PUBLIC_COMPANY_PHONE", "+1 877 371 7356"),
       supportEmail: getDynamicEnv("NEXT_PUBLIC_SUPPORT_EMAIL", "support@jetwithfly.com"),
 
-      // APIs & Keys
-      duffelToken: process.env.DUFFEL_ACCESS_TOKEN || "",
-      amadeusClientId: process.env.AMADEUS_CLIENT_ID || "",
-      amadeusClientSecret: process.env.AMADEUS_CLIENT_SECRET || "",
-      googleSheetsId: process.env.GOOGLE_SHEETS_ID || "",
+      // 6. Flight Search Engine & APIs
+      duffelToken: fileEnv.DUFFEL_ACCESS_TOKEN || process.env.DUFFEL_ACCESS_TOKEN || "",
+      duffelApiKey: fileEnv.DUFFEL_API_KEY || process.env.DUFFEL_API_KEY || "",
+      amadeusClientId: fileEnv.AMADEUS_CLIENT_ID || process.env.AMADEUS_CLIENT_ID || "",
+      amadeusClientSecret: fileEnv.AMADEUS_CLIENT_SECRET || process.env.AMADEUS_CLIENT_SECRET || "",
+
+      // 7. Third-party Integrations
+      googleSheetsId: fileEnv.GOOGLE_SHEETS_ID || process.env.GOOGLE_SHEETS_ID || "",
+      googleServiceAccountEmail: fileEnv.GOOGLE_SERVICE_ACCOUNT_EMAIL || process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL || "",
+      googlePrivateKey: fileEnv.GOOGLE_PRIVATE_KEY || process.env.GOOGLE_PRIVATE_KEY || "",
+      upstashRedisUrl: fileEnv.UPSTASH_REDIS_REST_URL || process.env.UPSTASH_REDIS_REST_URL || "",
+      upstashRedisToken: fileEnv.UPSTASH_REDIS_REST_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN || "",
+      twilioAccountSid: fileEnv.TWILIO_ACCOUNT_SID || process.env.TWILIO_ACCOUNT_SID || "",
+      twilioAuthToken: fileEnv.TWILIO_AUTH_TOKEN || process.env.TWILIO_AUTH_TOKEN || "",
+      whatsappSenderNumber: fileEnv.WHATSAPP_SENDER_NUMBER || process.env.WHATSAPP_SENDER_NUMBER || "",
+
+      // 8. Dynamic Custom Variables
+      customVariables,
     };
 
     return NextResponse.json(config);
@@ -106,7 +233,7 @@ export async function GET() {
   }
 }
 
-// POST: Save and apply updated ENV & Integration configurations
+// POST: Save and apply updated ENV & Integration configurations + dynamic custom variables
 export async function POST(request: Request) {
   try {
     const session = await getServerSession(authOptions);
@@ -117,7 +244,37 @@ export async function POST(request: Request) {
     const body = await request.json();
     const envUpdates: Record<string, string> = {};
 
-    // 1. SMTP Email
+    // 1. Database
+    let dbChanged = false;
+    if (body.mongodbUri !== undefined) {
+      if (body.mongodbUri !== process.env.MONGODB_URI) dbChanged = true;
+      setProcessEnv("MONGODB_URI", body.mongodbUri);
+      envUpdates.MONGODB_URI = body.mongodbUri;
+    }
+    if (body.databaseUrl !== undefined) {
+      if (body.databaseUrl !== process.env.DATABASE_URL) dbChanged = true;
+      setProcessEnv("DATABASE_URL", body.databaseUrl);
+      envUpdates.DATABASE_URL = body.databaseUrl;
+    } else if (body.mongodbUri !== undefined) {
+      setProcessEnv("DATABASE_URL", body.mongodbUri);
+      envUpdates.DATABASE_URL = body.mongodbUri;
+    }
+
+    if (dbChanged) {
+      resetDbConnection();
+    }
+
+    // 2. Auth & Security
+    if (body.nextauthUrl !== undefined) {
+      setProcessEnv("NEXTAUTH_URL", body.nextauthUrl);
+      envUpdates.NEXTAUTH_URL = body.nextauthUrl;
+    }
+    if (body.nextauthSecret !== undefined) {
+      setProcessEnv("NEXTAUTH_SECRET", body.nextauthSecret);
+      envUpdates.NEXTAUTH_SECRET = body.nextauthSecret;
+    }
+
+    // 3. SMTP Email
     if (body.emailHost !== undefined) {
       setProcessEnv("EMAIL_HOST", body.emailHost);
       envUpdates.EMAIL_HOST = body.emailHost;
@@ -138,7 +295,6 @@ export async function POST(request: Request) {
       setProcessEnv("EMAIL_PASS", body.emailPass);
       envUpdates.EMAIL_PASS = body.emailPass;
     } else {
-      // Preserve existing password from database or process.env
       try {
         await connectToDatabase();
         const existing = await CMSConfig.findOne({ key: "env_settings" }).lean();
@@ -166,7 +322,7 @@ export async function POST(request: Request) {
       envUpdates.DISABLE_BOOKING_EMAILS = String(body.disableBookingEmails);
     }
 
-    // 2. Google Tag & Tracking
+    // 4. Google Tag & Tracking
     if (body.googleTagEnabled !== undefined) {
       setProcessEnv("NEXT_PUBLIC_GOOGLE_TAG_ENABLED", String(body.googleTagEnabled));
       envUpdates.NEXT_PUBLIC_GOOGLE_TAG_ENABLED = String(body.googleTagEnabled);
@@ -188,7 +344,7 @@ export async function POST(request: Request) {
       envUpdates.CUSTOM_HEAD_SCRIPT = body.customHeadScript;
     }
 
-    // 3. Branding & Phone
+    // 5. Branding & Phone
     if (body.siteName !== undefined) {
       setProcessEnv("NEXT_PUBLIC_SITE_NAME", body.siteName);
       envUpdates.NEXT_PUBLIC_SITE_NAME = body.siteName;
@@ -207,13 +363,17 @@ export async function POST(request: Request) {
     }
     if (body.supportEmail !== undefined) {
       setProcessEnv("NEXT_PUBLIC_SUPPORT_EMAIL", body.supportEmail);
+      setProcessEnv("SUPPORT_EMAIL", body.supportEmail);
       envUpdates.NEXT_PUBLIC_SUPPORT_EMAIL = body.supportEmail;
+      envUpdates.SUPPORT_EMAIL = body.supportEmail;
     }
 
-    // 4. APIs & Keys
+    // 6. Flight Search Engine & APIs
     if (body.duffelToken !== undefined) {
       setProcessEnv("DUFFEL_ACCESS_TOKEN", body.duffelToken);
+      setProcessEnv("DUFFEL_API_KEY", body.duffelToken);
       envUpdates.DUFFEL_ACCESS_TOKEN = body.duffelToken;
+      envUpdates.DUFFEL_API_KEY = body.duffelToken;
     }
     if (body.amadeusClientId !== undefined) {
       setProcessEnv("AMADEUS_CLIENT_ID", body.amadeusClientId);
@@ -223,15 +383,61 @@ export async function POST(request: Request) {
       setProcessEnv("AMADEUS_CLIENT_SECRET", body.amadeusClientSecret);
       envUpdates.AMADEUS_CLIENT_SECRET = body.amadeusClientSecret;
     }
+
+    // 7. Third-party Integrations
     if (body.googleSheetsId !== undefined) {
       setProcessEnv("GOOGLE_SHEETS_ID", body.googleSheetsId);
       envUpdates.GOOGLE_SHEETS_ID = body.googleSheetsId;
     }
+    if (body.googleServiceAccountEmail !== undefined) {
+      setProcessEnv("GOOGLE_SERVICE_ACCOUNT_EMAIL", body.googleServiceAccountEmail);
+      envUpdates.GOOGLE_SERVICE_ACCOUNT_EMAIL = body.googleServiceAccountEmail;
+    }
+    if (body.googlePrivateKey !== undefined) {
+      setProcessEnv("GOOGLE_PRIVATE_KEY", body.googlePrivateKey);
+      envUpdates.GOOGLE_PRIVATE_KEY = body.googlePrivateKey;
+    }
+    if (body.upstashRedisUrl !== undefined) {
+      setProcessEnv("UPSTASH_REDIS_REST_URL", body.upstashRedisUrl);
+      envUpdates.UPSTASH_REDIS_REST_URL = body.upstashRedisUrl;
+    }
+    if (body.upstashRedisToken !== undefined) {
+      setProcessEnv("UPSTASH_REDIS_REST_TOKEN", body.upstashRedisToken);
+      envUpdates.UPSTASH_REDIS_REST_TOKEN = body.upstashRedisToken;
+    }
+    if (body.twilioAccountSid !== undefined) {
+      setProcessEnv("TWILIO_ACCOUNT_SID", body.twilioAccountSid);
+      envUpdates.TWILIO_ACCOUNT_SID = body.twilioAccountSid;
+    }
+    if (body.twilioAuthToken !== undefined) {
+      setProcessEnv("TWILIO_AUTH_TOKEN", body.twilioAuthToken);
+      envUpdates.TWILIO_AUTH_TOKEN = body.twilioAuthToken;
+    }
+    if (body.whatsappSenderNumber !== undefined) {
+      setProcessEnv("WHATSAPP_SENDER_NUMBER", body.whatsappSenderNumber);
+      envUpdates.WHATSAPP_SENDER_NUMBER = body.whatsappSenderNumber;
+    }
 
-    // Write to .env file on disk
-    updateEnvFile(envUpdates);
+    // 8. Dynamic Custom Variables
+    const sanitizedCustomVariables: Array<{ key: string; value: string }> = [];
+    if (Array.isArray(body.customVariables)) {
+      for (const item of body.customVariables) {
+        if (item?.key && typeof item.key === "string") {
+          const cleanKey = item.key.trim().toUpperCase().replace(/[^A-Z0-9_]/g, "_");
+          if (cleanKey) {
+            const cleanVal = typeof item.value === "string" ? item.value : String(item.value || "");
+            sanitizedCustomVariables.push({ key: cleanKey, value: cleanVal });
+            setProcessEnv(cleanKey, cleanVal);
+          }
+        }
+      }
+    }
+    body.customVariables = sanitizedCustomVariables;
 
-    // Save to CMSConfig in database (non-blocking)
+    // Write all updates + custom variables to .env file on disk
+    updateEnvFile(envUpdates, sanitizedCustomVariables);
+
+    // Save configuration into MongoDB CMSConfig collection
     try {
       await connectToDatabase();
       await CMSConfig.findOneAndUpdate(
@@ -245,7 +451,8 @@ export async function POST(request: Request) {
 
     return NextResponse.json({
       success: true,
-      message: "Environment and tracking configurations saved and applied successfully!",
+      message: "All environment configurations and custom variables saved successfully!",
+      customVariablesCount: sanitizedCustomVariables.length,
     });
   } catch (error: any) {
     console.error("POST /api/admin/env error:", error);

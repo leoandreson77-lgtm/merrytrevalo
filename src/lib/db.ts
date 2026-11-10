@@ -85,3 +85,14 @@ export async function getDb() {
   }
   return conn.connection.db;
 }
+
+export function resetDbConnection() {
+  if (cached.conn) {
+    try {
+      cached.conn.disconnect().catch(() => {});
+    } catch {}
+  }
+  cached.conn = null;
+  cached.promise = null;
+}
+
