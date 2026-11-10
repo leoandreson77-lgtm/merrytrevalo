@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   Users,
@@ -18,6 +19,8 @@ import {
   Phone,
   Save,
   KeyRound,
+  AlertTriangle,
+  Database,
 } from "lucide-react";
 import {
   AreaChart,
@@ -33,9 +36,10 @@ import {
 } from "recharts";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import Link from "next/link";
 
 interface DashboardData {
+  dbStatus?: string;
+  dbMessage?: string;
   kpis: {
     totalLeads: number;
     todaysLeads: number;
@@ -131,16 +135,6 @@ export default function AdminDashboard() {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["globalSettings"] }),
   });
 
-  if (error) {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-[50vh] text-slate-300">
-        <TrendingDown className="w-16 h-16 text-red-500 mb-4 animate-bounce" />
-        <h3 className="text-xl font-bold">Failed to load statistics</h3>
-        <p className="text-sm text-slate-500">Please verify database connections and try again.</p>
-      </div>
-    );
-  }
-
   const kpis = data?.kpis;
 
   const cards = [
@@ -190,6 +184,32 @@ export default function AdminDashboard() {
 
   return (
     <div className="space-y-8">
+      {/* MongoDB Connection Status Alert */}
+      {(data?.dbStatus === "disconnected" || error) && (
+        <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/25 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-amber-200">
+          <div className="flex items-start sm:items-center gap-3">
+            <div className="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center flex-shrink-0">
+              <AlertTriangle className="w-5 h-5" />
+            </div>
+            <div>
+              <p className="text-sm font-bold text-amber-300">
+                MongoDB Offline or Pending Connection
+              </p>
+              <p className="text-xs text-amber-400/80 leading-relaxed mt-0.5">
+                Dashboard is running in offline mode. Live lead & call stats require an active MongoDB connection.
+              </p>
+            </div>
+          </div>
+          <Link
+            href="/admin/env"
+            className="flex items-center gap-1.5 px-4 py-2 bg-amber-500 text-slate-950 font-bold text-xs rounded-xl hover:bg-amber-400 transition-colors shadow-sm flex-shrink-0"
+          >
+            <Database className="w-4 h-4" />
+            Configure Database
+          </Link>
+        </div>
+      )}
+
       {/* Top Header Card */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-3xl relative overflow-hidden shadow-sm">
         <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent z-0" />
