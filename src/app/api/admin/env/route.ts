@@ -247,14 +247,32 @@ export async function POST(request: Request) {
     // 1. Database
     let dbChanged = false;
     if (body.mongodbUri !== undefined) {
-      if (body.mongodbUri !== process.env.MONGODB_URI) dbChanged = true;
-      setProcessEnv("MONGODB_URI", body.mongodbUri);
-      envUpdates.MONGODB_URI = body.mongodbUri;
+      let cleanUri = String(body.mongodbUri).trim();
+      if ((cleanUri.startsWith('"') && cleanUri.endsWith('"')) || (cleanUri.startsWith("'") && cleanUri.endsWith("'"))) {
+        cleanUri = cleanUri.slice(1, -1).trim();
+      }
+      cleanUri = cleanUri.replace(/:<([^>]+)>@/, ":$1@").replace(/\/\/<([^>]+):/, "//$1:");
+      if (cleanUri.startsWith("mongodb+srv://") && cleanUri.endsWith(".mongodb.net/")) {
+        cleanUri = cleanUri + "jetwithfly?retryWrites=true&w=majority";
+      }
+      body.mongodbUri = cleanUri;
+      if (cleanUri !== process.env.MONGODB_URI) dbChanged = true;
+      setProcessEnv("MONGODB_URI", cleanUri);
+      envUpdates.MONGODB_URI = cleanUri;
     }
     if (body.databaseUrl !== undefined) {
-      if (body.databaseUrl !== process.env.DATABASE_URL) dbChanged = true;
-      setProcessEnv("DATABASE_URL", body.databaseUrl);
-      envUpdates.DATABASE_URL = body.databaseUrl;
+      let cleanDbUrl = String(body.databaseUrl).trim();
+      if ((cleanDbUrl.startsWith('"') && cleanDbUrl.endsWith('"')) || (cleanDbUrl.startsWith("'") && cleanDbUrl.endsWith("'"))) {
+        cleanDbUrl = cleanDbUrl.slice(1, -1).trim();
+      }
+      cleanDbUrl = cleanDbUrl.replace(/:<([^>]+)>@/, ":$1@").replace(/\/\/<([^>]+):/, "//$1:");
+      if (cleanDbUrl.startsWith("mongodb+srv://") && cleanDbUrl.endsWith(".mongodb.net/")) {
+        cleanDbUrl = cleanDbUrl + "jetwithfly?retryWrites=true&w=majority";
+      }
+      body.databaseUrl = cleanDbUrl;
+      if (cleanDbUrl !== process.env.DATABASE_URL) dbChanged = true;
+      setProcessEnv("DATABASE_URL", cleanDbUrl);
+      envUpdates.DATABASE_URL = cleanDbUrl;
     } else if (body.mongodbUri !== undefined) {
       setProcessEnv("DATABASE_URL", body.mongodbUri);
       envUpdates.DATABASE_URL = body.mongodbUri;

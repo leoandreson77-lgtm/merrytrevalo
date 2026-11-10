@@ -31,9 +31,21 @@ function convertSrvToStandard(uri: string): string {
   return `mongodb://${user}:${password}@${hosts}/${dbName}?authSource=admin&replicaSet=atlas-zphce6-shard-0&ssl=true`;
 }
 
+function cleanMongoUri(rawUri: string): string {
+  if (!rawUri) return "";
+  let uri = rawUri.trim();
+  if ((uri.startsWith('"') && uri.endsWith('"')) || (uri.startsWith("'") && uri.endsWith("'"))) {
+    uri = uri.slice(1, -1).trim();
+  }
+  // Remove accidental angle brackets around username or password (e.g. :<password>@ -> :password@)
+  uri = uri.replace(/:<([^>]+)>@/, ":$1@");
+  uri = uri.replace(/\/\/<([^>]+):/, "//$1:");
+  return convertSrvToStandard(uri);
+}
+
 function getMongoUri(): string {
   const rawUri = process.env.DATABASE_URL || process.env.MONGODB_URI || "";
-  return convertSrvToStandard(rawUri);
+  return cleanMongoUri(rawUri);
 }
 
 interface MongooseCache {

@@ -343,6 +343,14 @@ export default function AdminEnvConfigPage() {
         throw new Error(data.message || "Failed to connect to MongoDB cluster");
       }
 
+      if (data.cleanedUri && data.hadAngleBrackets) {
+        setConfig(prev => ({
+          ...prev,
+          mongodbUri: data.cleanedUri,
+          databaseUrl: prev.databaseUrl ? data.cleanedUri : prev.databaseUrl,
+        }));
+      }
+
       setDbTestResult({
         success: true,
         message: data.message || "Successfully connected to MongoDB cluster!",
@@ -612,6 +620,35 @@ export default function AdminEnvConfigPage() {
                 className="font-mono text-xs pr-10"
               />
             </div>
+
+            {config.mongodbUri.includes("<") && config.mongodbUri.includes(">") && (
+              <div className="mt-2.5 p-3 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 text-xs text-amber-900 dark:text-amber-300 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div className="flex items-center gap-2">
+                  <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0" />
+                  <span>
+                    <strong>Angle brackets <code>&lt; &gt;</code> detected!</strong> MongoDB Atlas placeholder brackets around your password (e.g. <code>&lt;password&gt;</code>) must be removed.
+                  </span>
+                </div>
+                <Button
+                  type="button"
+                  size="sm"
+                  onClick={() => {
+                    const cleaned = config.mongodbUri.replace(/:<([^>]+)>@/, ":$1@").replace(/\/\/<([^>]+):/, "//$1:");
+                    handleChange("mongodbUri", cleaned);
+                    if (config.databaseUrl) {
+                      handleChange("databaseUrl", config.databaseUrl.replace(/:<([^>]+)>@/, ":$1@").replace(/\/\/<([^>]+):/, "//$1:"));
+                    }
+                    toast({
+                      title: "Cleaned MongoDB URI",
+                      description: "Removed '<' and '>' brackets from your password.",
+                    });
+                  }}
+                  className="bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs shrink-0 self-start sm:self-auto h-7 px-3 rounded-lg"
+                >
+                  ⚡ Remove &lt; &gt; Automatically
+                </Button>
+              </div>
+            )}
           </div>
 
           <div>
