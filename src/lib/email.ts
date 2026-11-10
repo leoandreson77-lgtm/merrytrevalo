@@ -1,12 +1,13 @@
 import nodemailer from "nodemailer";
 import { format } from "date-fns";
+import { siteConfig } from "@/lib/site-config";
 
-const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME || "JetWithFly";
-const BRAND_NAME = process.env.NEXT_PUBLIC_BRAND_NAME || `${SITE_NAME} Flights`;
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://jetwithfly.com";
-const PHONE = process.env.NEXT_PUBLIC_COMPANY_PHONE || "+1 877 371 7356";
+const SITE_NAME = siteConfig.name;
+const BRAND_NAME = siteConfig.brandName;
+const SITE_URL = siteConfig.url;
+const PHONE = siteConfig.phone;
 
-const EMAIL_USER = process.env.EMAIL_USER || "support@jetwithfly.com";
+const EMAIL_USER = siteConfig.supportEmail;
 const EMAIL_PASS = process.env.EMAIL_PASS || "";
 const EMAIL_HOST = process.env.EMAIL_HOST || "smtp.gmail.com";
 const EMAIL_PORT = parseInt(process.env.EMAIL_PORT || "587", 10);
@@ -15,10 +16,10 @@ const EMAIL_FROM = process.env.EMAIL_FROM || `"${BRAND_NAME}" <${EMAIL_USER}>`;
 
 // Dynamic configuration helper so environment changes are always fresh
 function getSiteEmailConfig() {
-  const siteName = process.env.NEXT_PUBLIC_SITE_NAME || SITE_NAME;
-  const brandName = process.env.NEXT_PUBLIC_BRAND_NAME || BRAND_NAME;
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || SITE_URL;
-  const phone = process.env.NEXT_PUBLIC_COMPANY_PHONE || PHONE;
+  const siteName = siteConfig.name;
+  const brandName = siteConfig.brandName;
+  const siteUrl = siteConfig.url;
+  const phone = siteConfig.phone;
 
   const user = process.env.EMAIL_USER || EMAIL_USER;
   const pass = process.env.EMAIL_PASS || EMAIL_PASS;

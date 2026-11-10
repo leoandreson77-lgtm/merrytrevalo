@@ -1,12 +1,12 @@
-﻿"use client";
+"use client";
 
 import { Layout } from "@/components/layout";
 import { CompanyPhone } from "@/components/company-phone";
 import { siteConfig } from "@/lib/site-config";
 
 export function TermsOfServicePage() {
-  const brandName = process.env.NEXT_PUBLIC_BRAND_NAME || siteConfig.brandName;
-  const siteName = process.env.NEXT_PUBLIC_SITE_NAME || siteConfig.name;
+  const brandName = siteConfig.brandName;
+  const siteName = siteConfig.name;
 
   return (
     <Layout>

@@ -4,7 +4,7 @@ import { Shield, CreditCard, Clock, Star } from "lucide-react";
 import { siteConfig } from "@/lib/site-config";
 
 export function HomePage() {
-  const brandName = process.env.NEXT_PUBLIC_BRAND_NAME || siteConfig.brandName;
+  const brandName = siteConfig.brandName;
   return (
     <Layout>
       {/* Hero Section */}

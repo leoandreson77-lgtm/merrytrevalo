@@ -29,9 +29,9 @@ interface PageProps {
   params: { slug: string };
 }
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || siteConfig.url;
-const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME || siteConfig.name;
-const BRAND_NAME = process.env.NEXT_PUBLIC_BRAND_NAME || siteConfig.brandName;
+const BASE_URL = siteConfig.url;
+const SITE_NAME = siteConfig.name;
+const BRAND_NAME = siteConfig.brandName;
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   let page: any = null;

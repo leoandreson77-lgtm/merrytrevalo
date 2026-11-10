@@ -3,7 +3,7 @@ import { connectToDatabase } from "@/lib/db";
 import { LandingPage } from "@/models/LandingPage";
 import { siteConfig } from "@/lib/site-config";
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || siteConfig.url;
+const BASE_URL = siteConfig.url;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Static pages

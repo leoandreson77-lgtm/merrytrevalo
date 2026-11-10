@@ -8,3 +8,4 @@ export const metadata: Metadata = {
 export default function ScraperLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
+

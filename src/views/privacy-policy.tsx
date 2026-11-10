@@ -5,9 +5,9 @@ import { CompanyPhone } from "@/components/company-phone";
 import { siteConfig } from "@/lib/site-config";
 
 export function PrivacyPolicyPage() {
-  const brandName = process.env.NEXT_PUBLIC_BRAND_NAME || siteConfig.brandName;
-  const siteName = process.env.NEXT_PUBLIC_SITE_NAME || siteConfig.name;
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || siteConfig.url;
+  const brandName = siteConfig.brandName;
+  const siteName = siteConfig.name;
+  const siteUrl = siteConfig.url;
 
   return (
     <Layout>

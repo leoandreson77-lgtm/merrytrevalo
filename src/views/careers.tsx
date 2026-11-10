@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { Layout } from "@/components/layout";
 import { Briefcase, MapPin, Clock, Heart } from "lucide-react";

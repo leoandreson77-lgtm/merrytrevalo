@@ -5,9 +5,9 @@ import { Providers } from "@/components/providers";
 import { Toaster } from "@/components/ui/toaster";
 import { siteConfig } from "@/lib/site-config";
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || siteConfig.url;
-const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME || siteConfig.name;
-const BRAND_NAME = process.env.NEXT_PUBLIC_BRAND_NAME || siteConfig.brandName;
+const BASE_URL = siteConfig.url;
+const SITE_NAME = siteConfig.name;
+const BRAND_NAME = siteConfig.brandName;
 
 const inter = Inter({
   subsets: ["latin"],

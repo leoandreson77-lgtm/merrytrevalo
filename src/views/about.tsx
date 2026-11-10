@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { Layout } from "@/components/layout";
 import { Plane, Globe, ShieldCheck, Clock, Star, Users } from "lucide-react";
@@ -62,7 +62,7 @@ const team = [
 ];
 
 export function AboutPage() {
-  const brandName = process.env.NEXT_PUBLIC_BRAND_NAME || siteConfig.brandName;
+  const brandName = siteConfig.brandName;
 
   return (
     <Layout>
