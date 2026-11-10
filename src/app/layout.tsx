@@ -3,17 +3,11 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/providers";
 import { Toaster } from "@/components/ui/toaster";
-import { connectToDatabase, getDb } from "@/lib/db";
 import { siteConfig } from "@/lib/site-config";
 
-const rawBaseUrl = process.env.NEXT_PUBLIC_SITE_URL || siteConfig.url;
-const BASE_URL = (!rawBaseUrl || rawBaseUrl.toLowerCase().includes("skyswift")) ? "https://jetwithfly.com" : rawBaseUrl;
-
-const rawSiteName = process.env.NEXT_PUBLIC_SITE_NAME || siteConfig.name;
-const SITE_NAME = (!rawSiteName || rawSiteName.toLowerCase().includes("skyswift")) ? "JetWithFly" : rawSiteName;
-
-const rawBrandName = process.env.NEXT_PUBLIC_BRAND_NAME || siteConfig.brandName;
-const BRAND_NAME = (!rawBrandName || rawBrandName.toLowerCase().includes("skyswift")) ? "JetWithFly Flights" : rawBrandName;
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || siteConfig.url;
+const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME || siteConfig.name;
+const BRAND_NAME = process.env.NEXT_PUBLIC_BRAND_NAME || siteConfig.brandName;
 
 const inter = Inter({
   subsets: ["latin"],
@@ -159,66 +153,11 @@ const websiteSchema = {
 
 // ─────────────────────────────────────────────────────
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  let gtmId = process.env.NEXT_PUBLIC_GTM_ID || "";
-  let googleTagId = process.env.NEXT_PUBLIC_GOOGLE_TAG_ID || "";
-  let googleTagEnabled = process.env.NEXT_PUBLIC_GOOGLE_TAG_ENABLED !== "false";
   let customHeadScript = process.env.CUSTOM_HEAD_SCRIPT || "";
-
-  try {
-    const dbPromise = (async () => {
-      await connectToDatabase();
-      return getDb();
-    })();
-    const timeoutPromise = new Promise((_, reject) =>
-      setTimeout(() => reject(new Error("DB Timeout")), 1500)
-    );
-    const db = (await Promise.race([dbPromise, timeoutPromise])) as any;
-    if (db) {
-      const cmsDoc = await db.collection("cms_settings").findOne({ _type: "global" });
-      if (cmsDoc?.googleTagManagerId && !gtmId) {
-        gtmId = cmsDoc.googleTagManagerId;
-      }
-      if (cmsDoc?.googleTagId && !googleTagId) {
-        googleTagId = cmsDoc.googleTagId;
-      }
-    }
-  } catch {
-    // Fail silently during static build pre-rendering
-  }
 
   return (
     <html lang="en" className={inter.variable}>
       <head>
-        {/* ── Google Tag (gtag.js) - Loaded when enabled & configured in Admin Panel ── */}
-        {googleTagEnabled && googleTagId && (
-          <>
-            <script async src={`https://www.googletagmanager.com/gtag/js?id=${googleTagId}`} />
-            <script
-              dangerouslySetInnerHTML={{
-                __html: `
-                  window.dataLayer = window.dataLayer || [];
-                  function gtag(){dataLayer.push(arguments);}
-                  gtag('js', new Date());
-                  gtag('config', '${googleTagId}');
-                `
-              }}
-            />
-          </>
-        )}
-
-        {/* ── Google Tag Manager (Optional, only if user explicitly sets GTM ID) ── */}
-        {gtmId && (
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','${gtmId}');`
-            }}
-          />
-        )}
-
         {/* ── Custom Header Script from Admin Panel (if set) ── */}
         {customHeadScript && (
           <script dangerouslySetInnerHTML={{ __html: customHeadScript }} />
@@ -288,18 +227,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       </head>
 
       <body className={inter.className}>
-        {/* ── GTM noscript (only if GTM configured) ── */}
-        {gtmId && (
-          <noscript>
-            <iframe
-              src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`}
-              height="0"
-              width="0"
-              style={{ display: "none", visibility: "hidden" }}
-            />
-          </noscript>
-        )}
-
         <Providers>
           {children}
           <Toaster />

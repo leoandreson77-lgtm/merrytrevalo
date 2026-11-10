@@ -5,11 +5,8 @@ import { CompanyPhone } from "@/components/company-phone";
 import { siteConfig } from "@/lib/site-config";
 
 export function Layout({ children }: { children: React.ReactNode }) {
-  const rawBrand = process.env.NEXT_PUBLIC_BRAND_NAME || siteConfig.brandName;
-  const brandName = (!rawBrand || rawBrand.toLowerCase().includes("skyswift")) ? "JetWithFly Flights" : rawBrand;
-
-  const rawSite = process.env.NEXT_PUBLIC_SITE_NAME || siteConfig.name;
-  const siteName = (!rawSite || rawSite.toLowerCase().includes("skyswift")) ? "JetWithFly" : rawSite;
+  const brandName = process.env.NEXT_PUBLIC_BRAND_NAME || siteConfig.brandName;
+  const siteName = process.env.NEXT_PUBLIC_SITE_NAME || siteConfig.name;
 
   return (
     <div className="min-h-screen flex flex-col bg-[#f8fafc] dark:bg-slate-950">

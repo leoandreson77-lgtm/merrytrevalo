@@ -4,8 +4,7 @@ import { Shield, CreditCard, Clock, Star } from "lucide-react";
 import { siteConfig } from "@/lib/site-config";
 
 export function HomePage() {
-  const rawBrand = process.env.NEXT_PUBLIC_BRAND_NAME || siteConfig.brandName;
-  const brandName = (!rawBrand || rawBrand.toLowerCase().includes("skyswift")) ? "JetWithFly Flights" : rawBrand;
+  const brandName = process.env.NEXT_PUBLIC_BRAND_NAME || siteConfig.brandName;
   return (
     <Layout>
       {/* Hero Section */}
