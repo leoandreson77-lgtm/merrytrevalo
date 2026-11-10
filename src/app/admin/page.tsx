@@ -109,7 +109,7 @@ export default function AdminDashboard() {
       const res = await fetch("/api/settings");
       const json = await res.json();
       if (!settingsLoaded) {
-        setCallNumber(json.callNumber ?? "+18882566747");
+        setCallNumber(json.callNumber ?? "+18773717356");
         setCallLabel(json.callLabel ?? "Call Now");
         setGoogleTagId(json.googleTagId ?? "AW-18305273332");
         setSettingsLoaded(true);
@@ -434,10 +434,10 @@ export default function AdminDashboard() {
                   type="tel"
                   value={callNumber}
                   onChange={e => setCallNumber(e.target.value)}
-                  placeholder="+18882566747"
+                  placeholder="+18773717356"
                   className="w-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-green-500/50 transition-colors"
                 />
-                <p className="text-xs text-slate-500">Include country code, e.g. +18882566747</p>
+                <p className="text-xs text-slate-500">Include country code, e.g. +18773717356</p>
               </div>
               <div className="space-y-2">
                 <label className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Button Label</label>

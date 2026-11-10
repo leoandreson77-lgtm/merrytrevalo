@@ -19,7 +19,7 @@ export async function GET() {
     const settingsValue = config?.value ? { ...defaults, ...config.value } : defaults;
     
     // If config has no custom saved callNumber, fall back to TFN pool
-    if (!settingsValue.callNumber || settingsValue.callNumber === "+18882566747" || settingsValue.callNumber === "+18773717356") {
+    if (!settingsValue.callNumber || settingsValue.callNumber === "+18773717356" || settingsValue.callNumber === "+18773717356") {
       const activeTfn = await TFN.findOne({ isDefault: true, status: "active" }) 
         || await TFN.findOne({ status: "active" });
       if (activeTfn?.number) {

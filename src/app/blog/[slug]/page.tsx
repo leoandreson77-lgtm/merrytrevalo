@@ -6,6 +6,7 @@ import { Blog } from "@/models/Blog";
 import { Plane, Calendar, User, ArrowLeft } from "lucide-react";
 import { siteConfig } from "@/lib/site-config";
 import Link from "next/link";
+import { BrandLogo } from "@/components/brand-logo";
 
 interface PageProps {
   params: { slug: string };
@@ -64,7 +65,7 @@ export default async function BlogDetailPage({ params }: PageProps) {
       {/* Navigation */}
       <nav className="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-6 md:px-12 sticky top-0 z-40 shadow-sm">
         <Link href="/" className="flex items-center gap-2">
-          <img src="/logo.png" alt="JetWithFly" className="h-9 w-auto object-contain" />
+          <BrandLogo variant="dark" />
         </Link>
         <Link href="/blog" className="flex items-center gap-1.5 text-xs font-bold text-slate-650 hover:text-primary">
           <ArrowLeft className="w-4 h-4" /> All Articles

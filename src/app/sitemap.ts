@@ -1,4 +1,4 @@
-﻿import { MetadataRoute } from "next";
+import { MetadataRoute } from "next";
 import { connectToDatabase } from "@/lib/db";
 import { LandingPage } from "@/models/LandingPage";
 import { siteConfig } from "@/lib/site-config";

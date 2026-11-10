@@ -19,7 +19,7 @@ export function CallNowButton() {
     staleTime: 60000,
   });
 
-  const callNumber = (mounted && settings?.callNumber) || "+18882566747";
+  const callNumber = (mounted && settings?.callNumber) || "+18773717356";
   const callLabel = (mounted && settings?.callLabel) || "Call Now";
 
   return (

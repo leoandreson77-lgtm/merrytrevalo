@@ -1,4 +1,4 @@
-﻿import { MetadataRoute } from "next";
+import { MetadataRoute } from "next";
 import { siteConfig } from "@/lib/site-config";
 
 const BASE_URL = siteConfig.url;

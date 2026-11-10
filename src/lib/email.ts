@@ -1,6 +1,8 @@
 import nodemailer from "nodemailer";
 import { format } from "date-fns";
 import { siteConfig } from "@/lib/site-config";
+import { connectToDatabase } from "@/lib/db";
+import { CMSConfig } from "@/models/CMSConfig";
 
 const SITE_NAME = siteConfig.name;
 const BRAND_NAME = siteConfig.brandName;
@@ -14,25 +16,47 @@ const EMAIL_PORT = parseInt(process.env.EMAIL_PORT || "587", 10);
 const EMAIL_SECURE = process.env.EMAIL_SECURE === "true" || EMAIL_PORT === 465;
 const EMAIL_FROM = process.env.EMAIL_FROM || `"${BRAND_NAME}" <${EMAIL_USER}>`;
 
-// Dynamic configuration helper so environment changes are always fresh
-function getSiteEmailConfig() {
+// Dynamic configuration helper so environment & database changes are always fresh
+export async function getSiteEmailConfig() {
+  let dbConfig: any = null;
+  try {
+    await connectToDatabase();
+    const doc = await CMSConfig.findOne({ key: "env_settings" }).lean();
+    if (doc?.value && typeof doc.value === "object") {
+      dbConfig = doc.value;
+    }
+  } catch {
+    // fallback to env
+  }
+
   const siteName = siteConfig.name;
   const brandName = siteConfig.brandName;
   const siteUrl = siteConfig.url;
   const phone = siteConfig.phone;
 
-  const user = process.env.EMAIL_USER || EMAIL_USER;
-  const pass = process.env.EMAIL_PASS || EMAIL_PASS;
-  const host = process.env.EMAIL_HOST || EMAIL_HOST;
-  const port = parseInt(process.env.EMAIL_PORT || String(EMAIL_PORT), 10);
-  const secure = process.env.EMAIL_SECURE === "true" || port === 465;
-  const from = process.env.EMAIL_FROM || `"${brandName}" <${user}>`;
+  const user = dbConfig?.emailUser || process.env.EMAIL_USER || EMAIL_USER;
+  const pass = (dbConfig?.emailPass && dbConfig.emailPass !== "••••••••••••") ? dbConfig.emailPass : (process.env.EMAIL_PASS || EMAIL_PASS);
+  const host = dbConfig?.emailHost || process.env.EMAIL_HOST || EMAIL_HOST;
+  const port = parseInt(String(dbConfig?.emailPort || process.env.EMAIL_PORT || EMAIL_PORT), 10);
+  const secure = dbConfig?.emailSecure !== undefined ? Boolean(dbConfig.emailSecure) : (process.env.EMAIL_SECURE === "true" || port === 465);
+  const from = dbConfig?.emailFrom || process.env.EMAIL_FROM || `"${brandName}" <${user}>`;
 
   return { siteName, brandName, siteUrl, phone, user, pass, host, port, secure, from };
 }
 
-export async function sendMailWithFallback(mailOptions: any) {
-  const config = getSiteEmailConfig();
+function getSiteEmailConfigSync() {
+  return {
+    siteName: siteConfig.name,
+    brandName: siteConfig.brandName,
+    siteUrl: siteConfig.url,
+    phone: siteConfig.phone,
+    user: process.env.EMAIL_USER || EMAIL_USER,
+    from: process.env.EMAIL_FROM || `"${siteConfig.brandName}" <${process.env.EMAIL_USER || EMAIL_USER}>`,
+  };
+}
+
+export async function sendMailWithFallback(mailOptions: any, overrideConfig?: any) {
+  const config = overrideConfig || await getSiteEmailConfig();
 
   if (!config.pass) {
     console.warn(`[EMAIL-SIMULATED] EMAIL_PASS is not configured in .env. Email simulated for: ${mailOptions.to}`);
@@ -120,7 +144,7 @@ function parseRecipients(value: any) {
 }
 
 function getInternalRecipients() {
-  const { user } = getSiteEmailConfig();
+  const { user } = getSiteEmailConfigSync();
   const candidates = [
     user,
     ...parseRecipients(process.env.EMAIL_BOOKINGS_TO),
@@ -144,7 +168,7 @@ function buildAdminBookingHtml({
   returnArrivalDate,
   formattedPrice,
 }: any) {
-  const { brandName, phone } = getSiteEmailConfig();
+  const { brandName, phone } = getSiteEmailConfigSync();
 
   return `
 <!DOCTYPE html>
@@ -251,7 +275,7 @@ function buildCustomerBookingHtml({
   returnArrivalDate,
   formattedPrice,
 }: any) {
-  const { brandName, phone } = getSiteEmailConfig();
+  const { brandName, phone } = getSiteEmailConfigSync();
 
   return `
 <!DOCTYPE html>
@@ -493,7 +517,7 @@ export async function sendBookingConfirmation(booking: any, flight: any) {
     const ownerRecipients = getInternalRecipients();
     const customerRecipient = hasValue(booking.email) ? booking.email.trim() : "";
     const sendResults = [];
-    const config = getSiteEmailConfig();
+    const config = await getSiteEmailConfig();
 
     // 1. Send to Owner / Admin
     if (ownerRecipients.length > 0) {
@@ -696,10 +720,10 @@ export async function sendCustomerConfirmationEmail(lead: {
 // VERIFY TRANSPORTER / TEST CONFIG
 // ─────────────────────────────────────────────────────────────────
 export async function testEmailConfig(customConfig?: any) {
-  const config = customConfig || getSiteEmailConfig();
+  const config = customConfig || await getSiteEmailConfig();
 
   if (!config.pass) {
-    throw new Error("EMAIL_PASS is empty. Please enter your SMTP password or Gmail App Password.");
+    throw new Error("SMTP Password is empty. Please enter your email password or App Password.");
   }
 
   try {

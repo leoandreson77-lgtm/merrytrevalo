@@ -105,41 +105,85 @@ export default function AdminEnvConfigPage() {
     setConfig(prev => ({ ...prev, [field]: value }));
   };
 
-  const handlePresetSelect = (preset: "gmail" | "hostinger" | "sendgrid" | "resend") => {
-    if (preset === "gmail") {
-      setConfig(prev => ({
-        ...prev,
-        emailHost: "smtp.gmail.com",
-        emailPort: "587",
-        emailSecure: false,
-      }));
-    } else if (preset === "hostinger") {
-      setConfig(prev => ({
-        ...prev,
-        emailHost: "smtp.hostinger.com",
-        emailPort: "465",
-        emailSecure: true,
-      }));
-    } else if (preset === "sendgrid") {
-      setConfig(prev => ({
-        ...prev,
-        emailHost: "smtp.sendgrid.net",
-        emailPort: "587",
-        emailSecure: false,
-        emailUser: "apikey",
-      }));
-    } else if (preset === "resend") {
-      setConfig(prev => ({
-        ...prev,
-        emailHost: "smtp.resend.com",
-        emailPort: "465",
-        emailSecure: true,
-        emailUser: "resend",
-      }));
+  const handlePresetSelect = (
+    preset: "gmail" | "hostinger" | "godaddy" | "godaddy365" | "zoho" | "namecheap" | "cpanel" | "sendgrid" | "resend"
+  ) => {
+    let host = "";
+    let port = "587";
+    let secure = false;
+    let userPlaceholder = "";
+    let guide = "";
+
+    switch (preset) {
+      case "hostinger":
+        host = "smtp.hostinger.com";
+        port = "465";
+        secure = true;
+        guide = "Hostinger Webmail applied (Port 465 SSL). Enter your full email (e.g. support@jetwithfly.com) and mailbox password.";
+        break;
+      case "godaddy":
+        host = "smtpout.secureserver.net";
+        port = "465";
+        secure = true;
+        guide = "GoDaddy Webmail applied (Port 465 SSL). Enter your full GoDaddy email and password.";
+        break;
+      case "godaddy365":
+        host = "smtp.office365.com";
+        port = "587";
+        secure = false;
+        guide = "Microsoft 365 / GoDaddy M365 applied (Port 587 STARTTLS). Ensure SMTP AUTH is enabled in M365 Admin.";
+        break;
+      case "zoho":
+        host = "smtppro.zoho.com";
+        port = "465";
+        secure = true;
+        guide = "Zoho Webmail applied (Port 465 SSL). Enter your Zoho address and App Password (if 2FA is active).";
+        break;
+      case "namecheap":
+        host = "mail.privateemail.com";
+        port = "465";
+        secure = true;
+        guide = "Namecheap Private Email applied (Port 465 SSL). Enter your full email and password.";
+        break;
+      case "cpanel":
+        host = "mail.jetwithfly.com";
+        port = "465";
+        secure = true;
+        guide = "Custom cPanel / Webmail applied (Port 465 SSL). Set host to mail.yourdomain.com.";
+        break;
+      case "gmail":
+        host = "smtp.gmail.com";
+        port = "587";
+        secure = false;
+        guide = "Gmail / Google Workspace applied (Port 587). Requires 16-character App Password (not your personal password).";
+        break;
+      case "sendgrid":
+        host = "smtp.sendgrid.net";
+        port = "587";
+        secure = false;
+        userPlaceholder = "apikey";
+        guide = "SendGrid applied. User is 'apikey' and password is your API key (SG.xxxx).";
+        break;
+      case "resend":
+        host = "smtp.resend.com";
+        port = "465";
+        secure = true;
+        userPlaceholder = "resend";
+        guide = "Resend applied. User is 'resend' and password is your API key (re_xxxx).";
+        break;
     }
+
+    setConfig(prev => ({
+      ...prev,
+      emailHost: host,
+      emailPort: port,
+      emailSecure: secure,
+      ...(userPlaceholder ? { emailUser: userPlaceholder } : {}),
+    }));
+
     toast({
-      title: `Applied ${preset.toUpperCase()} Presets`,
-      description: `Host and Port updated for ${preset}. Please enter your credentials.`,
+      title: `Applied ${preset.toUpperCase()} Preset`,
+      description: guide,
     });
   };
 
@@ -307,19 +351,64 @@ export default function AdminEnvConfigPage() {
                 type="button"
                 variant="outline"
                 size="sm"
-                onClick={() => handlePresetSelect("gmail")}
-                className="text-xs font-bold hover:border-blue-500 hover:text-blue-600"
+                onClick={() => handlePresetSelect("hostinger")}
+                className="text-xs font-bold border-purple-300 dark:border-purple-800 hover:border-purple-500 hover:text-purple-600 dark:hover:text-purple-400"
               >
-                🔴 Gmail SMTP (smtp.gmail.com)
+                🟣 Hostinger Webmail
               </Button>
               <Button
                 type="button"
                 variant="outline"
                 size="sm"
-                onClick={() => handlePresetSelect("hostinger")}
-                className="text-xs font-bold hover:border-purple-500 hover:text-purple-600"
+                onClick={() => handlePresetSelect("godaddy")}
+                className="text-xs font-bold border-emerald-300 dark:border-emerald-800 hover:border-emerald-500 hover:text-emerald-600 dark:hover:text-emerald-400"
               >
-                🟣 Hostinger / Webmail
+                🟢 GoDaddy Webmail
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => handlePresetSelect("godaddy365")}
+                className="text-xs font-bold border-blue-300 dark:border-blue-800 hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400"
+              >
+                🟦 GoDaddy / Microsoft 365
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => handlePresetSelect("zoho")}
+                className="text-xs font-bold border-amber-300 dark:border-amber-800 hover:border-amber-500 hover:text-amber-600 dark:hover:text-amber-400"
+              >
+                🟡 Zoho Webmail
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => handlePresetSelect("cpanel")}
+                className="text-xs font-bold border-slate-300 dark:border-slate-700 hover:border-slate-500 hover:text-slate-700 dark:hover:text-slate-300"
+              >
+                🌐 Custom cPanel
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => handlePresetSelect("namecheap")}
+                className="text-xs font-bold border-orange-300 dark:border-orange-800 hover:border-orange-500 hover:text-orange-600 dark:hover:text-orange-400"
+              >
+                🟠 Namecheap Email
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => handlePresetSelect("gmail")}
+                className="text-xs font-bold border-red-300 dark:border-red-800 hover:border-red-500 hover:text-red-600 dark:hover:text-red-400"
+              >
+                🔴 Gmail / Google Workspace
               </Button>
               <Button
                 type="button"
@@ -339,6 +428,11 @@ export default function AdminEnvConfigPage() {
               >
                 ⚫ Resend
               </Button>
+            </div>
+
+            {/* Quick Webmail Info Banner */}
+            <div className="mt-3 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+              <span className="font-bold text-slate-900 dark:text-white">💡 Webmail Quick Tip:</span> For <strong>Hostinger</strong> & <strong>GoDaddy</strong>, use your full domain email address (e.g. <code>support@jetwithfly.com</code>) as the username and your standard mailbox password. Port 465 requires SSL to be checked.
             </div>
           </div>
 

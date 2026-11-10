@@ -54,18 +54,29 @@ export async function GET() {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
+    let dbEnv: Record<string, any> = {};
+    try {
+      await connectToDatabase();
+      const doc = await CMSConfig.findOne({ key: "env_settings" }).lean();
+      if (doc?.value && typeof doc.value === "object") {
+        dbEnv = doc.value;
+      }
+    } catch (err) {
+      console.warn("Could not load env_settings from database:", err);
+    }
+
     const config = {
       // SMTP Email
-      emailHost: process.env.EMAIL_HOST || "smtp.gmail.com",
-      emailPort: process.env.EMAIL_PORT || "587",
-      emailSecure: process.env.EMAIL_SECURE === "true" || process.env.EMAIL_PORT === "465",
-      emailUser: process.env.EMAIL_USER || "",
-      emailPass: process.env.EMAIL_PASS ? "••••••••••••" : "",
-      hasEmailPass: Boolean(process.env.EMAIL_PASS),
-      emailFrom: process.env.EMAIL_FROM || "",
-      emailBookingsTo: process.env.EMAIL_BOOKINGS_TO || "",
-      emailOwner: process.env.EMAIL_OWNER || "",
-      disableBookingEmails: process.env.DISABLE_BOOKING_EMAILS === "true",
+      emailHost: dbEnv.emailHost || process.env.EMAIL_HOST || "smtp.gmail.com",
+      emailPort: dbEnv.emailPort || process.env.EMAIL_PORT || "587",
+      emailSecure: dbEnv.emailSecure !== undefined ? Boolean(dbEnv.emailSecure) : (process.env.EMAIL_SECURE === "true" || process.env.EMAIL_PORT === "465"),
+      emailUser: dbEnv.emailUser || process.env.EMAIL_USER || "",
+      emailPass: (dbEnv.emailPass && dbEnv.emailPass !== "••••••••••••") || process.env.EMAIL_PASS ? "••••••••••••" : "",
+      hasEmailPass: Boolean(dbEnv.emailPass || process.env.EMAIL_PASS),
+      emailFrom: dbEnv.emailFrom || process.env.EMAIL_FROM || "",
+      emailBookingsTo: dbEnv.emailBookingsTo || process.env.EMAIL_BOOKINGS_TO || "",
+      emailOwner: dbEnv.emailOwner || process.env.EMAIL_OWNER || "",
+      disableBookingEmails: dbEnv.disableBookingEmails !== undefined ? Boolean(dbEnv.disableBookingEmails) : (process.env.DISABLE_BOOKING_EMAILS === "true"),
 
       // Google Tag & Tracking
       googleTagEnabled: getDynamicEnv("NEXT_PUBLIC_GOOGLE_TAG_ENABLED") === "true" || Boolean(getDynamicEnv("NEXT_PUBLIC_GOOGLE_TAG_ID")),
@@ -126,6 +137,17 @@ export async function POST(request: Request) {
     if (body.emailPass && body.emailPass !== "••••••••••••") {
       setProcessEnv("EMAIL_PASS", body.emailPass);
       envUpdates.EMAIL_PASS = body.emailPass;
+    } else {
+      // Preserve existing password from database or process.env
+      try {
+        await connectToDatabase();
+        const existing = await CMSConfig.findOne({ key: "env_settings" }).lean();
+        if (existing?.value?.emailPass && existing.value.emailPass !== "••••••••••••") {
+          body.emailPass = existing.value.emailPass;
+        } else if (process.env.EMAIL_PASS) {
+          body.emailPass = process.env.EMAIL_PASS;
+        }
+      } catch {}
     }
     if (body.emailFrom !== undefined) {
       setProcessEnv("EMAIL_FROM", body.emailFrom);
