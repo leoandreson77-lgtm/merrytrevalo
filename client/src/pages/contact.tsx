@@ -22,8 +22,8 @@ export function ContactPage() {
                   </div>
                   <div>
                     <p className="font-semibold text-foreground">Phone Support</p>
-                    <a href="tel:+18882566747" className="text-primary hover:underline text-sm block mt-0.5">
-                      +1 888 256 6747
+                    <a href="tel:+18773717356" className="text-primary hover:underline text-sm block mt-0.5">
+                      +1 877 371 7356
                     </a>
                     <a href="tel:+18554909708" className="text-primary hover:underline text-sm block mt-0.5">
                       +1 855 490 9708
@@ -37,8 +37,8 @@ export function ContactPage() {
                   </div>
                   <div>
                     <p className="font-semibold text-foreground">Email Support</p>
-                    <a href="mailto:support@flightitude.com" className="text-primary hover:underline text-sm mt-0.5 block">
-                      support@flightitude.com
+                    <a href="mailto:support@jetwithfly.com" className="text-primary hover:underline text-sm mt-0.5 block">
+                      support@jetwithfly.com
                     </a>
                     <p className="text-xs text-muted-foreground mt-1">We typically respond within 2–4 hours.</p>
                   </div>
@@ -106,7 +106,7 @@ export function ContactPage() {
                 e.preventDefault();
                 const form = e.currentTarget;
                 const data = new FormData(form);
-                window.location.href = `mailto:support@flightitude.com?subject=${encodeURIComponent(
+                window.location.href = `mailto:support@jetwithfly.com?subject=${encodeURIComponent(
                   (data.get("subject") as string) || "Contact from website"
                 )}&body=${encodeURIComponent(
                   `Name: ${data.get("name")}\nEmail: ${data.get("email")}\n\n${data.get("message")}`
@@ -179,8 +179,8 @@ export function ContactPage() {
 
               <p className="text-xs text-muted-foreground text-center">
                 Or email us directly at{" "}
-                <a href="mailto:support@flightitude.com" className="text-primary hover:underline">
-                  support@flightitude.com
+                <a href="mailto:support@jetwithfly.com" className="text-primary hover:underline">
+                  support@jetwithfly.com
                 </a>
               </p>
             </form>

@@ -55,7 +55,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   else if (slug.includes("paris")) defaultTitle = "Fly to Paris (CDG)";
   else if (slug.includes("dubai")) defaultTitle = "Dubai Flight Deals (DXB)";
 
-  const title = page?.seoTitle || (page?.title ? `${page.title} | ${BRAND_NAME}` : `${defaultTitle} | ${BRAND_NAME}`);
+  const title = page?.seoTitle || page?.title || defaultTitle;
   const description =
     page?.seoDescription ||
     page?.description ||

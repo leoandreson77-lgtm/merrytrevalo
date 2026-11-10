@@ -72,7 +72,7 @@ export function AboutPage() {
             We Make Flying <span className="text-primary">Simple</span>
           </h1>
           <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-            Flightitude.com was built with one mission — to make flight planning and enquiry collection as effortless as possible.
+            JetWithFly.com was built with one mission — to make flight planning and enquiry collection as effortless as possible.
             We combine real-time airline data with a clean, fast interface so you can find the right flight
             and submit a tailored request in minutes, not hours.
           </p>
@@ -100,7 +100,7 @@ export function AboutPage() {
             <div>
               <h2 className="text-3xl font-bold text-foreground mb-5">Our Mission</h2>
               <p className="text-muted-foreground leading-relaxed mb-4">
-                At Flightitude.com, we believe everyone deserves access to affordable, reliable air travel.
+                At JetWithFly.com, we believe everyone deserves access to affordable, reliable air travel.
                 Founded in 2017, we started as a small team of travel enthusiasts frustrated by
                 confusing travel flows and hidden charges.
               </p>
@@ -110,7 +110,7 @@ export function AboutPage() {
                 through the Amadeus GDS network.
               </p>
               <p className="text-muted-foreground leading-relaxed">
-                Whether it's a solo getaway, a family vacation, or an urgent business trip — Flightitude.com
+                Whether it's a solo getaway, a family vacation, or an urgent business trip — JetWithFly.com
                 has you covered with fast search, transparent pricing, and human support when you need it.
               </p>
             </div>
@@ -155,7 +155,7 @@ export function AboutPage() {
         <div className="max-w-5xl mx-auto sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-foreground mb-3">Meet the Team</h2>
-            <p className="text-muted-foreground">The people behind Flightitude.com who make it all possible.</p>
+            <p className="text-muted-foreground">The people behind JetWithFly.com who make it all possible.</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {team.map(({ name, role, bio }) => (
@@ -175,7 +175,7 @@ export function AboutPage() {
       {/* CTA */}
       <section className="py-16 bg-primary text-white text-center px-4">
         <div className="max-w-2xl mx-auto">
-          <h2 className="text-3xl font-bold mb-4">Ready to Fly with Flightitude.com?</h2>
+          <h2 className="text-3xl font-bold mb-4">Ready to Fly with JetWithFly.com?</h2>
           <p className="text-white/80 mb-8 leading-relaxed">
             Search thousands of flights and submit your next travel request in minutes.
           </p>

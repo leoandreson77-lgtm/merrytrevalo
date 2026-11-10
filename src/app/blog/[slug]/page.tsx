@@ -24,10 +24,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   } catch {
     article = null;
   }
-  if (!article) return {};
+  if (!article) return { title: "Travel Article" };
 
   return {
-    title: `${article.title} | ${siteConfig.brandName} Blog`,
+    title: article.title,
     description: article.seoDescription || article.content?.substring(0, 150),
     openGraph: {
       title: article.title,

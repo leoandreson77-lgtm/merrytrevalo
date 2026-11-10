@@ -1,4 +1,6 @@
-﻿import { Layout } from "@/components/layout";
+﻿"use client";
+
+import { Layout } from "@/components/layout";
 import { Plane, Globe, ShieldCheck, Clock, Star, Users } from "lucide-react";
 import { siteConfig } from "@/lib/site-config";
 

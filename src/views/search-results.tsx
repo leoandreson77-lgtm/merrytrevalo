@@ -1,3 +1,5 @@
+"use client";
+
 import { useSearchFlights } from "@/hooks/use-flights";
 import { useSearchParams } from "next/navigation";
 import { Layout } from "@/components/layout";

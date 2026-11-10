@@ -1,9 +1,15 @@
 import React from "react";
+import type { Metadata } from "next";
 import { connectToDatabase } from "@/lib/db";
 import { Blog } from "@/models/Blog";
 import { Plane, Calendar, User, ArrowRight } from "lucide-react";
 import { siteConfig } from "@/lib/site-config";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Travel Blog & Flight Guides",
+  description: "Read the latest flight tips, destination guides, and airline deals from JetWithFly Flights.",
+};
 
 interface SearchProps {
   searchParams: { category?: string };

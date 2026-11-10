@@ -1,3 +1,11 @@
-"use client";
+import type { Metadata } from "next";
 import { PrivacyPolicyPage } from "@/views/privacy-policy";
-export default PrivacyPolicyPage;
+
+export const metadata: Metadata = {
+  title: "Privacy Policy",
+  description: "Privacy policy and personal data protection principles of JetWithFly Flights.",
+};
+
+export default function Page() {
+  return <PrivacyPolicyPage />;
+}

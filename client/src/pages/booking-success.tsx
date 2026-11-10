@@ -209,7 +209,7 @@ export function BookingSuccessPage() {
               <div className="hidden sm:block w-px h-12 bg-green-300"></div>
               <div className="text-center">
                 <p className="text-sm text-green-700">Email Us</p>
-                <p className="text-lg font-bold text-green-900">support@flightitude.com</p>
+                <p className="text-lg font-bold text-green-900">support@jetwithfly.com</p>
               </div>
             </div>
           </div>

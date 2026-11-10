@@ -1,5 +1,11 @@
 import React from "react";
+import type { Metadata } from "next";
 import { getServerSession } from "next-auth";
+
+export const metadata: Metadata = {
+  title: "Admin Console",
+  robots: { index: false, follow: false },
+};
 import { redirect } from "next/navigation";
 import { authOptions } from "@/lib/auth-options";
 import Link from "next/link";

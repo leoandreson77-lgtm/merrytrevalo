@@ -12,14 +12,14 @@ export function PrivacyPolicyPage() {
           <section>
             <h2 className="text-xl font-semibold text-foreground mb-3">1. Introduction</h2>
             <p>
-              Welcome to Flightitude.com ("we," "our," or "us"), accessible at{" "}
-              <a href="https://flightitude.com" className="text-primary hover:underline">https://flightitude.com</a>.
+              Welcome to JetWithFly.com ("we," "our," or "us"), accessible at{" "}
+              <a href="https://jetwithfly.com" className="text-primary hover:underline">https://jetwithfly.com</a>.
               We are committed to protecting your personal information
               and your right to privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard
               your information when you use our website and flight booking services.
             </p>
             <p className="mt-3">
-              By using Flightitude.com, you agree to the collection and use of information in accordance with this policy.
+              By using JetWithFly.com, you agree to the collection and use of information in accordance with this policy.
               If you do not agree with the terms of this policy, please discontinue use of our site.
             </p>
           </section>
@@ -90,7 +90,7 @@ export function PrivacyPolicyPage() {
             </ul>
             <p className="mt-3">
               To exercise any of these rights, please contact us at{" "}
-              <a href="mailto:support@flightitude.com" className="text-primary hover:underline">support@flightitude.com</a>.
+              <a href="mailto:support@jetwithfly.com" className="text-primary hover:underline">support@jetwithfly.com</a>.
             </p>
           </section>
 
@@ -132,9 +132,9 @@ export function PrivacyPolicyPage() {
             <h2 className="text-xl font-semibold text-foreground mb-3">11. Contact Us</h2>
             <p>If you have any questions about this Privacy Policy, please contact us:</p>
             <ul className="mt-3 space-y-1">
-              <li>Email: <a href="mailto:support@flightitude.com" className="text-primary hover:underline">support@flightitude.com</a></li>
-              <li>Website: <a href="https://flightitude.com" className="text-primary hover:underline">https://flightitude.com</a></li>
-              <li>Phone: <a href="tel:+18882566747" className="text-primary hover:underline">+1 888 256 6747</a></li>
+              <li>Email: <a href="mailto:support@jetwithfly.com" className="text-primary hover:underline">support@jetwithfly.com</a></li>
+              <li>Website: <a href="https://jetwithfly.com" className="text-primary hover:underline">https://jetwithfly.com</a></li>
+              <li>Phone: <a href="tel:+18773717356" className="text-primary hover:underline">+1 877 371 7356</a></li>
               <li>Phone: <a href="tel:+18554909708" className="text-primary hover:underline">+1 855 490 9708</a></li>
             </ul>
           </section>

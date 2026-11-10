@@ -474,7 +474,7 @@ export function BookingPage() {
             <div className="bg-muted p-4 rounded-2xl flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-primary shrink-0 mt-0.5" />
               <p className="text-sm text-muted-foreground leading-relaxed">
-                By submitting this enquiry, you agree that Flightitude.com can store your request and contact details to review the trip and share next steps.
+                By submitting this enquiry, you agree that JetWithFly.com can store your request and contact details to review the trip and share next steps.
               </p>
             </div>
 

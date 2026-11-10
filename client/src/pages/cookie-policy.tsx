@@ -20,7 +20,7 @@ export function CookiePolicyPage() {
 
           <section>
             <h2 className="text-xl font-semibold text-foreground mb-3">2. How We Use Cookies</h2>
-            <p>Flightitude.com uses cookies to:</p>
+            <p>JetWithFly.com uses cookies to:</p>
             <ul className="list-disc list-inside mt-3 space-y-2">
               <li>Keep your session active while you search and book flights.</li>
               <li>Remember your search preferences (origin, destination, dates, passengers) for a seamless experience.</li>
@@ -114,8 +114,8 @@ export function CookiePolicyPage() {
             <h2 className="text-xl font-semibold text-foreground mb-3">8. Contact Us</h2>
             <p>For questions about our use of cookies:</p>
             <ul className="mt-3 space-y-1">
-              <li>Email: <a href="mailto:support@flightitude.com" className="text-primary hover:underline">support@flightitude.com</a></li>
-              <li>Phone: <a href="tel:+18882566747" className="text-primary hover:underline">+1 888 256 6747</a></li>
+              <li>Email: <a href="mailto:support@jetwithfly.com" className="text-primary hover:underline">support@jetwithfly.com</a></li>
+              <li>Phone: <a href="tel:+18773717356" className="text-primary hover:underline">+1 877 371 7356</a></li>
               <li>Phone: <a href="tel:+18554909708" className="text-primary hover:underline">+1 855 490 9708</a></li>
             </ul>
           </section>

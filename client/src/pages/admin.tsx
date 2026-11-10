@@ -78,7 +78,7 @@ export function AdminPage() {
             </Link>
             <Plane className="w-6 h-6 text-blue-400 animate-pulse" />
             <span className="font-extrabold text-lg tracking-tight bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">
-              Flightitude.com ADMIN
+              JetWithFly.com ADMIN
             </span>
           </div>
           <div className="flex items-center gap-2">

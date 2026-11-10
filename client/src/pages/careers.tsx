@@ -22,7 +22,7 @@ const openings = [
     location: "Remote (US / International)",
     type: "Full-Time",
     description:
-      "Help our travelers resolve booking issues, cancellations, and general inquiries. You're the voice of Flightitude.com.",
+      "Help our travelers resolve booking issues, cancellations, and general inquiries. You're the voice of JetWithFly.com.",
     requirements: [
       "2+ years in customer support (travel industry a plus)",
       "Excellent written and verbal communication",
@@ -73,7 +73,7 @@ export function CareersPage() {
       {/* Hero */}
       <section className="bg-gradient-to-br from-primary/5 to-primary/10 py-20 px-4 text-center">
         <h1 className="text-4xl sm:text-5xl font-extrabold text-foreground mb-4">
-          Join the Flightitude.com Team
+          Join the JetWithFly.com Team
         </h1>
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
           We're building the future of flight search. If you're passionate about travel, technology,
@@ -84,7 +84,7 @@ export function CareersPage() {
       {/* Benefits */}
       <section className="py-16 border-b px-4">
         <div className="max-w-5xl mx-auto sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold text-foreground text-center mb-10">Why Flightitude.com?</h2>
+          <h2 className="text-2xl font-bold text-foreground text-center mb-10">Why JetWithFly.com?</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {benefits.map(({ icon: Icon, title, desc }) => (
               <div key={title} className="bg-white border rounded-2xl p-6 shadow-sm text-center">
@@ -122,7 +122,7 @@ export function CareersPage() {
                     </div>
                   </div>
                   <a
-                    href={`mailto:support@flightitude.com?subject=Application: ${encodeURIComponent(title)}`}
+                    href={`mailto:support@jetwithfly.com?subject=Application: ${encodeURIComponent(title)}`}
                     className="bg-primary text-white text-sm font-semibold px-5 py-2 rounded-full hover:bg-primary/90 transition-colors whitespace-nowrap"
                   >
                     Apply Now
@@ -149,7 +149,7 @@ export function CareersPage() {
               We're always looking for talented people. Send us your resume and we'll keep it on file.
             </p>
             <a
-              href="mailto:support@flightitude.com?subject=General Application"
+              href="mailto:support@jetwithfly.com?subject=General Application"
               className="inline-block bg-primary text-white font-semibold text-sm px-6 py-2.5 rounded-full hover:bg-primary/90 transition-colors"
             >
               Send Open Application
