@@ -42,7 +42,15 @@ export function CompanyPhone({ className = "", asLink = true, formatted = true, 
 
   if (asLink) {
     return (
-      <a href={`tel:${rawNumber}`} className={className}>
+      <a
+        href={`tel:${rawNumber}`}
+        onClick={() => {
+          if (typeof window !== "undefined" && typeof (window as any).gtag_report_conversion === "function") {
+            (window as any).gtag_report_conversion(`tel:${rawNumber}`);
+          }
+        }}
+        className={className}
+      >
         {renderContent()}
       </a>
     );

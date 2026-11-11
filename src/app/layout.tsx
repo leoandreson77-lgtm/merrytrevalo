@@ -159,7 +159,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="en" className={inter.variable}>
       <head>
-        {/* ── Google Tag Manager (GTM) ── */}
+        {/* ── Google Tag Manager & Google Ads Tag (AW-18565196693) ── */}
         <script async src={`https://www.googletagmanager.com/gtm.js?id=${gtmId}`} />
         <script
           dangerouslySetInnerHTML={{
@@ -167,6 +167,27 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
+              gtag('config', '${gtmId}');
+              gtag('config', 'AW-18565196693');
+
+              function gtag_report_conversion(url) {
+                var callback = function () {
+                  if (typeof(url) != 'undefined') {
+                    window.location = url;
+                  }
+                };
+                if (typeof window.gtag === 'function') {
+                  window.gtag('event', 'conversion', {
+                    'send_to': 'AW-18565196693/6zgtCO6jq7YdEJXXyZRF',
+                    'event_callback': callback
+                  });
+                } else if (callback) {
+                  callback();
+                }
+                return false;
+              }
+              window.gtag_report_conversion = gtag_report_conversion;
+
               (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
               new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
               j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
@@ -181,7 +202,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <script dangerouslySetInnerHTML={{ __html: customHeadScript }} />
         )}
 
-        {/* ── CRM call click logging (Pure backend tracking without external tags) ── */}
+        {/* ── CRM call click logging & Google Ads Call Conversion Dispatcher ── */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -191,6 +212,20 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                   while (target && target !== document) {
                     if (target.tagName === 'A' && target.href && target.href.indexOf('tel:') === 0) {
                       try {
+                        // Dispatch Google Ads Click to Call Conversion
+                        if (typeof window.gtag === 'function') {
+                          window.gtag('event', 'conversion', {
+                            'send_to': 'AW-18565196693/6zgtCO6jq7YdEJXXyZRF'
+                          });
+                        }
+                        if (window.dataLayer) {
+                          window.dataLayer.push({
+                            event: 'phone_call_click',
+                            phone_number: target.href.replace('tel:', ''),
+                            page_path: window.location.pathname
+                          });
+                        }
+
                         var urlParams = new URLSearchParams(window.location.search);
                         fetch('/api/calls/click', {
                           method: 'POST',

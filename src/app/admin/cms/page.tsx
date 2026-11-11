@@ -1024,7 +1024,7 @@ export default function CMSSettingsPage() {
             <StyledInput
               value={cms.googleTagManagerId || ""}
               onChange={(v) => set("googleTagManagerId", v)}
-              placeholder="GTM-M35FZFH3"
+              placeholder="GTM-KD3ZBSTT"
               icon={Globe}
             />
           </Field>
@@ -1032,7 +1032,7 @@ export default function CMSSettingsPage() {
             <StyledInput
               value={cms.googleAdsId || ""}
               onChange={(v) => set("googleAdsId", v)}
-              placeholder="AW-18305273332"
+              placeholder="AW-18565196693"
               icon={Globe}
             />
           </Field>
@@ -1040,7 +1040,7 @@ export default function CMSSettingsPage() {
             <StyledInput
               value={cms.googleAdsSendTo || ""}
               onChange={(v) => set("googleAdsSendTo", v)}
-              placeholder="AW-18305273332/2hW1COCSudEcEPSb0ZhE"
+              placeholder="AW-18565196693/6zgtCO6jq7YdEJXXyZRF"
               icon={Globe}
             />
           </Field>
@@ -1048,7 +1048,7 @@ export default function CMSSettingsPage() {
             <StyledInput
               value={cms.googleTagId || ""}
               onChange={(v) => set("googleTagId", v)}
-              placeholder="AW-18305273332"
+              placeholder="AW-18565196693"
               icon={Globe}
             />
           </Field>

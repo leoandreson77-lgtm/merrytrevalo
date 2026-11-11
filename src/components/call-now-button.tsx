@@ -30,6 +30,11 @@ export function CallNowButton() {
         <span className="absolute inset-0 rounded-full bg-green-400 opacity-40 animate-ping" />
         <a
           href={`tel:${callNumber}`}
+          onClick={() => {
+            if (typeof window !== "undefined" && typeof (window as any).gtag_report_conversion === "function") {
+              (window as any).gtag_report_conversion(`tel:${callNumber}`);
+            }
+          }}
           title={`${callLabel}: ${callNumber}`}
           className="relative flex items-center gap-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-full pl-4 pr-5 py-3 shadow-2xl hover:shadow-green-500/40 hover:scale-105 transition-all duration-200 font-bold text-sm border-2 border-white"
         >
