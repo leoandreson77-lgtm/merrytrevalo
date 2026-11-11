@@ -37,28 +37,28 @@ const FALLBACK_PAGES: LandingPageCard[] = [
     title: "Cheap Flights to Miami",
     slug: "flights-to-miami",
     description: "Save up to $150 on roundtrip tickets to Miami Beach with 24/7 phone assistance.",
-    callPhone: "+18773717356",
+    callPhone: "+18555106415",
   },
   {
     _id: "fb-2",
     title: "Fly to London Heathrow",
     slug: "flights-to-london",
     description: "Exclusive international deals on nonstop flights to London.",
-    callPhone: "+18773717356",
+    callPhone: "+18555106415",
   },
   {
     _id: "fb-3",
     title: "New York Nonstop Deals",
     slug: "flights-to-new-york",
     description: "Book flights to JFK, LGA, & EWR with extra baggage discount.",
-    callPhone: "+18773717356",
+    callPhone: "+18555106415",
   },
   {
     _id: "fb-4",
     title: "Los Angeles Getaways",
     slug: "flights-to-los-angeles",
     description: "Direct flights to LAX with instant phone reservations.",
-    callPhone: "+18773717356",
+    callPhone: "+18555106415",
   },
 ];
 
@@ -133,7 +133,7 @@ export function LandingPagesSection() {
             {displayPages.map((page, i) => {
               const gradient = CARD_GRADIENTS[i % CARD_GRADIENTS.length];
               const icon = CARD_ICONS[i % CARD_ICONS.length];
-              const callPhone = page.callPhone || "+18773717356";
+              const callPhone = page.callPhone || "+18555106415";
               const callDisplay = callPhone
                 .replace(/^\+1/, "+1 ")
                 .replace(/(\d{3})(\d{3})(\d{4})$/, "$1 $2 $3");

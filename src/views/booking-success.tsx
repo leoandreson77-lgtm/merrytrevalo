@@ -203,9 +203,9 @@ export function BookingSuccessPage() {
             </h3>
             <p className="text-emerald-800 text-sm mb-4">Our ticketing Desk is available 24/7 for instant assistance.</p>
             <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
-              <a href="tel:+18773717356" className="text-center bg-emerald-600 text-white px-6 py-3 rounded-xl shadow-md hover:bg-emerald-700 transition-all">
+              <a href="tel:+18555106415" className="text-center bg-emerald-600 text-white px-6 py-3 rounded-xl shadow-md hover:bg-emerald-700 transition-all">
                 <p className="text-xs uppercase font-bold text-emerald-100">Call Live Agent</p>
-                <p className="text-xl font-black">+1 (877) 371-7356</p>
+                <p className="text-xl font-black">+1 (855) 510-6415</p>
               </a>
               <div className="hidden sm:block w-px h-12 bg-emerald-300"></div>
               <div className="text-center">

@@ -13,11 +13,11 @@ export const siteConfig = {
   tagline: "Compare & Book Cheap Flights Across 500+ Airlines",
   url: sanitizeValue(process.env.NEXT_PUBLIC_SITE_URL, "https://jetwithfly.com"),
   supportEmail: sanitizeValue(process.env.NEXT_PUBLIC_SUPPORT_EMAIL || process.env.EMAIL_USER, "support@jetwithfly.com"),
-  phone: sanitizeValue(process.env.NEXT_PUBLIC_COMPANY_PHONE, "+1 877 371 7356"),
-  formattedPhone: "+1 (877) 371-7356",
+  phone: sanitizeValue(process.env.NEXT_PUBLIC_COMPANY_PHONE, "+1 855 510 6415"),
+  formattedPhone: "+1 (855) 510-6415",
   address: "United States",
   description:
-    "Compare and book cheap flights from 500+ airlines with JetWithFly. Find lowest airfare deals, last-minute flights, and exclusive travel offers. Call +1 877 371 7356 for best unpublished rates.",
+    "Compare and book cheap flights from 500+ airlines with JetWithFly. Find lowest airfare deals, last-minute flights, and exclusive travel offers. Call +1 855 510 6415 for best unpublished rates.",
   keywords: [
     "cheap flights",
     "book airline tickets",

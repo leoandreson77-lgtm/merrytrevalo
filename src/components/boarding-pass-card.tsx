@@ -30,7 +30,7 @@ export function BoardingPassCard({
   seat,
   gate,
   priceOff,
-  callPhone = "+18773717356",
+  callPhone = "+18555106415",
   isStatic = false,
   holeBg = "#f5f7fa",
 }: BoardingPassCardProps) {

@@ -213,7 +213,7 @@ export async function GET() {
       siteName: getDynamicEnv("NEXT_PUBLIC_SITE_NAME", "JetWithFly"),
       brandName: getDynamicEnv("NEXT_PUBLIC_BRAND_NAME", "JetWithFly Flights"),
       siteUrl: getDynamicEnv("NEXT_PUBLIC_SITE_URL", "https://jetwithfly.com"),
-      companyPhone: getDynamicEnv("NEXT_PUBLIC_COMPANY_PHONE", "+1 877 371 7356"),
+      companyPhone: getDynamicEnv("NEXT_PUBLIC_COMPANY_PHONE", "+1 855 510 6415"),
       supportEmail: getDynamicEnv("NEXT_PUBLIC_SUPPORT_EMAIL", "support@jetwithfly.com"),
 
       // 6. Flight Search Engine & APIs

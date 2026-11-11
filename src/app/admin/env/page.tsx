@@ -101,7 +101,7 @@ export default function AdminEnvConfigPage() {
     siteName: "JetWithFly",
     brandName: "JetWithFly Flights",
     siteUrl: "https://jetwithfly.com",
-    companyPhone: "+1 877 371 7356",
+    companyPhone: "+1 855 510 6415",
     supportEmail: "support@jetwithfly.com",
 
     // 6. External Flight APIs
@@ -455,7 +455,7 @@ export default function AdminEnvConfigPage() {
       `NEXT_PUBLIC_SITE_NAME="${config.siteName || "JetWithFly"}"`,
       `NEXT_PUBLIC_BRAND_NAME="${config.brandName || "JetWithFly Flights"}"`,
       `NEXT_PUBLIC_SITE_URL="${config.siteUrl || "https://jetwithfly.com"}"`,
-      `NEXT_PUBLIC_COMPANY_PHONE="${config.companyPhone || "+1 877 371 7356"}"`,
+      `NEXT_PUBLIC_COMPANY_PHONE="${config.companyPhone || "+1 855 510 6415"}"`,
       `NEXT_PUBLIC_SUPPORT_EMAIL="${config.supportEmail || "support@jetwithfly.com"}"`,
       `SUPPORT_EMAIL="${config.supportEmail || "support@jetwithfly.com"}"`,
       "",
@@ -1336,7 +1336,7 @@ export default function AdminEnvConfigPage() {
                 id="companyPhone"
                 value={config.companyPhone}
                 onChange={e => handleChange("companyPhone", e.target.value)}
-                placeholder="+1 877 371 7356"
+                placeholder="+1 855 510 6415"
                 className="mt-1.5 font-bold text-emerald-600"
               />
               <p className="text-[11px] text-slate-400 mt-1">Appears on Call Desk banners, boarding passes, and receipts.</p>

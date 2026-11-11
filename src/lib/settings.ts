@@ -23,9 +23,9 @@ export async function getGlobalCallNumber(landingPageSlug?: string): Promise<str
     if (activeTfn?.number) return activeTfn.number;
 
     // 4. Default fallback
-    return process.env.NEXT_PUBLIC_COMPANY_PHONE || "+18773717356";
+    return process.env.NEXT_PUBLIC_COMPANY_PHONE || "+18555106415";
   } catch (err) {
     console.error("Error resolving global call number:", err);
-    return process.env.NEXT_PUBLIC_COMPANY_PHONE || "+18773717356";
+    return process.env.NEXT_PUBLIC_COMPANY_PHONE || "+18555106415";
   }
 }

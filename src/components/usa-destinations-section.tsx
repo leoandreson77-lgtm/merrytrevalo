@@ -295,11 +295,11 @@ export function UsaDestinationsSection() {
               <div className="p-4 bg-blue-50 dark:bg-blue-950/50 border border-blue-200 dark:border-blue-800 rounded-2xl space-y-2">
                 <p className="text-xs font-bold text-blue-700 dark:text-blue-300">Need Immediate Booking Confirmation?</p>
                 <a
-                  href="tel:+18773717356"
+                  href="tel:+18555106415"
                   className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-black text-base px-6 py-3 rounded-xl shadow-lg shadow-green-600/30 transition-all"
                 >
                   <Phone className="w-5 h-5" />
-                  Call Live Desk: +1 (877) 371-7356
+                  Call Live Desk: +1 (855) 510-6415
                 </a>
               </div>
               <Button
