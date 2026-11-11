@@ -29,19 +29,47 @@ export async function getSiteEmailConfig() {
     // fallback to env
   }
 
-  const siteName = siteConfig.name;
-  const brandName = siteConfig.brandName;
-  const siteUrl = siteConfig.url;
-  const phone = siteConfig.phone;
+  // Also read .env on disk if process.env.EMAIL_PASS is empty (for standalone or local dev processes)
+  let diskEnv: Record<string, string> = {};
+  if (!process.env.EMAIL_PASS && !dbConfig?.emailPass) {
+    try {
+      const fs = await import("fs");
+      const path = await import("path");
+      const envPath = path.join(process.cwd(), ".env");
+      if (fs.existsSync(envPath)) {
+        const content = fs.readFileSync(envPath, "utf-8");
+        for (const line of content.split("\n")) {
+          const trimmed = line.trim();
+          if (!trimmed || trimmed.startsWith("#")) continue;
+          const eq = trimmed.indexOf("=");
+          if (eq > 0) {
+            let val = trimmed.slice(eq + 1).trim();
+            if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
+              val = val.slice(1, -1);
+            }
+            diskEnv[trimmed.slice(0, eq).trim()] = val;
+          }
+        }
+      }
+    } catch {}
+  }
 
-  const user = dbConfig?.emailUser || process.env.EMAIL_USER || EMAIL_USER;
-  const pass = (dbConfig?.emailPass && dbConfig.emailPass !== "••••••••••••") ? dbConfig.emailPass : (process.env.EMAIL_PASS || EMAIL_PASS);
-  const host = dbConfig?.emailHost || process.env.EMAIL_HOST || EMAIL_HOST;
-  const port = parseInt(String(dbConfig?.emailPort || process.env.EMAIL_PORT || EMAIL_PORT), 10);
-  const secure = dbConfig?.emailSecure !== undefined ? Boolean(dbConfig.emailSecure) : (process.env.EMAIL_SECURE === "true" || port === 465);
-  const from = dbConfig?.emailFrom || process.env.EMAIL_FROM || `"${brandName}" <${user}>`;
+  const siteName = dbConfig?.siteName || process.env.NEXT_PUBLIC_SITE_NAME || siteConfig.name;
+  const brandName = dbConfig?.brandName || process.env.NEXT_PUBLIC_BRAND_NAME || siteConfig.brandName;
+  const siteUrl = dbConfig?.siteUrl || process.env.NEXT_PUBLIC_SITE_URL || siteConfig.url;
+  const phone = dbConfig?.companyPhone || process.env.NEXT_PUBLIC_COMPANY_PHONE || siteConfig.phone;
 
-  return { siteName, brandName, siteUrl, phone, user, pass, host, port, secure, from };
+  const user = dbConfig?.emailUser || process.env.EMAIL_USER || diskEnv.EMAIL_USER || siteConfig.supportEmail;
+  const rawPass = (dbConfig?.emailPass && dbConfig.emailPass !== "••••••••••••") ? dbConfig.emailPass : (process.env.EMAIL_PASS || diskEnv.EMAIL_PASS || EMAIL_PASS);
+  const pass = rawPass ? String(rawPass).replace(/\s+/g, "") : "";
+  const host = dbConfig?.emailHost || process.env.EMAIL_HOST || diskEnv.EMAIL_HOST || EMAIL_HOST;
+  const port = parseInt(String(dbConfig?.emailPort || process.env.EMAIL_PORT || diskEnv.EMAIL_PORT || EMAIL_PORT), 10);
+  const secure = dbConfig?.emailSecure !== undefined ? Boolean(dbConfig.emailSecure) : (process.env.EMAIL_SECURE === "true" || diskEnv.EMAIL_SECURE === "true" || port === 465);
+  const from = dbConfig?.emailFrom || process.env.EMAIL_FROM || diskEnv.EMAIL_FROM || `"${brandName}" <${user}>`;
+  const emailBookingsTo = dbConfig?.emailBookingsTo || process.env.EMAIL_BOOKINGS_TO || diskEnv.EMAIL_BOOKINGS_TO;
+  const emailOwner = dbConfig?.emailOwner || process.env.EMAIL_OWNER || diskEnv.EMAIL_OWNER;
+
+  return { siteName, brandName, siteUrl, phone, user, pass, host, port, secure, from, emailBookingsTo, emailOwner, dbConfig };
 }
 
 function getSiteEmailConfigSync() {
@@ -143,13 +171,17 @@ function parseRecipients(value: any) {
     .filter(Boolean);
 }
 
-function getInternalRecipients() {
-  const { user } = getSiteEmailConfigSync();
+function getInternalRecipients(config?: any) {
+  const user = config?.user || process.env.EMAIL_USER || siteConfig.supportEmail;
+  const bookingsTo = config?.emailBookingsTo || config?.dbConfig?.emailBookingsTo || process.env.EMAIL_BOOKINGS_TO;
+  const owner = config?.emailOwner || config?.dbConfig?.emailOwner || process.env.EMAIL_OWNER;
+  const admin = config?.dbConfig?.adminEmail || process.env.ADMIN_EMAIL;
+
   const candidates = [
     user,
-    ...parseRecipients(process.env.EMAIL_BOOKINGS_TO),
-    ...parseRecipients(process.env.EMAIL_OWNER),
-    ...parseRecipients(process.env.ADMIN_EMAIL),
+    ...parseRecipients(bookingsTo),
+    ...parseRecipients(owner),
+    ...parseRecipients(admin),
   ];
 
   return Array.from(new Set(candidates.filter(Boolean) as string[]));
@@ -514,10 +546,16 @@ export async function sendBookingConfirmation(booking: any, flight: any) {
       currency: "USD",
     }).format((safeFlight.price || 0) / 100);
 
-    const ownerRecipients = getInternalRecipients();
+    const config = await getSiteEmailConfig();
+
+    if (config?.dbConfig?.disableBookingEmails === true || String(process.env.DISABLE_BOOKING_EMAILS || "").toLowerCase() === "true") {
+      log("⚠️ Email sending disabled by configuration");
+      return { success: false, message: "Email sending disabled by configuration" };
+    }
+
+    const ownerRecipients = getInternalRecipients(config);
     const customerRecipient = hasValue(booking.email) ? booking.email.trim() : "";
     const sendResults = [];
-    const config = await getSiteEmailConfig();
 
     // 1. Send to Owner / Admin
     if (ownerRecipients.length > 0) {
@@ -538,7 +576,7 @@ export async function sendBookingConfirmation(booking: any, flight: any) {
           subject: `🚨 NEW BOOKING: ${booking.passengerName} (${safeFlight.origin} → ${safeFlight.destination}) - ${formattedPrice}`,
           html: ownerHtml,
           text: `NEW FLIGHT BOOKING\n\nPassenger: ${booking.passengerName}\nPhone: ${booking.phone}\nEmail: ${booking.email}\nRoute: ${safeFlight.origin} -> ${safeFlight.destination}\nPrice: ${formattedPrice}`,
-        });
+        }, config);
         sendResults.push({ recipient: "owner", success: true, messageId: ownerInfo.messageId });
       } catch (ownerError: any) {
         sendResults.push({ recipient: "owner", success: false, message: ownerError.message });
@@ -564,7 +602,7 @@ export async function sendBookingConfirmation(booking: any, flight: any) {
           subject: `✈️ Booking Received: ${safeFlight.origin} to ${safeFlight.destination} (${booking.passengerName})`,
           html: customerHtml,
           text: `Booking Received\n\nDear ${booking.passengerName},\nYour flight from ${safeFlight.origin} to ${safeFlight.destination} is being processed.\nSupport: ${config.phone}`,
-        });
+        }, config);
         sendResults.push({ recipient: "customer", success: true, messageId: customerInfo.messageId });
       } catch (customerError: any) {
         sendResults.push({ recipient: "customer", success: false, message: customerError.message });
