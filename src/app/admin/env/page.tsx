@@ -32,6 +32,8 @@ import {
   FileText,
   ChevronDown,
   ChevronUp,
+  BookOpen,
+  HelpCircle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -64,6 +66,7 @@ export default function AdminEnvConfigPage() {
   const [showNextAuthSecret, setShowNextAuthSecret] = useState(false);
   const [copiedEnv, setCopiedEnv] = useState(false);
   const [showRawEnv, setShowRawEnv] = useState(false);
+  const [showGuide, setShowGuide] = useState(false);
 
   // Main Form State
   const [config, setConfig] = useState({
@@ -302,10 +305,18 @@ export default function AdminEnvConfigPage() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Failed to save configuration");
 
-      toast({
-        title: "✅ Configuration Saved",
-        description: `Saved successfully! ${validCustomVars.length} custom variable(s) synced to .env file and database.`,
-      });
+      if (data.dbSaved === false) {
+        toast({
+          title: "⚠️ Saved Locally (Database Sync Pending)",
+          description: data.message,
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "✅ Configuration Saved",
+          description: data.message || `Saved successfully to .env and database! ${validCustomVars.length} custom variable(s) synced.`,
+        });
+      }
     } catch (err: any) {
       toast({
         title: "Save Failed",
@@ -544,6 +555,18 @@ export default function AdminEnvConfigPage() {
           <Button
             type="button"
             variant="outline"
+            onClick={() => setShowGuide(!showGuide)}
+            className={`flex items-center gap-2 text-xs font-bold border-blue-300 dark:border-blue-800 ${
+              showGuide ? "bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300" : "text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950"
+            }`}
+          >
+            <BookOpen className="w-4 h-4" />
+            <span>{showGuide ? "Hide Format Guide" : "📖 Format Guide & Examples"}</span>
+          </Button>
+
+          <Button
+            type="button"
+            variant="outline"
             onClick={handleCopyEnv}
             className="flex items-center gap-2 text-xs font-bold border-slate-300 dark:border-slate-700"
           >
@@ -561,6 +584,115 @@ export default function AdminEnvConfigPage() {
           </Button>
         </div>
       </div>
+
+      {/* ── INTERACTIVE FORMAT GUIDE & EXAMPLES DRAWER ── */}
+      {showGuide && (
+        <Card className="border-blue-300 dark:border-blue-800 bg-gradient-to-r from-blue-50/70 via-indigo-50/50 to-slate-50 dark:from-blue-950/40 dark:via-indigo-950/30 dark:to-slate-900 shadow-md animate-in fade-in duration-200">
+          <CardHeader className="pb-3 border-b border-blue-200/60 dark:border-blue-900/40">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2.5">
+                <div className="p-2 bg-blue-600 text-white rounded-lg">
+                  <BookOpen className="w-5 h-5" />
+                </div>
+                <div>
+                  <CardTitle className="text-base font-black text-slate-900 dark:text-white">
+                    📖 Configuration Format & Examples Guide (Kaise Add Karein)
+                  </CardTitle>
+                  <CardDescription className="text-xs">
+                    Quick reference for correct formats, live values, and common syntax pitfalls.
+                  </CardDescription>
+                </div>
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setShowGuide(false)}
+                className="text-xs text-slate-500 hover:text-slate-800"
+              >
+                Close Guide ✕
+              </Button>
+            </div>
+          </CardHeader>
+          <CardContent className="p-5 space-y-4 text-xs">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {/* Card 1: MongoDB Format */}
+              <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-2">
+                <div className="flex items-center gap-2 font-black text-blue-600 dark:text-blue-400">
+                  <Database className="w-4 h-4" />
+                  <span>1. MongoDB URI Format</span>
+                </div>
+                <p className="text-slate-600 dark:text-slate-400 text-[11px] leading-relaxed">
+                  Atlas gives <code>mongodb+srv://&lt;username&gt;:&lt;password&gt;@cluster0...</code>. <strong>Replace the entire &lt;password&gt;</strong> (including brackets!).
+                </p>
+                <div className="p-2.5 rounded bg-slate-50 dark:bg-slate-950 font-mono text-[11px] border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 break-all">
+                  <span className="text-emerald-600 font-bold">✓ SAHI:</span><br />
+                  mongodb+srv://leoandreson77_db_user:Sameer123@cluster0.20c8rgm.mongodb.net/jetwithfly?retryWrites=true&w=majority
+                </div>
+                <div className="p-2 rounded bg-red-50 dark:bg-red-950/40 font-mono text-[11px] text-red-600 border border-red-200 dark:border-red-900">
+                  <span className="font-bold">✗ GALAT:</span> :&lt;Sameer123&gt;@ (Do NOT keep brackets!)
+                </div>
+              </div>
+
+              {/* Card 2: Email SMTP Format */}
+              <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-2">
+                <div className="flex items-center gap-2 font-black text-emerald-600 dark:text-emerald-400">
+                  <Mail className="w-4 h-4" />
+                  <span>2. SMTP Email Formats</span>
+                </div>
+                <div className="space-y-1.5 text-[11px] text-slate-600 dark:text-slate-400">
+                  <p><strong>🔴 Gmail / Google:</strong></p>
+                  <ul className="list-disc pl-4 space-y-0.5">
+                    <li>Host: <code>smtp.gmail.com</code> | Port: <code>587</code></li>
+                    <li>SSL Checkbox: <strong>Unchecked</strong></li>
+                    <li>Pass: 16-character App Password (e.g. <code>onzgmyhxlirwxces</code>)</li>
+                  </ul>
+                  <p className="pt-1"><strong>🟣 Hostinger / GoDaddy:</strong></p>
+                  <ul className="list-disc pl-4 space-y-0.5">
+                    <li>Host: <code>smtp.hostinger.com</code> | Port: <code>465</code></li>
+                    <li>SSL Checkbox: <strong>CHECKED</strong></li>
+                    <li>Pass: Webmail Mailbox Password</li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Card 3: Custom Variables */}
+              <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-2">
+                <div className="flex items-center gap-2 font-black text-purple-600 dark:text-purple-400">
+                  <Key className="w-4 h-4" />
+                  <span>3. Custom Dynamic Variables</span>
+                </div>
+                <p className="text-slate-600 dark:text-slate-400 text-[11px] leading-relaxed">
+                  Keys are automatically formatted as UPPERCASE alphanumeric with underscores.
+                </p>
+                <div className="space-y-1.5 font-mono text-[11px]">
+                  <div className="p-1.5 rounded bg-slate-50 dark:bg-slate-950 border">
+                    <span className="text-blue-600 font-bold">KEY:</span> STRIPE_SECRET_KEY<br />
+                    <span className="text-slate-400">VAL:</span> sk_live_51M9xxx...
+                  </div>
+                  <div className="p-1.5 rounded bg-slate-50 dark:bg-slate-950 border">
+                    <span className="text-blue-600 font-bold">KEY:</span> CRM_WEBHOOK_URL<br />
+                    <span className="text-slate-400">VAL:</span> https://crm.company.com/webhook
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="p-3 rounded-xl bg-blue-100/70 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-900 text-slate-800 dark:text-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <span className="text-xs">
+                💡 <strong>Important Note on Saving:</strong> After filling in or changing values, remember to click the blue <strong>&quot;Save Configuration&quot;</strong> button at top-right or bottom-right. The &quot;Test&quot; buttons only verify connections without permanently saving.
+              </span>
+              <Button
+                size="sm"
+                onClick={handleSave}
+                disabled={saving}
+                className="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shrink-0 self-start sm:self-auto"
+              >
+                {saving ? "Saving..." : "Save Now"}
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* ── SECTION 1: DATABASE CONFIGURATION (MONGODB) ── */}
       <Card className="border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">

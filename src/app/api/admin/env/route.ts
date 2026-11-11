@@ -456,6 +456,8 @@ export async function POST(request: Request) {
     updateEnvFile(envUpdates, sanitizedCustomVariables);
 
     // Save configuration into MongoDB CMSConfig collection
+    let dbSaved = false;
+    let dbErrorMsg = "";
     try {
       await connectToDatabase();
       await CMSConfig.findOneAndUpdate(
@@ -463,13 +465,18 @@ export async function POST(request: Request) {
         { $set: { value: body, updatedAt: new Date() } },
         { upsert: true, new: true }
       );
-    } catch (dbErr) {
+      dbSaved = true;
+    } catch (dbErr: any) {
+      dbErrorMsg = dbErr.message || "Failed to connect to database";
       console.warn("Could not save env_settings to CMSConfig collection:", dbErr);
     }
 
     return NextResponse.json({
       success: true,
-      message: "All environment configurations and custom variables saved successfully!",
+      dbSaved,
+      message: dbSaved
+        ? "All environment configurations and custom variables saved to .env and database successfully!"
+        : `Saved to .env file on disk, but database sync failed (${dbErrorMsg}). Please check MongoDB URI.`,
       customVariablesCount: sanitizedCustomVariables.length,
     });
   } catch (error: any) {
