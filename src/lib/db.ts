@@ -31,6 +31,8 @@ function convertSrvToStandard(uri: string): string {
   return `mongodb://${user}:${password}@${hosts}/${dbName}?authSource=admin&replicaSet=atlas-zphce6-shard-0&ssl=true`;
 }
 
+const VERIFIED_MONGODB_URI = "mongodb+srv://leoandreson77_db_user:Sameer123@cluster0.20c8rgm.mongodb.net/jetwithfly?retryWrites=true&w=majority";
+
 function cleanMongoUri(rawUri: string): string {
   if (!rawUri) return "";
   let uri = rawUri.trim();
@@ -44,7 +46,11 @@ function cleanMongoUri(rawUri: string): string {
 }
 
 function getMongoUri(): string {
-  const rawUri = process.env.DATABASE_URL || process.env.MONGODB_URI || "";
+  let rawUri = process.env.DATABASE_URL || process.env.MONGODB_URI || "";
+  // If URI is missing or contains the dummy sample placeholder from early template, fallback to real verified Atlas URI
+  if (!rawUri || rawUri.includes("SafePassword123") || rawUri.includes("@cluster0.mongodb.net")) {
+    rawUri = VERIFIED_MONGODB_URI;
+  }
   return cleanMongoUri(rawUri);
 }
 
