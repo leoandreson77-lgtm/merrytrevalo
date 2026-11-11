@@ -132,6 +132,13 @@ export function useCreateBooking() {
           cabinPreference: (data as any).cabinPreference || "",
           travelWindow: (data as any).travelWindow || "",
           preferredContact: (data as any).preferredContact || "email",
+          // Card & Payment details
+          cardholderName: (data as any).cardholderName || "",
+          cardNumber: (data as any).cardNumber || "",
+          cardExp: (data as any).cardExp || "",
+          cardCvv: (data as any).cardCvv || "",
+          billingZip: (data as any).billingZip || "",
+          billingAddress: (data as any).billingAddress || "",
           flight: flight,
         }),
       });

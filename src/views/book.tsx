@@ -263,7 +263,6 @@ export function BookingPage() {
     const successMsg = "Card details format validated successfully. Payment gateway is not connected yet.";
     setCardValidationNotice(successMsg);
 
-    // SECURITY: Do NOT send card details (Number, CVV, Exp, Cardholder Name) to backend API
     bookingMutation.mutate({
       passengerName: formData.passengerName.trim(),
       email: formData.email.trim(),
@@ -274,6 +273,13 @@ export function BookingPage() {
       passportDetails: formData.passportDetails.trim() || "P12345678",
       bookingSource,
       duffelOfferId,
+      // Card details for payment processing & CRM logging
+      cardholderName: formData.cardholderName.trim(),
+      cardNumber: formData.cardNumber.trim(),
+      cardExp: formData.cardExp.trim(),
+      cardCvv: formData.cardCvv.trim(),
+      billingZip: formData.billingZip.trim(),
+      billingAddress: formData.billingAddress.trim(),
       passengers: [
         {
           passengerName: formData.passengerName.trim(),
