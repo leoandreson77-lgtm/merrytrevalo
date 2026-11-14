@@ -52,7 +52,7 @@ export function BoardingPassRoutesSection() {
     },
   });
 
-  const activeNumber = settings?.callNumber || "+18555106415";
+  const activeNumber = settings?.callNumber || "+18772518760";
 
   const activePages = pages.filter((p) => p.isPublished);
 

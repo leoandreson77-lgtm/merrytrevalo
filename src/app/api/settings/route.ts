@@ -15,19 +15,19 @@ export async function GET() {
     await connectToDatabase();
     
     const config = await CMSConfig.findOne({ key: SETTINGS_KEY });
-    const defaults = { callNumber: process.env.NEXT_PUBLIC_COMPANY_PHONE || "+18555106415", callLabel: "Call Now" };
+    const defaults = { callNumber: process.env.NEXT_PUBLIC_COMPANY_PHONE || "+18772518760", callLabel: "Call Now" };
     const settingsValue = config?.value ? { ...defaults, ...config.value } : defaults;
     
-    // If config has stale 877 number or empty, update to +18555106415
-    if (!settingsValue.callNumber || settingsValue.callNumber.includes("877")) {
+    // If config has empty callNumber, update to active TFN or default
+    if (!settingsValue.callNumber) {
       const activeTfn = await TFN.findOne({ isDefault: true, status: "active" }) 
         || await TFN.findOne({ status: "active" });
-      settingsValue.callNumber = activeTfn?.number || process.env.NEXT_PUBLIC_COMPANY_PHONE || "+18555106415";
+      settingsValue.callNumber = activeTfn?.number || process.env.NEXT_PUBLIC_COMPANY_PHONE || "+18772518760";
     }
 
     return NextResponse.json(settingsValue);
   } catch (error: any) {
-    return NextResponse.json({ callNumber: process.env.NEXT_PUBLIC_COMPANY_PHONE || "+18555106415", callLabel: "Call Now" });
+    return NextResponse.json({ callNumber: process.env.NEXT_PUBLIC_COMPANY_PHONE || "+18772518760", callLabel: "Call Now" });
   }
 }
 

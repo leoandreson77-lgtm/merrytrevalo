@@ -200,7 +200,7 @@ function EditLandingPageDialog({ isOpen, onOpenChange, editingPage, onSave, isSa
               <Label className="text-slate-300 flex items-center gap-1">
                 <Phone className="w-3.5 h-3.5 text-green-400" /> Call Phone Number
               </Label>
-              <Input name="callPhone" defaultValue={editingPage.callPhone || ""} placeholder="+18555106415" className="bg-slate-900 border-slate-700 text-white placeholder:text-slate-500" />
+              <Input name="callPhone" defaultValue={editingPage.callPhone || ""} placeholder="+18772518760" className="bg-slate-900 border-slate-700 text-white placeholder:text-slate-500" />
             </div>
           </div>
 
@@ -820,7 +820,7 @@ export default function AdminLandingPagesPage() {
                     </Label>
                     <Input
                       name="callPhone"
-                      placeholder="+18555106415"
+                      placeholder="+18772518760"
                       className="bg-slate-900 border-slate-700 text-white placeholder:text-slate-500"
                     />
                     <p className="text-[11px] text-slate-500">All Call Now buttons use this</p>

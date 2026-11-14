@@ -213,7 +213,7 @@ export async function GET() {
       siteName: getDynamicEnv("NEXT_PUBLIC_SITE_NAME", "MerryTravelo"),
       brandName: getDynamicEnv("NEXT_PUBLIC_BRAND_NAME", "MerryTravelo Flights"),
       siteUrl: getDynamicEnv("NEXT_PUBLIC_SITE_URL", "https://merrytravelo.com"),
-      companyPhone: getDynamicEnv("NEXT_PUBLIC_COMPANY_PHONE", "+1 855 510 6415"),
+      companyPhone: getDynamicEnv("NEXT_PUBLIC_COMPANY_PHONE", "+1 877 251 8760"),
       supportEmail: getDynamicEnv("NEXT_PUBLIC_SUPPORT_EMAIL", "support@merrytravelo.com"),
 
       // 6. Flight Search Engine & APIs

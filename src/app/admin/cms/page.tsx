@@ -117,7 +117,7 @@ const DEFAULT_CMS: CMSData = {
   heroCtaText: "Search Flights Now",
   heroCtaUrl: "/search",
   contactEmail: "support@merrytravelo.com",
-  contactPhone: "+1 855 510 6415",
+  contactPhone: "+1 877 251 8760",
   contactAddress: "United States",
   twitterUrl: "",
   facebookUrl: "",
@@ -743,7 +743,7 @@ export default function CMSSettingsPage() {
             <StyledInput
               value={cms.contactPhone}
               onChange={(v) => set("contactPhone", v)}
-              placeholder="+1 855 510 6415"
+              placeholder="+1 877 251 8760"
               icon={Phone}
             />
           </Field>

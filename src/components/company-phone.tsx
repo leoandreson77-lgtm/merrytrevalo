@@ -26,9 +26,9 @@ export function CompanyPhone({ className = "", asLink = true, formatted = true, 
     staleTime: 60000,
   });
 
-  const rawNumber = (mounted && settings?.callNumber) || process.env.NEXT_PUBLIC_COMPANY_PHONE || "+18555106415";
+  const rawNumber = (mounted && settings?.callNumber) || process.env.NEXT_PUBLIC_COMPANY_PHONE || "+18772518760";
   
-  // Basic formatting: +18555106415 -> +1 855 510 6415
+  // Basic formatting: +18772518760 -> +1 877 251 8760
   const displayVal = formatted 
     ? rawNumber.replace(/^\+1/, "+1 ").replace(/(\d{3})(\d{3})(\d{4})$/, "$1 $2 $3")
     : rawNumber;

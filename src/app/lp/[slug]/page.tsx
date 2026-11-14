@@ -60,7 +60,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const description =
     page?.seoDescription ||
     page?.description ||
-    `Book ${title} at the lowest price. Call +1 855 510 6415 for exclusive deals and instant booking.`;
+    `Book ${title} at the lowest price. Call +1 877 251 8760 for exclusive deals and instant booking.`;
 
   const pageUrl = `${BASE_URL}/lp/${page?.slug || params.slug}`;
 
@@ -141,8 +141,8 @@ export default async function DynamicLandingPage({ params }: PageProps) {
       _id: `fallback-${slug}`,
       title,
       slug: params.slug,
-      description: `Book ${title} at the lowest available phone fare. Call +1 855 510 6415 for unpublished rates and instant seat reservations.`,
-      callPhone: "+18555106415",
+      description: `Book ${title} at the lowest available phone fare. Call +1 877 251 8760 for unpublished rates and instant seat reservations.`,
+      callPhone: "+18772518760",
       isPublished: true,
       blocks: [
         {
@@ -179,7 +179,7 @@ export default async function DynamicLandingPage({ params }: PageProps) {
           type: "faq",
           content: {
             faqs: [
-              { q: `How do I book flights for ${title}?`, a: "Simply call our 24/7 reservation hotline at +1 (855) 510-6415. Our travel specialists will hold your seat at the lowest rate." },
+              { q: `How do I book flights for ${title}?`, a: "Simply call our 24/7 reservation hotline at +1 (877) 251-8760. Our travel specialists will hold your seat at the lowest rate." },
               { q: "Is calling really cheaper than booking online?", a: "Yes! Airlines provide phone-exclusive contract fares that cannot be published on public search engines." },
               { q: "What is the wait time to talk to an agent?", a: "Our average phone wait time is less than 30 seconds." },
             ],
@@ -200,11 +200,11 @@ export default async function DynamicLandingPage({ params }: PageProps) {
     }
   }
 
-  let callPhone = "+1 855 510 6415";
+  let callPhone = "+1 877 251 8760";
   try {
     callPhone = await getGlobalCallNumber(params.slug);
   } catch {
-    callPhone = process.env.NEXT_PUBLIC_COMPANY_PHONE || "+1 855 510 6415";
+    callPhone = process.env.NEXT_PUBLIC_COMPANY_PHONE || "+1 877 251 8760";
   }
   const callPhoneDisplay = callPhone.replace(/^\+1/, "+1 ").replace(/(\d{3})(\d{3})(\d{4})$/, "$1 $2 $3");
   const waLink = `https://wa.me/${callPhone.replace(/[^0-9]/g, "")}`;

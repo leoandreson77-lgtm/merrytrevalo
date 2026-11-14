@@ -256,11 +256,11 @@ export function BookingSuccessPage() {
             <p className="text-emerald-800 text-xs mb-4">Our ticketing desk is available 24/7 to answer questions.</p>
             
             <a
-              href="tel:+18555106415"
+              href="tel:+18772518760"
               className="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-xl font-black text-base shadow-md transition-all"
             >
               <Phone className="w-4 h-4" />
-              <span>Call Live Desk: +1 (855) 510-6415</span>
+              <span>Call Live Desk: +1 (877) 251-8760</span>
             </a>
           </div>
 

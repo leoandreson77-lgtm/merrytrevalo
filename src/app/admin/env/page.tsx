@@ -101,7 +101,7 @@ export default function AdminEnvConfigPage() {
     siteName: "MerryTravelo",
     brandName: "MerryTravelo Flights",
     siteUrl: "https://merrytravelo.com",
-    companyPhone: "+1 855 510 6415",
+    companyPhone: "+1 877 251 8760",
     supportEmail: "support@merrytravelo.com",
 
     // 6. External Flight APIs
@@ -455,7 +455,7 @@ export default function AdminEnvConfigPage() {
       `NEXT_PUBLIC_SITE_NAME="${config.siteName || "MerryTravelo"}"`,
       `NEXT_PUBLIC_BRAND_NAME="${config.brandName || "MerryTravelo Flights"}"`,
       `NEXT_PUBLIC_SITE_URL="${config.siteUrl || "https://merrytravelo.com"}"`,
-      `NEXT_PUBLIC_COMPANY_PHONE="${config.companyPhone || "+1 855 510 6415"}"`,
+      `NEXT_PUBLIC_COMPANY_PHONE="${config.companyPhone || "+1 877 251 8760"}"`,
       `NEXT_PUBLIC_SUPPORT_EMAIL="${config.supportEmail || "support@merrytravelo.com"}"`,
       `SUPPORT_EMAIL="${config.supportEmail || "support@merrytravelo.com"}"`,
       "",
@@ -1336,7 +1336,7 @@ export default function AdminEnvConfigPage() {
                 id="companyPhone"
                 value={config.companyPhone}
                 onChange={e => handleChange("companyPhone", e.target.value)}
-                placeholder="+1 855 510 6415"
+                placeholder="+1 877 251 8760"
                 className="mt-1.5 font-bold text-emerald-600"
               />
               <p className="text-[11px] text-slate-400 mt-1">Appears on Call Desk banners, boarding passes, and receipts.</p>
