@@ -187,7 +187,7 @@ export async function GET() {
       databaseUrl: effectiveDatabaseUrl,
 
       // 2. Auth & Security
-      nextauthUrl: dbEnv.nextauthUrl || fileEnv.NEXTAUTH_URL || process.env.NEXTAUTH_URL || "https://jetwithfly.com",
+      nextauthUrl: dbEnv.nextauthUrl || fileEnv.NEXTAUTH_URL || process.env.NEXTAUTH_URL || "https://merrytravelo.com",
       nextauthSecret: dbEnv.nextauthSecret || fileEnv.NEXTAUTH_SECRET || process.env.NEXTAUTH_SECRET || "",
 
       // 3. SMTP Email
@@ -210,11 +210,11 @@ export async function GET() {
       customHeadScript: getDynamicEnv("CUSTOM_HEAD_SCRIPT") || fileEnv.CUSTOM_HEAD_SCRIPT || "",
 
       // 5. Site Identity & Phone
-      siteName: getDynamicEnv("NEXT_PUBLIC_SITE_NAME", "JetWithFly"),
-      brandName: getDynamicEnv("NEXT_PUBLIC_BRAND_NAME", "JetWithFly Flights"),
-      siteUrl: getDynamicEnv("NEXT_PUBLIC_SITE_URL", "https://jetwithfly.com"),
+      siteName: getDynamicEnv("NEXT_PUBLIC_SITE_NAME", "MerryTravelo"),
+      brandName: getDynamicEnv("NEXT_PUBLIC_BRAND_NAME", "MerryTravelo Flights"),
+      siteUrl: getDynamicEnv("NEXT_PUBLIC_SITE_URL", "https://merrytravelo.com"),
       companyPhone: getDynamicEnv("NEXT_PUBLIC_COMPANY_PHONE", "+1 855 510 6415"),
-      supportEmail: getDynamicEnv("NEXT_PUBLIC_SUPPORT_EMAIL", "support@jetwithfly.com"),
+      supportEmail: getDynamicEnv("NEXT_PUBLIC_SUPPORT_EMAIL", "support@merrytravelo.com"),
 
       // 6. Flight Search Engine & APIs
       duffelToken: fileEnv.DUFFEL_ACCESS_TOKEN || process.env.DUFFEL_ACCESS_TOKEN || "",

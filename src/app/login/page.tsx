@@ -85,7 +85,7 @@ function LoginPageContent() {
       <Card className="w-full max-w-md border-slate-800 bg-slate-950/80 backdrop-blur-md text-white shadow-2xl relative z-10">
         <CardHeader className="text-center pb-2">
           <div className="mx-auto mb-4 flex justify-center">
-            <span className="text-2xl font-black text-white tracking-tight">JetWithFly</span>
+            <span className="text-2xl font-black text-white tracking-tight">MerryTravelo</span>
           </div>
           <CardTitle className="text-2xl font-extrabold tracking-tight">Enterprise Console</CardTitle>
           <CardDescription className="text-slate-400">

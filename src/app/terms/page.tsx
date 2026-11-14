@@ -3,7 +3,7 @@ import { TermsOfServicePage } from "@/views/terms";
 
 export const metadata: Metadata = {
   title: "Terms of Service",
-  description: "Terms and conditions for booking flight tickets and travel services on JetWithFly Flights.",
+  description: "Terms and conditions for booking flight tickets and travel services on MerryTravelo Flights.",
 };
 
 export default function Page() {

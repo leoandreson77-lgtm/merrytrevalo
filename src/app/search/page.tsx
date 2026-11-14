@@ -4,7 +4,7 @@ import { SearchResultsPage } from "@/views/search-results";
 
 export const metadata: Metadata = {
   title: "Search Cheap Flights",
-  description: "Search and compare real-time airline ticket prices across 500+ airlines with JetWithFly Flights.",
+  description: "Search and compare real-time airline ticket prices across 500+ airlines with MerryTravelo Flights.",
 };
 
 export default function SearchPage() {

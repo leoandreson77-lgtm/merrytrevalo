@@ -91,7 +91,7 @@ export async function POST(request: Request) {
 
     // 3. Auto-Greeting Follow Up (Auto greeting templates triggered if first time contact)
     if (firstTimeContact) {
-      const autoGreeting = "Hello! Thanks for contacting JetWithFly Flights travel experts. We've received your request and an agent will follow up with custom flight quotes shortly.";
+      const autoGreeting = "Hello! Thanks for contacting MerryTravelo Flights travel experts. We've received your request and an agent will follow up with custom flight quotes shortly.";
       
       // Save outgoing greeting
       await WhatsApp.create({

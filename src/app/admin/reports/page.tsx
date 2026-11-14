@@ -61,7 +61,7 @@ export default function ReportsPage() {
     doc.text(title, 14, 20);
     doc.setFont("helvetica", "normal");
     doc.setFontSize(10);
-    doc.text(`Generated on: ${new Date().toLocaleDateString()} | JetWithFly Enterprise`, 14, 26);
+    doc.text(`Generated on: ${new Date().toLocaleDateString()} | MerryTravelo Enterprise`, 14, 26);
 
     const headers = Object.keys(dataset[0]);
     const rows = dataset.map((item) => headers.map((key) => String(item[key] ?? "")));

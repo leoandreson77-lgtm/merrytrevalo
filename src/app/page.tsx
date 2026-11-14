@@ -106,7 +106,7 @@ export default function HomePage() {
         style={{ contentVisibility: "auto", containIntrinsicSize: "0 600px" }}
       >
         <div className="text-center mb-16">
-          <h2 className="text-3xl font-bold text-foreground">Why Book With JetWithFly Flights?</h2>
+          <h2 className="text-3xl font-bold text-foreground">Why Book With MerryTravelo Flights?</h2>
           <p className="text-muted-foreground mt-4">
             We make flight discovery and booking simple, seamless, and transparent.
           </p>

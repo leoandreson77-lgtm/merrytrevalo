@@ -176,7 +176,7 @@ export default function AdminBlogPage() {
                   </div>
                   <div className="space-y-1">
                     <Label>Author</Label>
-                    <Input name="author" placeholder="JetWithFly Travel Expert" className="bg-slate-900 border-slate-800" />
+                    <Input name="author" placeholder="MerryTravelo Travel Expert" className="bg-slate-900 border-slate-800" />
                   </div>
                   <div className="space-y-1 col-span-2">
                     <Label>Summary Description</Label>

@@ -187,7 +187,7 @@ export async function POST(request: Request) {
       } else {
         flight = {
           id: flightId,
-          airline: "JetWithFly Airline Partner",
+          airline: "MerryTravelo Airline Partner",
           origin: "JFK",
           destination: "LAX",
           departureTime: new Date().toISOString(),

@@ -38,7 +38,7 @@ export function HomePage() {
       {/* Trust & Features Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
         <div className="text-center mb-16">
-          <h2 className="text-3xl font-bold text-foreground">Why Book With JetWithFly Flights?</h2>
+          <h2 className="text-3xl font-bold text-foreground">Why Book With MerryTravelo Flights?</h2>
           <p className="text-muted-foreground mt-4">We make flight discovery and booking simple, seamless, and transparent.</p>
         </div>
         

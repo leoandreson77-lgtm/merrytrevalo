@@ -75,7 +75,7 @@ export default function AdminEnvConfigPage() {
     databaseUrl: "",
 
     // 2. Auth & Security
-    nextauthUrl: "https://jetwithfly.com",
+    nextauthUrl: "https://merrytravelo.com",
     nextauthSecret: "",
 
     // 3. Email / SMTP
@@ -98,11 +98,11 @@ export default function AdminEnvConfigPage() {
     customHeadScript: "",
 
     // 5. Brand & Phone
-    siteName: "JetWithFly",
-    brandName: "JetWithFly Flights",
-    siteUrl: "https://jetwithfly.com",
+    siteName: "MerryTravelo",
+    brandName: "MerryTravelo Flights",
+    siteUrl: "https://merrytravelo.com",
     companyPhone: "+1 855 510 6415",
-    supportEmail: "support@jetwithfly.com",
+    supportEmail: "support@merrytravelo.com",
 
     // 6. External Flight APIs
     duffelToken: "",
@@ -199,7 +199,7 @@ export default function AdminEnvConfigPage() {
         host = "smtp.hostinger.com";
         port = "465";
         secure = true;
-        guide = "Hostinger Webmail applied (Port 465 SSL). Enter your full email (e.g. support@jetwithfly.com) and mailbox password.";
+        guide = "Hostinger Webmail applied (Port 465 SSL). Enter your full email (e.g. support@merrytravelo.com) and mailbox password.";
         break;
       case "godaddy":
         host = "smtpout.secureserver.net";
@@ -226,7 +226,7 @@ export default function AdminEnvConfigPage() {
         guide = "Namecheap Private Email applied (Port 465 SSL). Enter your full email and password.";
         break;
       case "cpanel":
-        host = "mail.jetwithfly.com";
+        host = "mail.merrytravelo.com";
         port = "465";
         secure = true;
         guide = "Custom cPanel / Webmail applied (Port 465 SSL). Set host to mail.yourdomain.com.";
@@ -448,23 +448,23 @@ export default function AdminEnvConfigPage() {
   const generateRawEnv = (): string => {
     const lines: string[] = [
       "# ==============================================================================",
-      "# JETWITHFLY FLIGHTS - PRODUCTION ENVIRONMENT VARIABLES",
+      "# MERRYTRAVELO FLIGHTS - PRODUCTION ENVIRONMENT VARIABLES",
       "# ==============================================================================",
       "",
       "# 1. Brand Identity & URLs",
-      `NEXT_PUBLIC_SITE_NAME="${config.siteName || "JetWithFly"}"`,
-      `NEXT_PUBLIC_BRAND_NAME="${config.brandName || "JetWithFly Flights"}"`,
-      `NEXT_PUBLIC_SITE_URL="${config.siteUrl || "https://jetwithfly.com"}"`,
+      `NEXT_PUBLIC_SITE_NAME="${config.siteName || "MerryTravelo"}"`,
+      `NEXT_PUBLIC_BRAND_NAME="${config.brandName || "MerryTravelo Flights"}"`,
+      `NEXT_PUBLIC_SITE_URL="${config.siteUrl || "https://merrytravelo.com"}"`,
       `NEXT_PUBLIC_COMPANY_PHONE="${config.companyPhone || "+1 855 510 6415"}"`,
-      `NEXT_PUBLIC_SUPPORT_EMAIL="${config.supportEmail || "support@jetwithfly.com"}"`,
-      `SUPPORT_EMAIL="${config.supportEmail || "support@jetwithfly.com"}"`,
+      `NEXT_PUBLIC_SUPPORT_EMAIL="${config.supportEmail || "support@merrytravelo.com"}"`,
+      `SUPPORT_EMAIL="${config.supportEmail || "support@merrytravelo.com"}"`,
       "",
       "# 2. Database Connection",
       `MONGODB_URI="${config.mongodbUri || ""}"`,
       `DATABASE_URL="${config.databaseUrl || config.mongodbUri || ""}"`,
       "",
       "# 3. Authentication & Security",
-      `NEXTAUTH_URL="${config.nextauthUrl || "https://jetwithfly.com"}"`,
+      `NEXTAUTH_URL="${config.nextauthUrl || "https://merrytravelo.com"}"`,
       `NEXTAUTH_SECRET="${config.nextauthSecret || ""}"`,
       "",
       "# 4. Backend Email & SMTP",
@@ -473,7 +473,7 @@ export default function AdminEnvConfigPage() {
       `EMAIL_SECURE=${config.emailSecure ? "true" : "false"}`,
       `EMAIL_USER="${config.emailUser || ""}"`,
       config.emailPass && config.emailPass !== "••••••••••••" ? `EMAIL_PASS="${config.emailPass}"` : `# EMAIL_PASS="[SAVED_PASSWORD]"`,
-      `EMAIL_FROM="${config.emailFrom || `JetWithFly Flights <${config.emailUser || "support@jetwithfly.com"}>`}"`,
+      `EMAIL_FROM="${config.emailFrom || `MerryTravelo Flights <${config.emailUser || "support@merrytravelo.com"}>`}"`,
       `EMAIL_BOOKINGS_TO="${config.emailBookingsTo || config.emailUser || ""}"`,
       `EMAIL_OWNER="${config.emailOwner || config.emailUser || ""}"`,
       `DISABLE_BOOKING_EMAILS="${config.disableBookingEmails ? "true" : "false"}"`,
@@ -874,7 +874,7 @@ export default function AdminEnvConfigPage() {
                 id="nextauthUrl"
                 value={config.nextauthUrl}
                 onChange={e => handleChange("nextauthUrl", e.target.value)}
-                placeholder="https://jetwithfly.com or http://localhost:3000"
+                placeholder="https://merrytravelo.com or http://localhost:3000"
                 className="mt-1.5 font-medium"
               />
               <p className="text-[11px] text-slate-400 mt-1">Production URL used to validate authentication redirects.</p>
@@ -1038,7 +1038,7 @@ export default function AdminEnvConfigPage() {
             </div>
 
             <div className="mt-3 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-              <span className="font-bold text-slate-900 dark:text-white">💡 Webmail Quick Tip:</span> For <strong>Hostinger</strong> & <strong>GoDaddy</strong>, use your full domain email address (e.g. <code>support@jetwithfly.com</code>) as the username and your standard mailbox password. Port 465 requires SSL to be checked.
+              <span className="font-bold text-slate-900 dark:text-white">💡 Webmail Quick Tip:</span> For <strong>Hostinger</strong> & <strong>GoDaddy</strong>, use your full domain email address (e.g. <code>support@merrytravelo.com</code>) as the username and your standard mailbox password. Port 465 requires SSL to be checked.
             </div>
           </div>
 
@@ -1098,7 +1098,7 @@ export default function AdminEnvConfigPage() {
                 id="emailUser"
                 value={config.emailUser}
                 onChange={e => handleChange("emailUser", e.target.value)}
-                placeholder="support@jetwithfly.com or your-email@gmail.com"
+                placeholder="support@merrytravelo.com or your-email@gmail.com"
                 className="mt-1.5 font-medium"
               />
             </div>
@@ -1145,7 +1145,7 @@ export default function AdminEnvConfigPage() {
                 id="emailBookingsTo"
                 value={config.emailBookingsTo}
                 onChange={e => handleChange("emailBookingsTo", e.target.value)}
-                placeholder="bookings@jetwithfly.com, owner@gmail.com"
+                placeholder="bookings@merrytravelo.com, owner@gmail.com"
                 className="mt-1.5 font-medium"
               />
               <p className="text-[11px] text-slate-400 mt-1">
@@ -1161,7 +1161,7 @@ export default function AdminEnvConfigPage() {
                 id="emailFrom"
                 value={config.emailFrom}
                 onChange={e => handleChange("emailFrom", e.target.value)}
-                placeholder='JetWithFly Flights <support@jetwithfly.com>'
+                placeholder='MerryTravelo Flights <support@merrytravelo.com>'
                 className="mt-1.5 font-medium"
               />
             </div>
@@ -1350,7 +1350,7 @@ export default function AdminEnvConfigPage() {
                 id="supportEmail"
                 value={config.supportEmail}
                 onChange={e => handleChange("supportEmail", e.target.value)}
-                placeholder="support@jetwithfly.com"
+                placeholder="support@merrytravelo.com"
                 className="mt-1.5 font-medium"
               />
             </div>
@@ -1365,7 +1365,7 @@ export default function AdminEnvConfigPage() {
                 id="brandName"
                 value={config.brandName}
                 onChange={e => handleChange("brandName", e.target.value)}
-                placeholder="JetWithFly Flights"
+                placeholder="MerryTravelo Flights"
                 className="mt-1.5 font-medium"
               />
             </div>
@@ -1378,7 +1378,7 @@ export default function AdminEnvConfigPage() {
                 id="siteName"
                 value={config.siteName}
                 onChange={e => handleChange("siteName", e.target.value)}
-                placeholder="JetWithFly"
+                placeholder="MerryTravelo"
                 className="mt-1.5 font-medium"
               />
             </div>
@@ -1391,7 +1391,7 @@ export default function AdminEnvConfigPage() {
                 id="siteUrl"
                 value={config.siteUrl}
                 onChange={e => handleChange("siteUrl", e.target.value)}
-                placeholder="https://jetwithfly.com"
+                placeholder="https://merrytravelo.com"
                 className="mt-1.5 font-medium"
               />
             </div>

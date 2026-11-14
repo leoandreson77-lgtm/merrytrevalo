@@ -99,13 +99,13 @@ interface CMSData {
 }
 
 const DEFAULT_CMS: CMSData = {
-  siteName: "JetWithFly",
+  siteName: "MerryTravelo",
   siteTagline: "Book Cheap Flights Worldwide",
   logoUrl: "",
   faviconUrl: "",
-  metaTitle: "JetWithFly - Book Cheap Flights Worldwide",
-  metaDescription: "Compare cheap flights from over 500 airlines and travel agents worldwide with JetWithFly.",
-  metaKeywords: "delta airlines flights, american airlines flights, delta flights booking, american flights booking, delta flight deals, american airlines flight deals, book delta tickets, book american tickets, cheap flights, airline tickets, travel deals, JetWithFly, jetwithfly.com, book flight tickets, flight booking, flight reservations, airline reservations, airline booking, domestic flights, international flights, last minute flights, same day flight booking, refundable flight tickets, business class flights, first class flights, round trip flights, one way flights, multi city flights, flight booking assistance, airline booking help, travel booking support, flight reservation support, change flight booking, cancel flight booking, flight rebooking, flight itinerary assistance",
+  metaTitle: "MerryTravelo - Book Cheap Flights Worldwide",
+  metaDescription: "Compare cheap flights from over 500 airlines and travel agents worldwide with MerryTravelo.",
+  metaKeywords: "delta airlines flights, american airlines flights, delta flights booking, american flights booking, delta flight deals, american airlines flight deals, book delta tickets, book american tickets, cheap flights, airline tickets, travel deals, MerryTravelo, merrytravelo.com, book flight tickets, flight booking, flight reservations, airline reservations, airline booking, domestic flights, international flights, last minute flights, same day flight booking, refundable flight tickets, business class flights, first class flights, round trip flights, one way flights, multi city flights, flight booking assistance, airline booking help, travel booking support, flight reservation support, change flight booking, cancel flight booking, flight rebooking, flight itinerary assistance",
   ogImageUrl: "",
   announcementEnabled: false,
   announcementText: "🎉 Limited-time deal! Save up to 40% on international flights this week.",
@@ -116,7 +116,7 @@ const DEFAULT_CMS: CMSData = {
   heroBadgeText: "✈️ Best Price Guarantee",
   heroCtaText: "Search Flights Now",
   heroCtaUrl: "/search",
-  contactEmail: "support@jetwithfly.com",
+  contactEmail: "support@merrytravelo.com",
   contactPhone: "+1 855 510 6415",
   contactAddress: "United States",
   twitterUrl: "",
@@ -125,7 +125,7 @@ const DEFAULT_CMS: CMSData = {
   youtubeUrl: "",
   linkedinUrl: "",
   footerTagline: "Your trusted partner for affordable global travel.",
-  footerCopyright: `© ${new Date().getFullYear()} JetWithFly Flights. All rights reserved.`,
+  footerCopyright: `© ${new Date().getFullYear()} MerryTravelo Flights. All rights reserved.`,
   googleTagManagerId: "",
   googleAdsId: "",
   googleAdsSendTo: "",
@@ -461,7 +461,7 @@ export default function CMSSettingsPage() {
             <StyledInput
               value={cms.siteName}
               onChange={(v) => set("siteName", v)}
-              placeholder="JetWithFly"
+              placeholder="MerryTravelo"
               icon={Plane}
             />
           </Field>
@@ -477,7 +477,7 @@ export default function CMSSettingsPage() {
             <StyledInput
               value={cms.logoUrl}
               onChange={(v) => set("logoUrl", v)}
-              placeholder="https://cdn.jetwithfly.com/logo.svg"
+              placeholder="https://cdn.merrytravelo.com/logo.svg"
               icon={ImageIcon}
             />
           </Field>
@@ -485,7 +485,7 @@ export default function CMSSettingsPage() {
             <StyledInput
               value={cms.faviconUrl}
               onChange={(v) => set("faviconUrl", v)}
-              placeholder="https://cdn.jetwithfly.com/favicon.ico"
+              placeholder="https://cdn.merrytravelo.com/favicon.ico"
               icon={Star}
             />
           </Field>
@@ -505,7 +505,7 @@ export default function CMSSettingsPage() {
             <StyledInput
               value={cms.metaTitle}
               onChange={(v) => set("metaTitle", v)}
-              placeholder="JetWithFly - Book Cheap Flights Worldwide"
+              placeholder="MerryTravelo - Book Cheap Flights Worldwide"
             />
             <div className="flex justify-end mt-1">
               <span className={`text-[11px] font-mono ${cms.metaTitle.length > 60 ? "text-red-400" : "text-slate-500"}`}>
@@ -539,7 +539,7 @@ export default function CMSSettingsPage() {
               <StyledInput
                 value={cms.ogImageUrl}
                 onChange={(v) => set("ogImageUrl", v)}
-                placeholder="https://cdn.jetwithfly.com/og-image.jpg"
+                placeholder="https://cdn.merrytravelo.com/og-image.jpg"
                 icon={ImageIcon}
               />
               {cms.ogImageUrl && (
@@ -734,7 +734,7 @@ export default function CMSSettingsPage() {
             <StyledInput
               value={cms.contactEmail}
               onChange={(v) => set("contactEmail", v)}
-              placeholder="support@jetwithfly.com"
+              placeholder="support@merrytravelo.com"
               type="email"
               icon={Mail}
             />
@@ -768,11 +768,11 @@ export default function CMSSettingsPage() {
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {[
-            { key: "twitterUrl", label: "Twitter / X", icon: Twitter, placeholder: "https://twitter.com/jetwithfly" },
-            { key: "facebookUrl", label: "Facebook", icon: Facebook, placeholder: "https://facebook.com/jetwithfly" },
-            { key: "instagramUrl", label: "Instagram", icon: Instagram, placeholder: "https://instagram.com/jetwithfly" },
-            { key: "youtubeUrl", label: "YouTube", icon: Youtube, placeholder: "https://youtube.com/@jetwithfly" },
-            { key: "linkedinUrl", label: "LinkedIn", icon: Linkedin, placeholder: "https://linkedin.com/company/jetwithfly" },
+            { key: "twitterUrl", label: "Twitter / X", icon: Twitter, placeholder: "https://twitter.com/merrytravelo" },
+            { key: "facebookUrl", label: "Facebook", icon: Facebook, placeholder: "https://facebook.com/merrytravelo" },
+            { key: "instagramUrl", label: "Instagram", icon: Instagram, placeholder: "https://instagram.com/merrytravelo" },
+            { key: "youtubeUrl", label: "YouTube", icon: Youtube, placeholder: "https://youtube.com/@merrytravelo" },
+            { key: "linkedinUrl", label: "LinkedIn", icon: Linkedin, placeholder: "https://linkedin.com/company/merrytravelo" },
           ].map(({ key, label, icon, placeholder }) => (
             <Field key={key} label={label}>
               <StyledInput
@@ -808,7 +808,7 @@ export default function CMSSettingsPage() {
             <StyledTextarea
               value={cms.footerCopyright}
               onChange={(v) => set("footerCopyright", v)}
-              placeholder={`© ${new Date().getFullYear()} JetWithFly Flights. All rights reserved.`}
+              placeholder={`© ${new Date().getFullYear()} MerryTravelo Flights. All rights reserved.`}
               rows={2}
             />
           </Field>

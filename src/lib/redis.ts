@@ -18,8 +18,8 @@ interface MemoryCacheItem {
 }
 
 const memoryStore: Map<string, MemoryCacheItem> =
-  (globalThis as any).__jetwithfly_memory_cache || new Map();
-(globalThis as any).__jetwithfly_memory_cache = memoryStore;
+  (globalThis as any).__merrytravelo_memory_cache || new Map();
+(globalThis as any).__merrytravelo_memory_cache = memoryStore;
 
 /**
  * Helper to cache data with a TTL (in seconds)

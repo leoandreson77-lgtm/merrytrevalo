@@ -22,7 +22,7 @@ export function BrandLogo({
             isLight ? "text-white" : "text-slate-900"
           }`}
         >
-          JetWithFly<span className="text-blue-600">.</span>
+          MerryTravelo<span className="text-blue-600">.</span>
         </span>
         {showSubtitle && (
           <span className="text-[10px] font-bold text-slate-400 tracking-wider uppercase mt-0.5">

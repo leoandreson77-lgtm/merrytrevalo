@@ -33,7 +33,7 @@ export async function POST(request: Request) {
       secure: body.secure === true || body.port === 465 || body.port === "465",
       user: body.user,
       pass: cleanPass,
-      from: body.from || process.env.EMAIL_FROM || `JetWithFly Flights <${body.user}>`,
+      from: body.from || process.env.EMAIL_FROM || `MerryTravelo Flights <${body.user}>`,
     } : undefined;
 
     // 1. Verify connection credentials
@@ -43,11 +43,11 @@ export async function POST(request: Request) {
     if (testRecipient && body.sendActualMail !== false) {
       const activeHost = customConfig?.host || process.env.EMAIL_HOST || "smtp.gmail.com";
       const activePort = customConfig?.port || process.env.EMAIL_PORT || 587;
-      const activeUser = customConfig?.user || process.env.EMAIL_USER || "support@jetwithfly.com";
+      const activeUser = customConfig?.user || process.env.EMAIL_USER || "support@merrytravelo.com";
 
       const info = await sendMailWithFallback({
         to: testRecipient,
-        subject: `🧪 Test Email from ${process.env.NEXT_PUBLIC_BRAND_NAME || "JetWithFly Flights"}`,
+        subject: `🧪 Test Email from ${process.env.NEXT_PUBLIC_BRAND_NAME || "MerryTravelo Flights"}`,
         html: `
           <div style="font-family:sans-serif; padding:24px; background:#f8fafc; border-radius:12px; max-width:600px; margin:0 auto; border:1px solid #e2e8f0;">
             <div style="background:#2563eb; color:#ffffff; padding:16px 20px; border-radius:8px; margin-bottom:20px;">
@@ -62,7 +62,7 @@ export async function POST(request: Request) {
               <li><strong>Delivered To:</strong> ${testRecipient}</li>
               <li><strong>Timestamp:</strong> ${new Date().toISOString()}</li>
             </ul>
-            <p style="color:#94a3b8; font-size:11px; margin-top:20px; text-align:center;">JetWithFly Flights automated email verification system.</p>
+            <p style="color:#94a3b8; font-size:11px; margin-top:20px; text-align:center;">MerryTravelo Flights automated email verification system.</p>
           </div>
         `,
         text: `SMTP Configuration Verified! Outgoing emails are working properly on ${activeHost}:${activePort} for ${activeUser}.`,

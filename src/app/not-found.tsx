@@ -126,7 +126,7 @@ export default function NotFound() {
 
         {/* Brand badge */}
         <div className="flex items-center gap-2 mb-8 bg-white/95 backdrop-blur-md px-4 py-2 rounded-full shadow-lg">
-          <span className="font-black text-sm text-slate-900 tracking-tight">JetWithFly Flights</span>
+          <span className="font-black text-sm text-slate-900 tracking-tight">MerryTravelo Flights</span>
         </div>
 
         {/* 404 Giant Number */}

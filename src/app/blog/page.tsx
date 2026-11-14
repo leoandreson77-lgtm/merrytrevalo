@@ -9,7 +9,7 @@ import { BrandLogo } from "@/components/brand-logo";
 
 export const metadata: Metadata = {
   title: "Travel Blog & Flight Guides",
-  description: "Read the latest flight tips, destination guides, and airline deals from JetWithFly Flights.",
+  description: "Read the latest flight tips, destination guides, and airline deals from MerryTravelo Flights.",
 };
 
 interface SearchProps {

@@ -80,7 +80,7 @@ export default async function AdminLayout({
             backdrop-blur-sm
           ">
             <div className="flex items-center gap-2">
-              <span className="font-black text-base text-slate-900 dark:text-white">JetWithFly</span>
+              <span className="font-black text-base text-slate-900 dark:text-white">MerryTravelo</span>
             </div>
             <span className="font-black text-xs px-2 py-0.5 rounded bg-blue-500/10 text-blue-500 border border-blue-500/20">
               ADMIN
