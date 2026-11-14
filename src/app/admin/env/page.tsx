@@ -726,7 +726,7 @@ export default function AdminEnvConfigPage() {
 
         <CardContent className="p-6 space-y-5">
           <div className="p-4 rounded-xl bg-blue-50/60 dark:bg-blue-950/20 border border-blue-200/60 dark:border-blue-800/40 text-xs text-blue-900 dark:text-blue-300 leading-relaxed">
-            💡 <strong>Connection Tip:</strong> Paste your MongoDB Atlas URI below. Format: <code>mongodb+srv://username:password@cluster0.xxxx.mongodb.net/jetwithfly?retryWrites=true&w=majority</code>.
+            💡 <strong>Connection Tip:</strong> Paste your MongoDB Atlas URI below. Format: <code>mongodb+srv://username:password@cluster0.xxxx.mongodb.net/merrytravelo?retryWrites=true&w=majority</code>.
             Ensure you have added <strong>0.0.0.0/0</strong> (Allow access from anywhere) in MongoDB Atlas &gt; Network Access.
           </div>
 
@@ -748,7 +748,7 @@ export default function AdminEnvConfigPage() {
                 type={showMongoUri ? "text" : "password"}
                 value={config.mongodbUri}
                 onChange={e => handleChange("mongodbUri", e.target.value)}
-                placeholder="mongodb+srv://username:password@cluster0.mongodb.net/jetwithfly?retryWrites=true&w=majority"
+                placeholder="mongodb+srv://username:password@cluster0.mongodb.net/merrytravelo?retryWrites=true&w=majority"
                 className="font-mono text-xs pr-10"
               />
             </div>
