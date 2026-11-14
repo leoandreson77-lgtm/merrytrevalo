@@ -10,12 +10,12 @@ build/
 *.log
 .DS_Store
 
-# Legacy non-Next directories (kept locally, excluded from git/Vercel)
-VIDEO/
-api/
-backend/
-client/
-frontend/
-server-js/
-render.yaml
-vite.config.ts
+# Legacy non-Next directories at root only
+/VIDEO/
+/api/
+/backend/
+/client/
+/frontend/
+/server-js/
+/render.yaml
+/vite.config.ts
