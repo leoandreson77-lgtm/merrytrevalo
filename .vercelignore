@@ -5,3 +5,11 @@ node_modules
 .vscode
 .git
 dist
+VIDEO
+api
+backend
+client
+frontend
+server-js
+render.yaml
+vite.config.ts
