@@ -11,6 +11,7 @@ import { cacheGet } from "@/lib/redis";
 import { Lead } from "@/models/Lead";
 import { ObjectId } from "mongodb";
 import { checkRateLimit } from "@/lib/rate-limit";
+import { generateBookingId } from "@/lib/booking-id";
 
 const optionalEmailSchema = z.preprocess(
   (value) => {
@@ -121,7 +122,10 @@ export async function POST(request: Request) {
       phone: input.phone || "",
     };
 
+    const bookingId = body.bookingId || generateBookingId("MT");
+
     const bookingRecord = {
+      bookingId,
       flightId: normalizedInput.flightId,
       passengerName: normalizedInput.passengerName,
       email: normalizedInput.email,
@@ -326,10 +330,11 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         success: true,
+        bookingId,
         message: "Booking completed successfully!",
         emailSent,
         sheetsLogged,
-        booking: savedBooking,
+        booking: savedBooking ? { ...savedBooking, bookingId } : { bookingId },
         duffelOrder: duffelOrder
           ? {
               id: duffelOrder.id,

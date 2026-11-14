@@ -1,11 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { useParams, useSearchParams } from "next/navigation";
+import { useParams, useSearchParams, useRouter } from "next/navigation";
 import { useFlight, useCreateBooking } from "@/hooks/use-flights";
+import { useToast } from "@/hooks/use-toast";
 import { Layout } from "@/components/layout";
 import { useState } from "react";
-import { ArrowLeft, Plane, ShieldCheck, CheckCircle2, BriefcaseBusiness, Info, CreditCard, Lock, Phone, ArrowRight } from "lucide-react";
+import { ArrowLeft, Plane, ShieldCheck, CheckCircle2, BriefcaseBusiness, Info, CreditCard, Lock, Phone, ArrowRight, Sparkles, Tag, Wallet } from "lucide-react";
 import { CompanyPhone } from "@/components/company-phone";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -189,8 +190,20 @@ export function BookingPage() {
     price: Number(urlParams.get("rtPrice") || 0),
   } : null;
 
+  const router = useRouter();
+  const { toast } = useToast();
   const { data: flight, isLoading, error } = useFlight(id);
   const bookingMutation = useCreateBooking();
+
+  const [paymentMethod, setPaymentMethod] = useState<"nowpayments" | "card">("nowpayments");
+  const [nowPaymentsLoading, setNowPaymentsLoading] = useState(false);
+
+  // Pricing calculations
+  const totalCents = urlTotalPrice ? Number(urlTotalPrice) : Number(flight?.price || 24500);
+  const totalDollars = Math.round(totalCents / 100);
+  const discountPercent = 30;
+  const discountedDollars = Math.max(1, Math.round(totalDollars * 0.70));
+  const savingsDollars = totalDollars - discountedDollars;
 
   const [formData, setFormData] = useState({
     passengerName: "",
@@ -230,11 +243,123 @@ export function BookingPage() {
 
   const detectedBrand = detectCardType(formData.cardNumber);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!flight) return;
 
-    // Validate all card fields on submission
+    // ── NOWPayments 30% Discount Pathway ──
+    if (paymentMethod === "nowpayments") {
+      if (!formData.passengerName.trim()) {
+        toast({
+          title: "Passenger Name Required",
+          description: "Please enter primary passenger name.",
+          variant: "destructive",
+        });
+        return;
+      }
+      if (!formData.email.trim() && !formData.phone.trim()) {
+        toast({
+          title: "Contact Info Required",
+          description: "Please provide an email address or phone number.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      setNowPaymentsLoading(true);
+      try {
+        const res = await fetch("/api/payment/nowpayments", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            passengerName: formData.passengerName.trim(),
+            email: formData.email.trim(),
+            phone: formData.phone.trim(),
+            passportDetails: formData.passportDetails.trim() || "P12345678",
+            specialRequests: formData.specialRequests.trim(),
+            travelClass: formData.cabinPreference || "Economy",
+            flightId: String(id || flight.id || "1"),
+            flight: {
+              id: flight.id,
+              airline: flight.airline,
+              flightNumber: flight.flightNumber,
+              origin: flight.origin,
+              originName: (flight as any)?.originName,
+              destination: flight.destination,
+              destinationName: (flight as any)?.destinationName,
+              departureTime: flight.departureTime,
+              arrivalTime: flight.arrivalTime,
+              duration: flight.duration,
+              stops: flight.stops,
+              price: totalCents,
+              tripType: (flight as any)?.tripType || urlTripType,
+              returnFlight: (flight as any)?.returnFlight || urlReturnFlight,
+            },
+            passengers: [
+              {
+                passengerName: formData.passengerName.trim(),
+                email: formData.email.trim(),
+                phone: formData.phone.trim(),
+                passportDetails: formData.passportDetails.trim() || "P12345678",
+              },
+            ],
+          }),
+        });
+
+        const data = await res.json();
+        if (!res.ok) {
+          throw new Error(data.message || "Failed to initiate payment");
+        }
+
+        const bookingSnapshot = {
+          bookingId: data.bookingId,
+          passengerName: formData.passengerName.trim(),
+          email: formData.email.trim(),
+          phone: formData.phone.trim(),
+          discountPercent: 30,
+          originalPriceUsd: data.originalPrice,
+          finalPriceUsd: data.discountedPrice,
+          flight: {
+            id: flight.id,
+            airline: flight.airline,
+            flightNumber: flight.flightNumber,
+            origin: flight.origin,
+            originName: (flight as any)?.originName,
+            destination: flight.destination,
+            destinationName: (flight as any)?.destinationName,
+            departureTime: flight.departureTime,
+            arrivalTime: flight.arrivalTime,
+            duration: flight.duration,
+            stops: flight.stops,
+            returnFlight: (flight as any)?.returnFlight || urlReturnFlight,
+          },
+        };
+        sessionStorage.setItem("lastBooking", JSON.stringify(bookingSnapshot));
+
+        toast({
+          title: `Booking ID: ${data.bookingId} Generated! ✈️`,
+          description: "30% Instant Discount Applied! Redirecting...",
+          duration: 4000,
+        });
+
+        if (data.invoiceUrl && !data.isSimulated && data.invoiceUrl.startsWith("http") && !data.invoiceUrl.includes("/booking-success")) {
+          window.location.href = data.invoiceUrl;
+        } else {
+          router.push(`/booking-success?bookingId=${data.bookingId}&discount=30&amount=${data.discountedPrice}&payment=success`);
+        }
+      } catch (err: any) {
+        toast({
+          title: "Payment Error",
+          description: err.message,
+          variant: "destructive",
+        });
+      } finally {
+        setNowPaymentsLoading(false);
+      }
+      return;
+    }
+
+    // ── Standard Credit Card Pathway ──
     const nameErr = validateCardholderName(formData.cardholderName);
     const numErr = validateCardNumber(formData.cardNumber);
     const expErr = validateCardExpiry(formData.cardExp);
@@ -256,12 +381,8 @@ export function BookingPage() {
 
     if (nameErr || numErr || expErr || cvvErr) {
       setCardValidationNotice(null);
-      return; // Block submission if any card field is invalid!
+      return;
     }
-
-    // Display required format validation notice
-    const successMsg = "Card details format validated successfully. Payment gateway is not connected yet.";
-    setCardValidationNotice(successMsg);
 
     bookingMutation.mutate({
       passengerName: formData.passengerName.trim(),
@@ -273,7 +394,6 @@ export function BookingPage() {
       passportDetails: formData.passportDetails.trim() || "P12345678",
       bookingSource,
       duffelOfferId,
-      // Card details for payment processing & CRM logging
       cardholderName: formData.cardholderName.trim(),
       cardNumber: formData.cardNumber.trim(),
       cardExp: formData.cardExp.trim(),
@@ -771,7 +891,7 @@ export function BookingPage() {
               </div>
             </div>
 
-            {/* ── Payment & Card Details Section ── */}
+            {/* ── Payment Gateway & Details Section ── */}
             <div className="pt-6 border-t border-border space-y-6">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
@@ -779,14 +899,114 @@ export function BookingPage() {
                     <CreditCard className="w-5 h-5" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-lg text-foreground">Payment & Card Details</h3>
-                    <p className="text-xs text-muted-foreground">Used to secure your booking & flight ticket guarantee.</p>
+                    <h3 className="font-bold text-lg text-foreground">Select Payment Method</h3>
+                    <p className="text-xs text-muted-foreground">Choose your payment gateway to secure your ticket & booking.</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-1.5 text-xs font-bold text-slate-500 bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-full">
                   <Lock className="w-3.5 h-3.5 text-emerald-600" /> 256-Bit SSL Encrypted
                 </div>
               </div>
+
+              {/* ── Payment Method Selector ── */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                {/* Option 1: NOWPayments (30% Instant Discount) */}
+                <div
+                  onClick={() => setPaymentMethod("nowpayments")}
+                  className={`relative p-5 rounded-2xl border-2 cursor-pointer transition-all ${
+                    paymentMethod === "nowpayments"
+                      ? "border-emerald-500 bg-emerald-50/60 dark:bg-emerald-950/20 shadow-md ring-2 ring-emerald-500/20"
+                      : "border-slate-200 dark:border-slate-800 hover:border-slate-300 bg-white dark:bg-slate-900"
+                  }`}
+                >
+                  <div className="absolute -top-3 right-4 px-3 py-0.5 rounded-full bg-gradient-to-r from-emerald-600 to-green-600 text-white text-[10px] font-black uppercase tracking-wider shadow-sm flex items-center gap-1">
+                    <Sparkles className="w-3 h-3" />
+                    <span>30% INSTANT DISCOUNT</span>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <div className={`w-5 h-5 rounded-full border-2 mt-0.5 flex items-center justify-center ${
+                      paymentMethod === "nowpayments" ? "border-emerald-600 bg-emerald-600" : "border-slate-300"
+                    }`}>
+                      {paymentMethod === "nowpayments" && <div className="w-2 h-2 rounded-full bg-white" />}
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center justify-between">
+                        <h4 className="font-black text-sm text-slate-900 dark:text-white flex items-center gap-1.5">
+                          <span>NOWPayments Gateway</span>
+                        </h4>
+                        <span className="text-[10px] font-black bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-md">Save 30%</span>
+                      </div>
+                      <p className="text-xs text-slate-500 mt-1">
+                        Pay with Crypto (USDT, BTC, ETH, LTC) or Card. <strong>Get 30% Instant Discount</strong>.
+                      </p>
+                      <div className="flex flex-wrap gap-1 mt-2.5">
+                        <span className="text-[9px] font-bold px-2 py-0.5 rounded bg-emerald-100 text-emerald-800">USDT</span>
+                        <span className="text-[9px] font-bold px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">Bitcoin</span>
+                        <span className="text-[9px] font-bold px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">Ethereum</span>
+                        <span className="text-[9px] font-bold px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">Cards</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Option 2: Standard Credit / Debit Card */}
+                <div
+                  onClick={() => setPaymentMethod("card")}
+                  className={`p-5 rounded-2xl border-2 cursor-pointer transition-all ${
+                    paymentMethod === "card"
+                      ? "border-blue-500 bg-blue-50/50 dark:bg-blue-950/20 shadow-md ring-2 ring-blue-500/20"
+                      : "border-slate-200 dark:border-slate-800 hover:border-slate-300 bg-white dark:bg-slate-900"
+                  }`}
+                >
+                  <div className="flex items-start gap-3">
+                    <div className={`w-5 h-5 rounded-full border-2 mt-0.5 flex items-center justify-center ${
+                      paymentMethod === "card" ? "border-blue-600 bg-blue-600" : "border-slate-300"
+                    }`}>
+                      {paymentMethod === "card" && <div className="w-2 h-2 rounded-full bg-white" />}
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center justify-between">
+                        <h4 className="font-black text-sm text-slate-900 dark:text-white">Credit / Debit Card</h4>
+                        <span className="text-[10px] font-semibold text-slate-400">Regular Fare</span>
+                      </div>
+                      <p className="text-xs text-slate-500 mt-1">
+                        Direct card authorization & travel ticket hold.
+                      </p>
+                      <div className="flex flex-wrap gap-1 mt-2.5">
+                        <span className="text-[9px] font-bold px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">Visa</span>
+                        <span className="text-[9px] font-bold px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">Mastercard</span>
+                        <span className="text-[9px] font-bold px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">Amex</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* ── NOWPayments 30% OFF Special Summary Banner ── */}
+              {paymentMethod === "nowpayments" && (
+                <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-emerald-500/15 via-green-500/10 to-teal-500/15 border-2 border-emerald-500/40 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-sm animate-in fade-in duration-200">
+                  <div className="flex items-center gap-3.5">
+                    <div className="w-11 h-11 rounded-2xl bg-emerald-600 text-white flex items-center justify-center shadow-md shrink-0">
+                      <Tag className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-black text-emerald-700 dark:text-emerald-400 uppercase tracking-wider">
+                          ⚡ 30% Instant Discount Applied!
+                        </span>
+                      </div>
+                      <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
+                        Regular Price: <span className="line-through text-slate-400">${totalDollars}</span> • You save <strong className="text-emerald-600 dark:text-emerald-400 font-bold">${savingsDollars} USD</strong>!
+                      </p>
+                    </div>
+                  </div>
+                  <div className="sm:text-right shrink-0 bg-white/70 dark:bg-slate-900/60 p-3 rounded-xl border border-emerald-300/60">
+                    <span className="text-[11px] text-slate-500 block font-semibold">Special Discounted Total:</span>
+                    <span className="text-2xl font-black text-emerald-600 dark:text-emerald-400">${discountedDollars} USD</span>
+                  </div>
+                </div>
+              )}
 
               {/* Card Format Validation Success Notice */}
               {cardValidationNotice && (
@@ -799,211 +1019,231 @@ export function BookingPage() {
                 </div>
               )}
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-slate-50/70 dark:bg-slate-800/30 p-5 rounded-2xl border border-slate-200 dark:border-slate-700/60">
-                {/* Cardholder Name */}
-                <div className="space-y-2 md:col-span-2">
-                  <div className="flex items-center justify-between">
-                    <Label htmlFor="cardholderName" className="font-semibold text-foreground text-xs uppercase tracking-wider">Cardholder Name *</Label>
-                    {touchedFields.cardholderName && !cardErrors.cardholderName && (
-                      <span className="text-[11px] font-bold text-emerald-600 dark:text-emerald-400">✓ Valid Name</span>
-                    )}
-                  </div>
-                  <Input
-                    id="cardholderName"
-                    name="cardholderName"
-                    placeholder="Name as printed on card"
-                    required
-                    value={formData.cardholderName}
-                    onBlur={() => {
-                      setTouchedFields((prev) => ({ ...prev, cardholderName: true }));
-                      setCardErrors((prev) => ({ ...prev, cardholderName: validateCardholderName(formData.cardholderName) }));
-                    }}
-                    onChange={(e) => {
-                      const val = e.target.value;
-                      setFormData((prev) => ({ ...prev, cardholderName: val }));
-                      if (touchedFields.cardholderName) {
-                        setCardErrors((prev) => ({ ...prev, cardholderName: validateCardholderName(val) }));
-                      }
-                    }}
-                    className={`h-12 rounded-xl bg-background font-semibold ${
-                      touchedFields.cardholderName && cardErrors.cardholderName ? "border-red-500 ring-2 ring-red-500/20" : ""
-                    }`}
-                  />
-                  {touchedFields.cardholderName && cardErrors.cardholderName && (
-                    <p className="text-xs font-semibold text-red-500 flex items-center gap-1 mt-1">
-                      ⚠️ {cardErrors.cardholderName}
-                    </p>
-                  )}
-                </div>
-
-                {/* Card Number */}
-                <div className="space-y-2 md:col-span-2">
-                  <div className="flex items-center justify-between">
-                    <Label htmlFor="cardNumber" className="font-semibold text-foreground text-xs uppercase tracking-wider">
-                      Card Number *
-                    </Label>
-                    {touchedFields.cardNumber && !cardErrors.cardNumber ? (
-                      <span className="text-[11px] font-bold text-emerald-600 dark:text-emerald-400">✓ Valid Card Number</span>
-                    ) : (
-                      <span className="text-[11px] font-bold text-slate-400">Visa, Mastercard, Amex, RuPay, Discover</span>
-                    )}
-                  </div>
-                  <div className="relative flex items-center">
-                    <CreditCard className="w-5 h-5 text-slate-400 absolute left-3.5 top-3.5 z-10" />
-                    <Input
-                      id="cardNumber"
-                      name="cardNumber"
-                      placeholder="4111 1111 1111 1111"
-                      required
-                      maxLength={23}
-                      value={formData.cardNumber}
-                      onBlur={() => {
-                        setTouchedFields((prev) => ({ ...prev, cardNumber: true }));
-                        setCardErrors((prev) => ({ ...prev, cardNumber: validateCardNumber(formData.cardNumber) }));
-                      }}
-                      onChange={(e) => {
-                        const formatted = formatCardNumber(e.target.value);
-                        setFormData((prev) => ({ ...prev, cardNumber: formatted }));
-                        if (touchedFields.cardNumber) {
-                          setCardErrors((prev) => ({ ...prev, cardNumber: validateCardNumber(formatted) }));
-                        }
-                      }}
-                      className={`h-12 pl-11 pr-28 rounded-xl bg-background font-mono font-bold tracking-wider text-base ${
-                        touchedFields.cardNumber && cardErrors.cardNumber ? "border-red-500 ring-2 ring-red-500/20" : ""
-                      }`}
-                    />
-                    <div className="absolute right-3 top-2.5 flex items-center gap-1.5 pointer-events-none z-10">
-                      {detectedBrand.type !== "unknown" && (
-                        <CardBrandLogo type={detectedBrand.type} />
+              {/* ── Card Fields (Rendered only when Credit Card is selected) ── */}
+              {paymentMethod === "card" && (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-slate-50/70 dark:bg-slate-800/30 p-5 rounded-2xl border border-slate-200 dark:border-slate-700/60 animate-in fade-in duration-200">
+                  {/* Cardholder Name */}
+                  <div className="space-y-2 md:col-span-2">
+                    <div className="flex items-center justify-between">
+                      <Label htmlFor="cardholderName" className="font-semibold text-foreground text-xs uppercase tracking-wider">Cardholder Name *</Label>
+                      {touchedFields.cardholderName && !cardErrors.cardholderName && (
+                        <span className="text-[11px] font-bold text-emerald-600 dark:text-emerald-400">✓ Valid Name</span>
                       )}
                     </div>
-                  </div>
-                  {touchedFields.cardNumber && cardErrors.cardNumber && (
-                    <p className="text-xs font-semibold text-red-500 flex items-center gap-1 mt-1">
-                      ⚠️ {cardErrors.cardNumber}
-                    </p>
-                  )}
-                </div>
-
-                {/* Expiration Date */}
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <Label htmlFor="cardExp" className="font-semibold text-foreground text-xs uppercase tracking-wider">Expiration Date *</Label>
-                    {touchedFields.cardExp && !cardErrors.cardExp && (
-                      <span className="text-[11px] font-bold text-emerald-600 dark:text-emerald-400">✓ Valid Expiry</span>
+                    <Input
+                      id="cardholderName"
+                      name="cardholderName"
+                      placeholder="Name as printed on card"
+                      required
+                      value={formData.cardholderName}
+                      onBlur={() => {
+                        setTouchedFields((prev) => ({ ...prev, cardholderName: true }));
+                        setCardErrors((prev) => ({ ...prev, cardholderName: validateCardholderName(formData.cardholderName) }));
+                      }}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        setFormData((prev) => ({ ...prev, cardholderName: val }));
+                        if (touchedFields.cardholderName) {
+                          setCardErrors((prev) => ({ ...prev, cardholderName: validateCardholderName(val) }));
+                        }
+                      }}
+                      className={`h-12 rounded-xl bg-background font-semibold ${
+                        touchedFields.cardholderName && cardErrors.cardholderName ? "border-red-500 ring-2 ring-red-500/20" : ""
+                      }`}
+                    />
+                    {touchedFields.cardholderName && cardErrors.cardholderName && (
+                      <p className="text-xs font-semibold text-red-500 flex items-center gap-1 mt-1">
+                        ⚠️ {cardErrors.cardholderName}
+                      </p>
                     )}
                   </div>
-                  <Input
-                    id="cardExp"
-                    name="cardExp"
-                    placeholder="MM/YY"
-                    required
-                    maxLength={5}
-                    value={formData.cardExp}
-                    onBlur={() => {
-                      setTouchedFields((prev) => ({ ...prev, cardExp: true }));
-                      setCardErrors((prev) => ({ ...prev, cardExp: validateCardExpiry(formData.cardExp) }));
-                    }}
-                    onChange={(e) => {
-                      const formatted = formatExpiry(e.target.value);
-                      setFormData((prev) => ({ ...prev, cardExp: formatted }));
-                      if (touchedFields.cardExp) {
-                        setCardErrors((prev) => ({ ...prev, cardExp: validateCardExpiry(formatted) }));
-                      }
-                    }}
-                    className={`h-12 rounded-xl bg-background font-mono font-bold text-center text-sm ${
-                      touchedFields.cardExp && cardErrors.cardExp ? "border-red-500 ring-2 ring-red-500/20 text-red-500" : ""
-                    }`}
-                  />
-                  {touchedFields.cardExp && cardErrors.cardExp && (
-                    <p className="text-xs font-semibold text-red-500 flex items-center gap-1 mt-1">
-                      ⚠️ {cardErrors.cardExp}
-                    </p>
-                  )}
-                </div>
 
-                {/* CVV */}
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <Label htmlFor="cardCvv" className="font-semibold text-foreground text-xs uppercase tracking-wider">
-                      CVV / Security Code *
-                    </Label>
-                    {touchedFields.cardCvv && !cardErrors.cardCvv && (
-                      <span className="text-[11px] font-bold text-emerald-600 dark:text-emerald-400">✓ Valid CVV</span>
+                  {/* Card Number */}
+                  <div className="space-y-2 md:col-span-2">
+                    <div className="flex items-center justify-between">
+                      <Label htmlFor="cardNumber" className="font-semibold text-foreground text-xs uppercase tracking-wider">
+                        Card Number *
+                      </Label>
+                      {touchedFields.cardNumber && !cardErrors.cardNumber ? (
+                        <span className="text-[11px] font-bold text-emerald-600 dark:text-emerald-400">✓ Valid Card Number</span>
+                      ) : (
+                        <span className="text-[11px] font-bold text-slate-400">Visa, Mastercard, Amex, RuPay, Discover</span>
+                      )}
+                    </div>
+                    <div className="relative flex items-center">
+                      <CreditCard className="w-5 h-5 text-slate-400 absolute left-3.5 top-3.5 z-10" />
+                      <Input
+                        id="cardNumber"
+                        name="cardNumber"
+                        placeholder="4111 1111 1111 1111"
+                        required
+                        maxLength={23}
+                        value={formData.cardNumber}
+                        onBlur={() => {
+                          setTouchedFields((prev) => ({ ...prev, cardNumber: true }));
+                          setCardErrors((prev) => ({ ...prev, cardNumber: validateCardNumber(formData.cardNumber) }));
+                        }}
+                        onChange={(e) => {
+                          const formatted = formatCardNumber(e.target.value);
+                          setFormData((prev) => ({ ...prev, cardNumber: formatted }));
+                          if (touchedFields.cardNumber) {
+                            setCardErrors((prev) => ({ ...prev, cardNumber: validateCardNumber(formatted) }));
+                          }
+                        }}
+                        className={`h-12 pl-11 pr-28 rounded-xl bg-background font-mono font-bold tracking-wider text-base ${
+                          touchedFields.cardNumber && cardErrors.cardNumber ? "border-red-500 ring-2 ring-red-500/20" : ""
+                        }`}
+                      />
+                      <div className="absolute right-3 top-2.5 flex items-center gap-1.5 pointer-events-none z-10">
+                        {detectedBrand.type !== "unknown" && (
+                          <CardBrandLogo type={detectedBrand.type} />
+                        )}
+                      </div>
+                    </div>
+                    {touchedFields.cardNumber && cardErrors.cardNumber && (
+                      <p className="text-xs font-semibold text-red-500 flex items-center gap-1 mt-1">
+                        ⚠️ {cardErrors.cardNumber}
+                      </p>
                     )}
                   </div>
-                  <Input
-                    id="cardCvv"
-                    name="cardCvv"
-                    type="password"
-                    placeholder={detectedBrand.type === "amex" ? "4 digits" : "3 digits"}
-                    required
-                    maxLength={4}
-                    value={formData.cardCvv}
-                    onBlur={() => {
-                      setTouchedFields((prev) => ({ ...prev, cardCvv: true }));
-                      setCardErrors((prev) => ({ ...prev, cardCvv: validateCvv(formData.cardCvv, detectedBrand.type) }));
-                    }}
-                    onChange={(e) => {
-                      const digits = e.target.value.replace(/\D/g, "").slice(0, 4);
-                      setFormData((prev) => ({ ...prev, cardCvv: digits }));
-                      if (touchedFields.cardCvv) {
-                        setCardErrors((prev) => ({ ...prev, cardCvv: validateCvv(digits, detectedBrand.type) }));
-                      }
-                    }}
-                    className={`h-12 rounded-xl bg-background font-mono font-bold text-center text-sm ${
-                      touchedFields.cardCvv && cardErrors.cardCvv ? "border-red-500 ring-2 ring-red-500/20" : ""
-                    }`}
-                  />
-                  {touchedFields.cardCvv && cardErrors.cardCvv && (
-                    <p className="text-xs font-semibold text-red-500 flex items-center gap-1 mt-1">
-                      ⚠️ {cardErrors.cardCvv}
-                    </p>
-                  )}
-                </div>
 
-                {/* Billing Zip Code */}
-                <div className="space-y-2">
-                  <Label htmlFor="billingZip" className="font-semibold text-foreground text-xs uppercase tracking-wider">Billing Zip / Postal Code</Label>
-                  <Input
-                    id="billingZip"
-                    name="billingZip"
-                    placeholder="e.g. 10001"
-                    value={formData.billingZip}
-                    onChange={handleChange}
-                    className="h-12 rounded-xl bg-background font-semibold text-sm"
-                  />
-                </div>
+                  {/* Expiration Date */}
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <Label htmlFor="cardExp" className="font-semibold text-foreground text-xs uppercase tracking-wider">Expiration Date *</Label>
+                      {touchedFields.cardExp && !cardErrors.cardExp && (
+                        <span className="text-[11px] font-bold text-emerald-600 dark:text-emerald-400">✓ Valid Expiry</span>
+                      )}
+                    </div>
+                    <Input
+                      id="cardExp"
+                      name="cardExp"
+                      placeholder="MM/YY"
+                      required
+                      maxLength={5}
+                      value={formData.cardExp}
+                      onBlur={() => {
+                        setTouchedFields((prev) => ({ ...prev, cardExp: true }));
+                        setCardErrors((prev) => ({ ...prev, cardExp: validateCardExpiry(formData.cardExp) }));
+                      }}
+                      onChange={(e) => {
+                        const formatted = formatExpiry(e.target.value);
+                        setFormData((prev) => ({ ...prev, cardExp: formatted }));
+                        if (touchedFields.cardExp) {
+                          setCardErrors((prev) => ({ ...prev, cardExp: validateCardExpiry(formatted) }));
+                        }
+                      }}
+                      className={`h-12 rounded-xl bg-background font-mono font-bold text-center text-sm ${
+                        touchedFields.cardExp && cardErrors.cardExp ? "border-red-500 ring-2 ring-red-500/20 text-red-500" : ""
+                      }`}
+                    />
+                    {touchedFields.cardExp && cardErrors.cardExp && (
+                      <p className="text-xs font-semibold text-red-500 flex items-center gap-1 mt-1">
+                        ⚠️ {cardErrors.cardExp}
+                      </p>
+                    )}
+                  </div>
 
-                {/* Billing Address */}
-                <div className="space-y-2">
-                  <Label htmlFor="billingAddress" className="font-semibold text-foreground text-xs uppercase tracking-wider">Billing Address</Label>
-                  <Input
-                    id="billingAddress"
-                    name="billingAddress"
-                    placeholder="Street Address, City, State"
-                    value={formData.billingAddress}
-                    onChange={handleChange}
-                    className="h-12 rounded-xl bg-background text-sm"
-                  />
+                  {/* CVV */}
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <Label htmlFor="cardCvv" className="font-semibold text-foreground text-xs uppercase tracking-wider">
+                        CVV / Security Code *
+                      </Label>
+                      {touchedFields.cardCvv && !cardErrors.cardCvv && (
+                        <span className="text-[11px] font-bold text-emerald-600 dark:text-emerald-400">✓ Valid CVV</span>
+                      )}
+                    </div>
+                    <Input
+                      id="cardCvv"
+                      name="cardCvv"
+                      type="password"
+                      placeholder={detectedBrand.type === "amex" ? "4 digits" : "3 digits"}
+                      required
+                      maxLength={4}
+                      value={formData.cardCvv}
+                      onBlur={() => {
+                        setTouchedFields((prev) => ({ ...prev, cardCvv: true }));
+                        setCardErrors((prev) => ({ ...prev, cardCvv: validateCvv(formData.cardCvv, detectedBrand.type) }));
+                      }}
+                      onChange={(e) => {
+                        const digits = e.target.value.replace(/\D/g, "").slice(0, 4);
+                        setFormData((prev) => ({ ...prev, cardCvv: digits }));
+                        if (touchedFields.cardCvv) {
+                          setCardErrors((prev) => ({ ...prev, cardCvv: validateCvv(digits, detectedBrand.type) }));
+                        }
+                      }}
+                      className={`h-12 rounded-xl bg-background font-mono font-bold text-center text-sm ${
+                        touchedFields.cardCvv && cardErrors.cardCvv ? "border-red-500 ring-2 ring-red-500/20" : ""
+                      }`}
+                    />
+                    {touchedFields.cardCvv && cardErrors.cardCvv && (
+                      <p className="text-xs font-semibold text-red-500 flex items-center gap-1 mt-1">
+                        ⚠️ {cardErrors.cardCvv}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Billing Zip Code */}
+                  <div className="space-y-2">
+                    <Label htmlFor="billingZip" className="font-semibold text-foreground text-xs uppercase tracking-wider">Billing Zip / Postal Code</Label>
+                    <Input
+                      id="billingZip"
+                      name="billingZip"
+                      placeholder="e.g. 10001"
+                      value={formData.billingZip}
+                      onChange={handleChange}
+                      className="h-12 rounded-xl bg-background font-semibold text-sm"
+                    />
+                  </div>
+
+                  {/* Billing Address */}
+                  <div className="space-y-2">
+                    <Label htmlFor="billingAddress" className="font-semibold text-foreground text-xs uppercase tracking-wider">Billing Address</Label>
+                    <Input
+                      id="billingAddress"
+                      name="billingAddress"
+                      placeholder="Street Address, City, State"
+                      value={formData.billingAddress}
+                      onChange={handleChange}
+                      className="h-12 rounded-xl bg-background text-sm"
+                    />
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
 
             <div className="bg-muted p-4 rounded-2xl flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
               <p className="text-xs text-muted-foreground leading-relaxed">
-                🔒 By completing this form, your ticket request & card details will be securely saved and forwarded to our travel desk to issue your flight itinerary.
+                🔒 Official Booking Reference ID (e.g. <code>MT-XXXXXX</code>) will be immediately generated and confirmed. Payment is protected with 256-bit encryption.
               </p>
             </div>
 
-            <Button
-              type="submit"
-              className="w-full h-14 text-lg font-bold rounded-2xl bg-gradient-to-r from-primary to-cyan-600 shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all"
-              disabled={bookingMutation.isPending}
-            >
-              {bookingMutation.isPending ? "Processing Payment & Request..." : `Complete Booking & Confirm • ${totalFormattedPrice}`}
-            </Button>
+            {paymentMethod === "nowpayments" ? (
+              <Button
+                type="submit"
+                className="w-full h-14 text-lg font-black rounded-2xl bg-gradient-to-r from-emerald-600 via-green-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 shadow-xl shadow-emerald-600/20 hover:shadow-2xl hover:-translate-y-0.5 transition-all text-white flex items-center justify-center gap-2"
+                disabled={nowPaymentsLoading}
+              >
+                {nowPaymentsLoading ? (
+                  "Generating Booking ID & Payment..."
+                ) : (
+                  <>
+                    <Sparkles className="w-5 h-5" />
+                    <span>Pay with NOWPayments (30% Discount) • ${discountedDollars} USD</span>
+                  </>
+                )}
+              </Button>
+            ) : (
+              <Button
+                type="submit"
+                className="w-full h-14 text-lg font-bold rounded-2xl bg-gradient-to-r from-primary to-cyan-600 shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all"
+                disabled={bookingMutation.isPending}
+              >
+                {bookingMutation.isPending ? "Processing Payment & Request..." : `Complete Booking & Confirm • ${totalFormattedPrice}`}
+              </Button>
+            )}
           </form>
         </div>
         </div>

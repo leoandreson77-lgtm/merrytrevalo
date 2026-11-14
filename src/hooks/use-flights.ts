@@ -153,8 +153,10 @@ export function useCreateBooking() {
     },
     onSuccess: (result, variables) => {
       const flight = (variables as any)?.flight;
+      const bookingId = result.response?.bookingId || result.input?.bookingId;
       const bookingSnapshot = {
         ...result.input,
+        bookingId,
         bookingResponse: result.response,
         flight: flight
           ? {
