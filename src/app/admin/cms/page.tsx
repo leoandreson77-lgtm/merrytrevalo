@@ -81,10 +81,6 @@ interface CMSData {
   // Footer
   footerTagline: string;
   footerCopyright: string;
-  googleTagManagerId?: string;
-  googleAdsId?: string;
-  googleAdsSendTo?: string;
-  googleTagId?: string;
   popularRoutes?: Array<{
     title: string;
     slug: string;
@@ -126,10 +122,6 @@ const DEFAULT_CMS: CMSData = {
   linkedinUrl: "",
   footerTagline: "Your trusted partner for affordable global travel.",
   footerCopyright: `© ${new Date().getFullYear()} MerryTravelo Flights. All rights reserved.`,
-  googleTagManagerId: "",
-  googleAdsId: "",
-  googleAdsSendTo: "",
-  googleTagId: "",
   popularRoutes: [
     {
       title: "Cheap Flights to Paris",
@@ -1007,51 +999,6 @@ export default function CMSSettingsPage() {
               </>
             );
           })()}
-        </div>
-      </SectionCard>
-
-      {/* ── Google Analytics & Conversion Tracking Settings ── */}
-      <SectionCard
-        icon={Globe}
-        title="Google Analytics & Conversion Tracking"
-        description="Configure your Google Tag Manager container, Google Ads, and Conversion Event IDs dynamically"
-        badge="Analytics"
-        badgeColor="indigo"
-        defaultOpen={false}
-      >
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          <Field label="Google Tag Manager Container ID" hint="e.g. GTM-XXXXXX">
-            <StyledInput
-              value={cms.googleTagManagerId || ""}
-              onChange={(v) => set("googleTagManagerId", v)}
-              placeholder="GTM-XXXXXXX"
-              icon={Globe}
-            />
-          </Field>
-          <Field label="Google Ads ID" hint="e.g. AW-XXXXXXXXX">
-            <StyledInput
-              value={cms.googleAdsId || ""}
-              onChange={(v) => set("googleAdsId", v)}
-              placeholder="AW-XXXXXXXXXX"
-              icon={Globe}
-            />
-          </Field>
-          <Field label="Google Ads Send-To Conversion Event" hint="e.g. AW-XXXXXXXXX/YYYYYYYYYYY">
-            <StyledInput
-              value={cms.googleAdsSendTo || ""}
-              onChange={(v) => set("googleAdsSendTo", v)}
-              placeholder="AW-XXXXXXXXXX/YYYYYYYYYYY"
-              icon={Globe}
-            />
-          </Field>
-          <Field label="Dynamic Google Tag ID" hint="e.g. G-XXXXXXXXXX">
-            <StyledInput
-              value={cms.googleTagId || ""}
-              onChange={(v) => set("googleTagId", v)}
-              placeholder="G-XXXXXXXXXX"
-              icon={Globe}
-            />
-          </Field>
         </div>
       </SectionCard>
 

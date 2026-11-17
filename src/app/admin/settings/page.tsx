@@ -143,7 +143,7 @@ export default function AdminSettingsPage() {
               Looking to configure SMTP Email, Google Tag, or API keys?
             </h4>
             <p className="text-xs text-slate-500 dark:text-slate-400">
-              Manage Gmail App Passwords, Google Tag (GTag/GA4) tracking IDs, and phone numbers in Environment Settings.
+              Manage Gmail App Passwords, payment gateway keys, and phone numbers in Environment Settings.
             </p>
           </div>
         </div>

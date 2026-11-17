@@ -16,7 +16,7 @@ A modern, high-conversion flight search and booking platform built with Next.js 
 - ✅ **Admin Management Console**:
   - Live CRM Leads & Flight Booking Requests
   - **Environment & Integrations Panel (`/admin/env`)**: Configure SMTP email, Gmail App Passwords, and API keys with a live test email tool.
-  - **Google Tag & Analytics**: Dynamic `gtag.js` (GA4 / GTM / Google Ads) toggle and configuration.
+  - **Payment Gateway**: NOWPayments crypto/card checkout integration with instant 30% discount and Booking Reference ID generation.
   - Call Tracking & Telephony routing.
   - Landing Pages & Form Builder.
 

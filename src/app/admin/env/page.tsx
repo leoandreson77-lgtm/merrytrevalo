@@ -90,11 +90,7 @@ export default function AdminEnvConfigPage() {
     emailOwner: "",
     disableBookingEmails: false,
 
-    // 4. Google Tag & Tracking
-    googleTagEnabled: false,
-    googleTagId: "",
-    gtmId: "",
-    googleAdsId: "",
+    // 4. Custom Scripts
     customHeadScript: "",
 
     // 5. Brand & Phone
@@ -478,11 +474,7 @@ export default function AdminEnvConfigPage() {
       `EMAIL_OWNER="${config.emailOwner || config.emailUser || ""}"`,
       `DISABLE_BOOKING_EMAILS="${config.disableBookingEmails ? "true" : "false"}"`,
       "",
-      "# 5. Google Tag & Analytics",
-      `NEXT_PUBLIC_GOOGLE_TAG_ENABLED="${config.googleTagEnabled ? "true" : "false"}"`,
-      `NEXT_PUBLIC_GOOGLE_TAG_ID="${config.googleTagId || ""}"`,
-      `NEXT_PUBLIC_GTM_ID="${config.gtmId || ""}"`,
-      `NEXT_PUBLIC_GOOGLE_ADS_ID="${config.googleAdsId || ""}"`,
+      "# 5. Custom Scripts",
       config.customHeadScript ? `CUSTOM_HEAD_SCRIPT="${config.customHeadScript.replace(/"/g, '\\"')}"` : "",
       "",
       "# 6. Flight Search APIs",
@@ -1211,96 +1203,35 @@ export default function AdminEnvConfigPage() {
         </CardContent>
       </Card>
 
-      {/* ── SECTION 4: GOOGLE TAG (GTAG) & TRACKING ── */}
+      {/* ── SECTION 4: CUSTOM HEADER SCRIPT ── */}
       <Card className="border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
         <CardHeader className="bg-gradient-to-r from-emerald-50/50 via-slate-50 to-transparent dark:from-emerald-950/20 dark:via-slate-900/40 border-b border-slate-200/80 dark:border-slate-800">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="p-2.5 rounded-xl bg-emerald-600 text-white shadow-sm">
-                <Tag className="w-5 h-5" />
-              </div>
-              <div>
-                <CardTitle className="text-lg font-black text-slate-900 dark:text-white">
-                  Google Tag (gtag.js) & Tracking Configuration
-                </CardTitle>
-                <CardDescription className="text-xs">
-                  Manage Google Analytics 4 (GA4), Google Ads Conversion Tracking, and Google Tag Manager.
-                </CardDescription>
-              </div>
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-emerald-600 text-white shadow-sm">
+              <Code2 className="w-5 h-5" />
             </div>
-
-            <div className="flex items-center gap-2">
-              <label className="flex items-center gap-2 cursor-pointer bg-white dark:bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-800">
-                <span className="text-xs font-bold text-slate-700 dark:text-slate-300">Google Tag:</span>
-                <input
-                  type="checkbox"
-                  checked={config.googleTagEnabled}
-                  onChange={e => handleChange("googleTagEnabled", e.target.checked)}
-                  className="w-4 h-4 rounded text-emerald-600"
-                />
-                <span className={`text-xs font-black ${config.googleTagEnabled ? "text-emerald-600" : "text-slate-400"}`}>
-                  {config.googleTagEnabled ? "ENABLED" : "DISABLED"}
-                </span>
-              </label>
+            <div>
+              <CardTitle className="text-lg font-black text-slate-900 dark:text-white">
+                Custom Header Script
+              </CardTitle>
+              <CardDescription className="text-xs">
+                Optionally add custom header snippets if needed (all third-party tags are disabled by default).
+              </CardDescription>
             </div>
           </div>
         </CardHeader>
 
         <CardContent className="p-6 space-y-5">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            <div>
-              <Label htmlFor="googleTagId" className="text-xs font-bold text-slate-700 dark:text-slate-300">
-                Google Tag ID (GTag / GA4)
-              </Label>
-              <Input
-                id="googleTagId"
-                value={config.googleTagId}
-                onChange={e => handleChange("googleTagId", e.target.value)}
-                placeholder="G-XXXXXXXXXX or AW-XXXXXXXXX"
-                className="mt-1.5 font-mono text-sm"
-              />
-              <p className="text-[11px] text-slate-400 mt-1">Google Analytics 4 or Google Ads Tag ID</p>
-            </div>
-
-            <div>
-              <Label htmlFor="gtmId" className="text-xs font-bold text-slate-700 dark:text-slate-300">
-                Google Tag Manager (GTM)
-              </Label>
-              <Input
-                id="gtmId"
-                value={config.gtmId}
-                onChange={e => handleChange("gtmId", e.target.value)}
-                placeholder="GTM-XXXXXXX"
-                className="mt-1.5 font-mono text-sm"
-              />
-              <p className="text-[11px] text-slate-400 mt-1">GTM Container ID (Optional)</p>
-            </div>
-
-            <div>
-              <Label htmlFor="googleAdsId" className="text-xs font-bold text-slate-700 dark:text-slate-300">
-                Google Ads Conversion ID
-              </Label>
-              <Input
-                id="googleAdsId"
-                value={config.googleAdsId}
-                onChange={e => handleChange("googleAdsId", e.target.value)}
-                placeholder="AW-XXXXXXXXX/YYYYYYYYYY"
-                className="mt-1.5 font-mono text-sm"
-              />
-              <p className="text-[11px] text-slate-400 mt-1">Conversion label for booking completions</p>
-            </div>
-          </div>
-
           <div>
             <Label htmlFor="customHeadScript" className="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
               <Code2 className="w-4 h-4 text-emerald-600" />
-              Custom Header Script / Meta Pixel snippet
+              Custom Header Script
             </Label>
             <textarea
               id="customHeadScript"
               value={config.customHeadScript}
               onChange={e => handleChange("customHeadScript", e.target.value)}
-              placeholder="<!-- Optional: Paste any custom <head> analytics, Meta Pixel, or Clarity scripts here -->"
+              placeholder="<!-- Optional custom <head> script -->"
               rows={3}
               className="mt-1.5 w-full rounded-md border border-input bg-transparent px-3 py-2 text-xs font-mono shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
             />

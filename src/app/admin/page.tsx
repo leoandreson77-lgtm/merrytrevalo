@@ -104,7 +104,6 @@ export default function AdminDashboard() {
   // Settings state
   const [callNumber, setCallNumber] = useState("");
   const [callLabel, setCallLabel] = useState("Call Now");
-  const [googleTagId, setGoogleTagId] = useState("");
   const [settingsLoaded, setSettingsLoaded] = useState(false);
 
   useQuery({
@@ -115,7 +114,6 @@ export default function AdminDashboard() {
       if (!settingsLoaded) {
         setCallNumber(json.callNumber ?? "+18772518760");
         setCallLabel(json.callLabel ?? "Call Now");
-        setGoogleTagId(json.googleTagId ?? "");
         setSettingsLoaded(true);
       }
       return json;
@@ -127,7 +125,7 @@ export default function AdminDashboard() {
       const res = await fetch("/api/settings", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ callNumber, callLabel, googleTagId }),
+        body: JSON.stringify({ callNumber, callLabel }),
       });
       if (!res.ok) throw new Error("Failed to save");
       return res.json();
@@ -469,17 +467,6 @@ export default function AdminDashboard() {
                   className="w-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-green-500/50 transition-colors"
                 />
                 <p className="text-xs text-slate-500">Label shown below the phone icon</p>
-              </div>
-              <div className="space-y-2">
-                <label className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Tracking / Analytics ID (Optional)</label>
-                <input
-                  type="text"
-                  value={googleTagId}
-                  onChange={e => setGoogleTagId(e.target.value)}
-                  placeholder="G-XXXXXXXXXX"
-                  className="w-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-green-500/50 transition-colors"
-                />
-                <p className="text-xs text-slate-500">Optional tracking ID (leave blank if unused)</p>
               </div>
             </div>
             <button

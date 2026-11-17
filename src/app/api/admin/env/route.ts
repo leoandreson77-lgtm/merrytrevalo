@@ -28,10 +28,6 @@ const KNOWN_ENV_KEYS = new Set([
   "EMAIL_BOOKINGS_TO",
   "EMAIL_OWNER",
   "DISABLE_BOOKING_EMAILS",
-  "NEXT_PUBLIC_GOOGLE_TAG_ENABLED",
-  "NEXT_PUBLIC_GOOGLE_TAG_ID",
-  "NEXT_PUBLIC_GTM_ID",
-  "NEXT_PUBLIC_GOOGLE_ADS_ID",
   "CUSTOM_HEAD_SCRIPT",
   "DUFFEL_ACCESS_TOKEN",
   "DUFFEL_API_KEY",
@@ -202,11 +198,7 @@ export async function GET() {
       emailOwner: dbEnv.emailOwner || fileEnv.EMAIL_OWNER || process.env.EMAIL_OWNER || "",
       disableBookingEmails: dbEnv.disableBookingEmails !== undefined ? Boolean(dbEnv.disableBookingEmails) : (process.env.DISABLE_BOOKING_EMAILS === "true" || fileEnv.DISABLE_BOOKING_EMAILS === "true"),
 
-      // 4. Google Tag & Tracking
-      googleTagEnabled: getDynamicEnv("NEXT_PUBLIC_GOOGLE_TAG_ENABLED") === "true" || Boolean(getDynamicEnv("NEXT_PUBLIC_GOOGLE_TAG_ID")),
-      googleTagId: getDynamicEnv("NEXT_PUBLIC_GOOGLE_TAG_ID") || fileEnv.NEXT_PUBLIC_GOOGLE_TAG_ID || "",
-      gtmId: getDynamicEnv("NEXT_PUBLIC_GTM_ID") || fileEnv.NEXT_PUBLIC_GTM_ID || "",
-      googleAdsId: getDynamicEnv("NEXT_PUBLIC_GOOGLE_ADS_ID") || fileEnv.NEXT_PUBLIC_GOOGLE_ADS_ID || "",
+      // 4. Custom Scripts
       customHeadScript: getDynamicEnv("CUSTOM_HEAD_SCRIPT") || fileEnv.CUSTOM_HEAD_SCRIPT || "",
 
       // 5. Site Identity & Phone
@@ -350,23 +342,7 @@ export async function POST(request: Request) {
       envUpdates.DISABLE_BOOKING_EMAILS = String(body.disableBookingEmails);
     }
 
-    // 4. Google Tag & Tracking
-    if (body.googleTagEnabled !== undefined) {
-      setProcessEnv("NEXT_PUBLIC_GOOGLE_TAG_ENABLED", String(body.googleTagEnabled));
-      envUpdates.NEXT_PUBLIC_GOOGLE_TAG_ENABLED = String(body.googleTagEnabled);
-    }
-    if (body.googleTagId !== undefined) {
-      setProcessEnv("NEXT_PUBLIC_GOOGLE_TAG_ID", body.googleTagId);
-      envUpdates.NEXT_PUBLIC_GOOGLE_TAG_ID = body.googleTagId;
-    }
-    if (body.gtmId !== undefined) {
-      setProcessEnv("NEXT_PUBLIC_GTM_ID", body.gtmId);
-      envUpdates.NEXT_PUBLIC_GTM_ID = body.gtmId;
-    }
-    if (body.googleAdsId !== undefined) {
-      setProcessEnv("NEXT_PUBLIC_GOOGLE_ADS_ID", body.googleAdsId);
-      envUpdates.NEXT_PUBLIC_GOOGLE_ADS_ID = body.googleAdsId;
-    }
+    // 4. Custom Scripts
     if (body.customHeadScript !== undefined) {
       setProcessEnv("CUSTOM_HEAD_SCRIPT", body.customHeadScript);
       envUpdates.CUSTOM_HEAD_SCRIPT = body.customHeadScript;

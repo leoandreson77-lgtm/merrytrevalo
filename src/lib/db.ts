@@ -42,6 +42,8 @@ function cleanMongoUri(rawUri: string): string {
   // Remove accidental angle brackets around username or password (e.g. :<password>@ -> :password@)
   uri = uri.replace(/:<([^>]+)>@/, ":$1@");
   uri = uri.replace(/\/\/<([^>]+):/, "//$1:");
+  // Enforce separate MerryTravelo database even if env URI still points to legacy db
+  uri = uri.replace(/\/jetwithfly(\?|$)/i, "/merrytravelo$1");
   return convertSrvToStandard(uri);
 }
 

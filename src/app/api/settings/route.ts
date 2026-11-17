@@ -15,9 +15,18 @@ export async function GET() {
     await connectToDatabase();
     
     const config = await CMSConfig.findOne({ key: SETTINGS_KEY });
-    const defaults = { callNumber: process.env.NEXT_PUBLIC_COMPANY_PHONE || "+18772518760", callLabel: "Call Now" };
-    const settingsValue = config?.value ? { ...defaults, ...config.value } : defaults;
-    
+    const defaults = {
+      callNumber: process.env.NEXT_PUBLIC_COMPANY_PHONE || "+18772518760",
+      callLabel: "Call Now",
+    };
+    const settingsValue: Record<string, any> = config?.value ? { ...defaults, ...config.value } : { ...defaults };
+
+    // Keep all tracking tags strictly disabled / null
+    settingsValue.googleTagId = null;
+    settingsValue.gtmId = null;
+    settingsValue.googleAdsId = null;
+    settingsValue.googleAdsSendTo = null;
+
     // If config has empty callNumber, update to active TFN or default
     if (!settingsValue.callNumber) {
       const activeTfn = await TFN.findOne({ isDefault: true, status: "active" }) 
@@ -27,7 +36,14 @@ export async function GET() {
 
     return NextResponse.json(settingsValue);
   } catch (error: any) {
-    return NextResponse.json({ callNumber: process.env.NEXT_PUBLIC_COMPANY_PHONE || "+18772518760", callLabel: "Call Now" });
+    return NextResponse.json({
+      callNumber: process.env.NEXT_PUBLIC_COMPANY_PHONE || "+18772518760",
+      callLabel: "Call Now",
+      googleTagId: null,
+      gtmId: null,
+      googleAdsId: null,
+      googleAdsSendTo: null,
+    });
   }
 }
 
