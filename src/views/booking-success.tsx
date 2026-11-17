@@ -85,21 +85,21 @@ export function BookingSuccessPage() {
 
   return (
     <Layout>
-      <div className="bg-gradient-to-br from-emerald-50/60 via-slate-50 to-blue-50/40 min-h-screen py-12">
-        <div className="max-w-2xl mx-auto px-4">
+      <div className="bg-gradient-to-br from-emerald-50/60 via-slate-50 to-blue-50/40 min-h-screen overflow-x-hidden py-8 sm:py-12">
+        <div className="max-w-2xl mx-auto px-3 sm:px-4">
           
           {/* Success Header */}
-          <div className="text-center mb-8">
-            <div className="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-5 shadow-lg shadow-emerald-200">
-              <CheckCircle2 className="w-12 h-12 text-emerald-600 animate-in zoom-in-75 duration-300" />
+          <div className="text-center mb-6 sm:mb-8">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-5 shadow-lg shadow-emerald-200">
+              <CheckCircle2 className="w-10 h-10 sm:w-12 sm:h-12 text-emerald-600 animate-in zoom-in-75 duration-300" />
             </div>
             
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-100 border border-emerald-300 text-emerald-800 text-xs font-black uppercase tracking-wider mb-3">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Payment & Booking Confirmed</span>
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-100 border border-emerald-300 text-emerald-800 text-[11px] sm:text-xs font-black uppercase tracking-wider mb-3">
+              <Sparkles className="w-3.5 h-3.5 shrink-0" />
+              <span>Payment &amp; Booking Confirmed</span>
             </div>
 
-            <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 mb-2 tracking-tight">
+            <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-900 mb-2 tracking-tight">
               Booking Confirmed Successfully! ✈️
             </h1>
             <p className="text-sm sm:text-base font-semibold text-slate-600 max-w-lg mx-auto">
@@ -108,22 +108,22 @@ export function BookingSuccessPage() {
           </div>
 
           {/* ── Official Booking ID Showcase Card ── */}
-          <div className="bg-gradient-to-r from-slate-900 via-blue-950 to-indigo-950 rounded-3xl p-6 sm:p-7 text-white shadow-xl border border-blue-500/30 mb-8 relative overflow-hidden">
+          <div className="bg-gradient-to-r from-slate-900 via-blue-950 to-indigo-950 rounded-2xl sm:rounded-3xl p-5 sm:p-7 text-white shadow-xl border border-blue-500/30 mb-6 sm:mb-8 relative overflow-hidden">
             <div className="absolute top-0 right-0 transform translate-x-8 -translate-y-8 w-36 h-36 bg-blue-500/20 rounded-full blur-2xl pointer-events-none" />
             
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <div>
-                <p className="text-xs font-bold text-blue-300 uppercase tracking-widest flex items-center gap-1.5 mb-1">
+              <div className="min-w-0">
+                <p className="text-[11px] sm:text-xs font-bold text-blue-300 uppercase tracking-widest flex items-center gap-1.5 mb-1">
                   <span>Official Booking Reference ID</span>
                 </p>
-                <div className="flex items-center gap-3">
-                  <span className="font-mono text-2xl sm:text-3xl font-black text-white tracking-wider">
+                <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
+                  <span className="font-mono text-2xl sm:text-3xl font-black text-white tracking-wider break-all">
                     {bookingId}
                   </span>
                   <button
                     onClick={handleCopyBookingId}
                     type="button"
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 active:scale-95 text-xs font-bold text-white transition-all border border-white/20"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 active:scale-95 text-xs font-bold text-white transition-all border border-white/20 shrink-0"
                     title="Copy Booking ID"
                   >
                     {copied ? (
@@ -142,9 +142,9 @@ export function BookingSuccessPage() {
               </div>
 
               {discountPercent > 0 && (
-                <div className="sm:text-right">
+                <div className="sm:text-right shrink-0">
                   <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-400/50 text-emerald-300 text-xs font-black">
-                    <Tag className="w-3 h-3" />
+                    <Tag className="w-3 h-3 shrink-0" />
                     <span>{discountPercent}% OFF Applied</span>
                   </span>
                   <p className="text-[11px] text-slate-300 mt-1">Special Discount Rate Locked</p>
@@ -217,11 +217,11 @@ export function BookingSuccessPage() {
             <div>
               <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Selected Itinerary</h3>
               <div className="bg-slate-50 p-4 rounded-xl border border-slate-200/80">
-                <div className="flex justify-between items-center mb-1.5">
-                  <p className="text-lg font-black text-slate-900">
+                <div className="flex flex-wrap justify-between items-start gap-2 mb-1.5">
+                  <p className="text-base sm:text-lg font-black text-slate-900 break-words">
                     {originLabel} → {destinationLabel}
                   </p>
-                  <span className="text-[11px] bg-emerald-100 text-emerald-800 px-2.5 py-0.5 rounded-full font-black">
+                  <span className="text-[11px] bg-emerald-100 text-emerald-800 px-2.5 py-0.5 rounded-full font-black shrink-0">
                     Confirmed
                   </span>
                 </div>
@@ -248,18 +248,18 @@ export function BookingSuccessPage() {
           </div>
 
           {/* Support Helpline Card */}
-          <div className="bg-emerald-50 border border-emerald-200/80 rounded-2xl p-6 mb-8 text-center">
-            <h3 className="text-base font-bold text-emerald-950 mb-1 flex items-center justify-center gap-2">
-              <Phone className="w-4 h-4 text-emerald-700" />
+          <div className="bg-emerald-50 border border-emerald-200/80 rounded-2xl p-5 sm:p-6 mb-8 text-center">
+            <h3 className="text-sm sm:text-base font-bold text-emerald-950 mb-1 flex flex-wrap items-center justify-center gap-2">
+              <Phone className="w-4 h-4 text-emerald-700 shrink-0" />
               <span>Need Immediate Assistance with Booking {bookingId}?</span>
             </h3>
             <p className="text-emerald-800 text-xs mb-4">Our ticketing desk is available 24/7 to answer questions.</p>
             
             <a
               href="tel:+18772518760"
-              className="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-xl font-black text-base shadow-md transition-all"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-4 sm:px-6 py-3 rounded-xl font-black text-sm sm:text-base shadow-md transition-all"
             >
-              <Phone className="w-4 h-4" />
+              <Phone className="w-4 h-4 shrink-0" />
               <span>Call Live Desk: +1 (877) 251-8760</span>
             </a>
           </div>

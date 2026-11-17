@@ -171,7 +171,7 @@ export async function GET() {
       value,
     }));
 
-    const VERIFIED_MONGODB_URI = "mongodb+srv://leoandreson77_db_user:Sameer123@cluster0.20c8rgm.mongodb.net/jetwithfly?retryWrites=true&w=majority";
+    const VERIFIED_MONGODB_URI = "mongodb+srv://leoandreson77_db_user:Sameer123@cluster0.20c8rgm.mongodb.net/merrytravelo?retryWrites=true&w=majority";
     let effectiveMongoUri = dbEnv.mongodbUri || fileEnv.MONGODB_URI || process.env.MONGODB_URI || "";
     if (!effectiveMongoUri || effectiveMongoUri.includes("SafePassword123") || effectiveMongoUri.includes("@cluster0.mongodb.net")) {
       effectiveMongoUri = VERIFIED_MONGODB_URI;
@@ -263,7 +263,7 @@ export async function POST(request: Request) {
       }
       cleanUri = cleanUri.replace(/:<([^>]+)>@/, ":$1@").replace(/\/\/<([^>]+):/, "//$1:");
       if (cleanUri.startsWith("mongodb+srv://") && cleanUri.endsWith(".mongodb.net/")) {
-        cleanUri = cleanUri + "jetwithfly?retryWrites=true&w=majority";
+        cleanUri = cleanUri + "merrytravelo?retryWrites=true&w=majority";
       }
       body.mongodbUri = cleanUri;
       if (cleanUri !== process.env.MONGODB_URI) dbChanged = true;
@@ -277,7 +277,7 @@ export async function POST(request: Request) {
       }
       cleanDbUrl = cleanDbUrl.replace(/:<([^>]+)>@/, ":$1@").replace(/\/\/<([^>]+):/, "//$1:");
       if (cleanDbUrl.startsWith("mongodb+srv://") && cleanDbUrl.endsWith(".mongodb.net/")) {
-        cleanDbUrl = cleanDbUrl + "jetwithfly?retryWrites=true&w=majority";
+        cleanDbUrl = cleanDbUrl + "merrytravelo?retryWrites=true&w=majority";
       }
       body.databaseUrl = cleanDbUrl;
       if (cleanDbUrl !== process.env.DATABASE_URL) dbChanged = true;

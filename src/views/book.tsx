@@ -586,29 +586,29 @@ export function BookingPage() {
 
   return (
     <Layout>
-      <div className="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(37,99,235,0.12),_transparent_30%),radial-gradient(circle_at_top_right,_rgba(16,185,129,0.10),_transparent_25%),linear-gradient(to_bottom,_rgba(248,250,252,1),_rgba(255,255,255,1))]">
-        <div className="max-w-7xl mx-auto px-4 py-10 lg:py-14">
-        <Link href="/search" className="inline-flex items-center text-muted-foreground hover:text-primary mb-8 transition-colors font-medium">
+      <div className="min-h-screen overflow-x-hidden bg-[radial-gradient(circle_at_top_left,_rgba(37,99,235,0.12),_transparent_30%),radial-gradient(circle_at_top_right,_rgba(16,185,129,0.10),_transparent_25%),linear-gradient(to_bottom,_rgba(248,250,252,1),_rgba(255,255,255,1))]">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 py-6 sm:py-10 lg:py-14">
+        <Link href="/search" className="inline-flex items-center text-sm sm:text-base text-muted-foreground hover:text-primary mb-5 sm:mb-8 transition-colors font-medium">
           <ArrowLeft className="w-4 h-4 mr-2" />
           Back to results
         </Link>
 
-        <div className="mb-8 lg:mb-10 grid grid-cols-1 xl:grid-cols-[1.25fr_0.75fr] gap-6 lg:gap-8 items-stretch">
-          <div className="rounded-[2rem] border border-border bg-card/95 backdrop-blur shadow-xl shadow-slate-200/50 p-8 lg:p-10">
+        <div className="mb-8 lg:mb-10 grid grid-cols-1 xl:grid-cols-[1.2fr_0.8fr] gap-5 lg:gap-8 items-start">
+          <div className="min-w-0 rounded-2xl sm:rounded-[2rem] border border-border bg-card/95 backdrop-blur shadow-xl shadow-slate-200/50 p-4 sm:p-6 lg:p-10">
             <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
               <div>
-                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary mb-2">Flight enquiry</p>
-                <h1 className="text-3xl lg:text-4xl font-extrabold tracking-tight text-foreground">Request a tailored quote</h1>
-                <p className="text-muted-foreground mt-3 max-w-2xl">
-                  Share your traveller details and preferences. We’ll collect the request and prepare it for follow-up instead of placing a booking immediately.
+                <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.18em] text-primary mb-2">Flight booking</p>
+                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-foreground">Review itinerary &amp; checkout</h1>
+                <p className="text-sm sm:text-base text-muted-foreground mt-2 sm:mt-3 max-w-2xl">
+                  Confirm your flight details below and complete payment to lock in your booking reference ID with up to 30% instant savings.
                 </p>
               </div>
               <div className="flex flex-wrap items-center gap-2">
-                <span className={cn("text-sm font-bold px-3 py-1 rounded-full border", isRoundTrip ? "bg-indigo-50 text-indigo-700 border-indigo-200" : "bg-emerald-50 text-emerald-700 border-emerald-200")}>
+                <span className={cn("text-xs sm:text-sm font-bold px-3 py-1 rounded-full border", isRoundTrip ? "bg-indigo-50 text-indigo-700 border-indigo-200" : "bg-emerald-50 text-emerald-700 border-emerald-200")}>
                   {isRoundTrip ? "↔ Round Trip" : "→ One Way"}
                 </span>
-                <span className="text-sm font-semibold px-3 py-1 rounded-full border bg-muted text-foreground border-border">{packageLabel}</span>
-                <span className="text-sm font-semibold px-3 py-1 rounded-full border bg-muted text-foreground border-border">{passengerCount} Traveller{passengerCount > 1 ? "s" : ""}</span>
+                <span className="text-xs sm:text-sm font-semibold px-3 py-1 rounded-full border bg-muted text-foreground border-border">{packageLabel}</span>
+                <span className="text-xs sm:text-sm font-semibold px-3 py-1 rounded-full border bg-muted text-foreground border-border">{passengerCount} Traveller{passengerCount > 1 ? "s" : ""}</span>
               </div>
             </div>
 
@@ -756,31 +756,34 @@ export function BookingPage() {
             </div>
           </div>
 
-          <div className="xl:sticky xl:top-8 space-y-6 self-start">
-            <div className="rounded-[2rem] border border-border bg-card shadow-xl shadow-slate-200/40 p-6">
-              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary mb-2">Inquiry summary</p>
-              <h2 className="text-2xl font-bold mb-3">Tell us how to reach you</h2>
-              <p className="text-sm text-muted-foreground mb-6">
-                No payment is taken here. This form captures the request so the team can review the trip and follow up.
+          <div className="min-w-0 xl:sticky xl:top-8 space-y-5 sm:space-y-6 self-start">
+            <div className="rounded-2xl sm:rounded-[2rem] border border-border bg-card shadow-xl shadow-slate-200/40 p-4 sm:p-6">
+              <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.18em] text-primary mb-2">Fare summary</p>
+              <h2 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-3">Instant Checkout &amp; 30% OFF</h2>
+              <p className="text-xs sm:text-sm text-muted-foreground mb-5">
+                Pay via NOWPayments to unlock an instant 30% discount and receive your official Booking Reference ID immediately.
               </p>
-              <div className="space-y-3 text-sm">
-                <div className="flex justify-between gap-4"><span className="text-muted-foreground">Route</span><span className="font-medium text-right">{originLabel} → {destinationLabel}</span></div>
-                <div className="flex justify-between gap-4"><span className="text-muted-foreground">Trip type</span><span className="font-medium">{isRoundTrip ? "Round trip" : "One way"}</span></div>
-                <div className="flex justify-between gap-4"><span className="text-muted-foreground">Travellers</span><span className="font-medium">{passengerCount}</span></div>
-                <div className="flex justify-between gap-4"><span className="text-muted-foreground">Fare estimate</span><span className="font-medium">{urlTotalPrice ? formatUsd(Number(urlTotalPrice) / 100) : formattedPrice}</span></div>
-              </div>
-              <div className="mt-6 rounded-2xl bg-slate-50 border border-slate-200 p-4 text-sm text-slate-600">
-                Add traveller details, contact preference, and special requests below. We’ll save it as a quote request.
+              <div className="space-y-2.5 text-sm">
+                <div className="flex justify-between gap-3"><span className="text-muted-foreground shrink-0">Route</span><span className="font-medium text-right break-words">{originLabel} → {destinationLabel}</span></div>
+                <div className="flex justify-between gap-3"><span className="text-muted-foreground shrink-0">Trip type</span><span className="font-medium">{isRoundTrip ? "Round trip" : "One way"}</span></div>
+                <div className="flex justify-between gap-3"><span className="text-muted-foreground shrink-0">Travellers</span><span className="font-medium">{passengerCount}</span></div>
+                <div className="flex justify-between gap-3"><span className="text-muted-foreground shrink-0">Regular fare</span><span className={paymentMethod === "nowpayments" ? "font-medium line-through text-muted-foreground" : "font-bold text-foreground"}>${totalDollars} USD</span></div>
+                {paymentMethod === "nowpayments" && (
+                  <div className="flex justify-between gap-3 pt-2 border-t border-border">
+                    <span className="font-bold text-emerald-700 dark:text-emerald-400">NOWPayments (30% OFF)</span>
+                    <span className="font-black text-base text-emerald-600 dark:text-emerald-400">${discountedDollars} USD</span>
+                  </div>
+                )}
               </div>
             </div>
 
-            <div className="rounded-[2rem] border border-border bg-card shadow-xl shadow-slate-200/40 p-8">
+            <div className="rounded-2xl sm:rounded-[2rem] border border-border bg-card shadow-xl shadow-slate-200/40 p-4 sm:p-6 lg:p-8">
           <div>
-            <h1 className="text-3xl font-extrabold mb-2">Passenger enquiry details</h1>
-            <p className="text-muted-foreground">Capture the traveller data needed to prepare a follow-up quote.</p>
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-extrabold mb-1.5">Passenger &amp; payment details</h2>
+            <p className="text-xs sm:text-sm text-muted-foreground">Enter passport-accurate traveller details and choose your payment method.</p>
           </div>
 
-          <form onSubmit={handleSubmit} className="mt-8 space-y-8">
+          <form onSubmit={handleSubmit} className="mt-6 sm:mt-8 space-y-6 sm:space-y-8">
             <div className="flex items-center gap-3 pb-6 border-b border-border">
               <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
                 <ShieldCheck className="w-5 h-5 text-primary" />
@@ -892,59 +895,72 @@ export function BookingPage() {
             </div>
 
             {/* ── Payment Gateway & Details Section ── */}
-            <div className="pt-6 border-t border-border space-y-6">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-emerald-100 dark:bg-emerald-950/60 rounded-full flex items-center justify-center text-emerald-600">
+            <div className="pt-6 border-t border-border space-y-5">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div className="flex items-center gap-3 min-w-0">
+                  <div className="w-10 h-10 bg-emerald-100 dark:bg-emerald-950/60 rounded-full flex items-center justify-center text-emerald-600 shrink-0">
                     <CreditCard className="w-5 h-5" />
                   </div>
-                  <div>
-                    <h3 className="font-bold text-lg text-foreground">Select Payment Method</h3>
-                    <p className="text-xs text-muted-foreground">Choose your payment gateway to secure your ticket & booking.</p>
+                  <div className="min-w-0">
+                    <h3 className="font-bold text-base sm:text-lg text-foreground leading-tight">Select Payment Method</h3>
+                    <p className="text-xs text-muted-foreground mt-0.5">Choose your payment gateway to secure your booking.</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-1.5 text-xs font-bold text-slate-500 bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-full">
-                  <Lock className="w-3.5 h-3.5 text-emerald-600" /> 256-Bit SSL Encrypted
+                <div className="inline-flex items-center gap-1.5 text-[11px] font-bold text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-full self-start sm:self-auto shrink-0">
+                  <Lock className="w-3.5 h-3.5 text-emerald-600 shrink-0" /> 256-Bit SSL Encrypted
                 </div>
               </div>
 
-              {/* ── Payment Method Selector ── */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              {/* ── Payment Method Selector (Full-width stacked cards for crisp mobile & desktop UX) ── */}
+              <div className="grid grid-cols-1 gap-4 pt-2">
                 {/* Option 1: NOWPayments (30% Instant Discount) */}
                 <div
+                  role="button"
+                  tabIndex={0}
                   onClick={() => setPaymentMethod("nowpayments")}
-                  className={`relative p-5 rounded-2xl border-2 cursor-pointer transition-all ${
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      setPaymentMethod("nowpayments");
+                    }
+                  }}
+                  className={`relative p-4 pt-5 sm:p-5 rounded-2xl border-2 cursor-pointer transition-all ${
                     paymentMethod === "nowpayments"
-                      ? "border-emerald-500 bg-emerald-50/60 dark:bg-emerald-950/20 shadow-md ring-2 ring-emerald-500/20"
+                      ? "border-emerald-500 bg-emerald-50/70 dark:bg-emerald-950/25 shadow-md ring-2 ring-emerald-500/20"
                       : "border-slate-200 dark:border-slate-800 hover:border-slate-300 bg-white dark:bg-slate-900"
                   }`}
                 >
-                  <div className="absolute -top-3 right-4 px-3 py-0.5 rounded-full bg-gradient-to-r from-emerald-600 to-green-600 text-white text-[10px] font-black uppercase tracking-wider shadow-sm flex items-center gap-1">
-                    <Sparkles className="w-3 h-3" />
+                  <div className="absolute -top-3 left-4 sm:left-auto sm:right-4 px-2.5 sm:px-3 py-0.5 rounded-full bg-gradient-to-r from-emerald-600 to-green-600 text-white text-[10px] font-black uppercase tracking-wider shadow-sm inline-flex items-center gap-1 whitespace-nowrap">
+                    <Sparkles className="w-3 h-3 shrink-0" />
                     <span>30% INSTANT DISCOUNT</span>
                   </div>
 
                   <div className="flex items-start gap-3">
-                    <div className={`w-5 h-5 rounded-full border-2 mt-0.5 flex items-center justify-center ${
+                    <div className={`w-5 h-5 rounded-full border-2 mt-0.5 shrink-0 flex items-center justify-center ${
                       paymentMethod === "nowpayments" ? "border-emerald-600 bg-emerald-600" : "border-slate-300"
                     }`}>
                       {paymentMethod === "nowpayments" && <div className="w-2 h-2 rounded-full bg-white" />}
                     </div>
-                    <div className="flex-1">
-                      <div className="flex items-center justify-between">
-                        <h4 className="font-black text-sm text-slate-900 dark:text-white flex items-center gap-1.5">
-                          <span>NOWPayments Gateway</span>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex flex-wrap items-center justify-between gap-2">
+                        <h4 className="font-black text-sm sm:text-base text-slate-900 dark:text-white leading-snug">
+                          NOWPayments Gateway
                         </h4>
-                        <span className="text-[10px] font-black bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-md">Save 30%</span>
+                        <div className="flex items-center gap-1.5 shrink-0">
+                          <span className="text-xs line-through text-slate-400 font-semibold">${totalDollars}</span>
+                          <span className="text-sm font-black text-emerald-700 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-950/60 px-2 py-0.5 rounded-md">
+                            ${discountedDollars} USD
+                          </span>
+                        </div>
                       </div>
-                      <p className="text-xs text-slate-500 mt-1">
-                        Pay with Crypto (USDT, BTC, ETH, LTC) or Card. <strong>Get 30% Instant Discount</strong>.
+                      <p className="text-xs text-slate-600 dark:text-slate-400 mt-1.5 leading-relaxed">
+                        Pay securely with Crypto (USDT, BTC, ETH, LTC) or Card. <strong className="text-emerald-700 dark:text-emerald-400">Save ${savingsDollars} USD (30% OFF)</strong> instantly.
                       </p>
-                      <div className="flex flex-wrap gap-1 mt-2.5">
-                        <span className="text-[9px] font-bold px-2 py-0.5 rounded bg-emerald-100 text-emerald-800">USDT</span>
-                        <span className="text-[9px] font-bold px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">Bitcoin</span>
-                        <span className="text-[9px] font-bold px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">Ethereum</span>
-                        <span className="text-[9px] font-bold px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">Cards</span>
+                      <div className="flex flex-wrap gap-1.5 mt-3">
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800">USDT</span>
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">Bitcoin</span>
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">Ethereum</span>
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">Cards</span>
                       </div>
                     </div>
                   </div>
@@ -952,31 +968,39 @@ export function BookingPage() {
 
                 {/* Option 2: Standard Credit / Debit Card */}
                 <div
+                  role="button"
+                  tabIndex={0}
                   onClick={() => setPaymentMethod("card")}
-                  className={`p-5 rounded-2xl border-2 cursor-pointer transition-all ${
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      setPaymentMethod("card");
+                    }
+                  }}
+                  className={`p-4 sm:p-5 rounded-2xl border-2 cursor-pointer transition-all ${
                     paymentMethod === "card"
                       ? "border-blue-500 bg-blue-50/50 dark:bg-blue-950/20 shadow-md ring-2 ring-blue-500/20"
                       : "border-slate-200 dark:border-slate-800 hover:border-slate-300 bg-white dark:bg-slate-900"
                   }`}
                 >
                   <div className="flex items-start gap-3">
-                    <div className={`w-5 h-5 rounded-full border-2 mt-0.5 flex items-center justify-center ${
+                    <div className={`w-5 h-5 rounded-full border-2 mt-0.5 shrink-0 flex items-center justify-center ${
                       paymentMethod === "card" ? "border-blue-600 bg-blue-600" : "border-slate-300"
                     }`}>
                       {paymentMethod === "card" && <div className="w-2 h-2 rounded-full bg-white" />}
                     </div>
-                    <div className="flex-1">
-                      <div className="flex items-center justify-between">
-                        <h4 className="font-black text-sm text-slate-900 dark:text-white">Credit / Debit Card</h4>
-                        <span className="text-[10px] font-semibold text-slate-400">Regular Fare</span>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex flex-wrap items-center justify-between gap-2">
+                        <h4 className="font-black text-sm sm:text-base text-slate-900 dark:text-white leading-snug">Credit / Debit Card</h4>
+                        <span className="text-xs font-bold text-slate-500 shrink-0">${totalDollars} USD · Regular Fare</span>
                       </div>
-                      <p className="text-xs text-slate-500 mt-1">
-                        Direct card authorization & travel ticket hold.
+                      <p className="text-xs text-slate-500 mt-1.5 leading-relaxed">
+                        Direct card authorization &amp; travel ticket hold.
                       </p>
-                      <div className="flex flex-wrap gap-1 mt-2.5">
-                        <span className="text-[9px] font-bold px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">Visa</span>
-                        <span className="text-[9px] font-bold px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">Mastercard</span>
-                        <span className="text-[9px] font-bold px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">Amex</span>
+                      <div className="flex flex-wrap gap-1.5 mt-3">
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">Visa</span>
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">Mastercard</span>
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">Amex</span>
                       </div>
                     </div>
                   </div>
@@ -985,25 +1009,23 @@ export function BookingPage() {
 
               {/* ── NOWPayments 30% OFF Special Summary Banner ── */}
               {paymentMethod === "nowpayments" && (
-                <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-emerald-500/15 via-green-500/10 to-teal-500/15 border-2 border-emerald-500/40 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-sm animate-in fade-in duration-200">
-                  <div className="flex items-center gap-3.5">
-                    <div className="w-11 h-11 rounded-2xl bg-emerald-600 text-white flex items-center justify-center shadow-md shrink-0">
-                      <Tag className="w-6 h-6" />
+                <div className="p-4 rounded-2xl bg-gradient-to-r from-emerald-500/15 via-green-500/10 to-teal-500/15 border-2 border-emerald-500/40 flex flex-col gap-3.5 shadow-sm animate-in fade-in duration-200">
+                  <div className="flex items-start gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center shadow-md shrink-0 mt-0.5">
+                      <Tag className="w-5 h-5" />
                     </div>
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs font-black text-emerald-700 dark:text-emerald-400 uppercase tracking-wider">
-                          ⚡ 30% Instant Discount Applied!
-                        </span>
-                      </div>
-                      <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
+                    <div className="min-w-0 flex-1">
+                      <span className="text-xs font-black text-emerald-700 dark:text-emerald-400 uppercase tracking-wider block">
+                        ⚡ 30% Instant Discount Applied!
+                      </span>
+                      <p className="text-xs text-slate-600 dark:text-slate-400 mt-1 leading-relaxed">
                         Regular Price: <span className="line-through text-slate-400">${totalDollars}</span> • You save <strong className="text-emerald-600 dark:text-emerald-400 font-bold">${savingsDollars} USD</strong>!
                       </p>
                     </div>
                   </div>
-                  <div className="sm:text-right shrink-0 bg-white/70 dark:bg-slate-900/60 p-3 rounded-xl border border-emerald-300/60">
-                    <span className="text-[11px] text-slate-500 block font-semibold">Special Discounted Total:</span>
-                    <span className="text-2xl font-black text-emerald-600 dark:text-emerald-400">${discountedDollars} USD</span>
+                  <div className="w-full flex items-center justify-between gap-2 bg-white/85 dark:bg-slate-900/75 px-4 py-3 rounded-xl border border-emerald-300/60">
+                    <span className="text-xs text-slate-600 dark:text-slate-300 font-semibold">Discounted Total:</span>
+                    <span className="text-xl sm:text-2xl font-black text-emerald-600 dark:text-emerald-400 shrink-0">${discountedDollars} USD</span>
                   </div>
                 </div>
               )}
@@ -1021,10 +1043,10 @@ export function BookingPage() {
 
               {/* ── Card Fields (Rendered only when Credit Card is selected) ── */}
               {paymentMethod === "card" && (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-slate-50/70 dark:bg-slate-800/30 p-5 rounded-2xl border border-slate-200 dark:border-slate-700/60 animate-in fade-in duration-200">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-slate-50/70 dark:bg-slate-800/30 p-3.5 sm:p-5 rounded-2xl border border-slate-200 dark:border-slate-700/60 animate-in fade-in duration-200">
                   {/* Cardholder Name */}
                   <div className="space-y-2 md:col-span-2">
-                    <div className="flex items-center justify-between">
+                    <div className="flex flex-wrap items-center justify-between gap-1">
                       <Label htmlFor="cardholderName" className="font-semibold text-foreground text-xs uppercase tracking-wider">Cardholder Name *</Label>
                       {touchedFields.cardholderName && !cardErrors.cardholderName && (
                         <span className="text-[11px] font-bold text-emerald-600 dark:text-emerald-400">✓ Valid Name</span>
@@ -1060,14 +1082,14 @@ export function BookingPage() {
 
                   {/* Card Number */}
                   <div className="space-y-2 md:col-span-2">
-                    <div className="flex items-center justify-between">
+                    <div className="flex flex-wrap items-center justify-between gap-1">
                       <Label htmlFor="cardNumber" className="font-semibold text-foreground text-xs uppercase tracking-wider">
                         Card Number *
                       </Label>
                       {touchedFields.cardNumber && !cardErrors.cardNumber ? (
                         <span className="text-[11px] font-bold text-emerald-600 dark:text-emerald-400">✓ Valid Card Number</span>
                       ) : (
-                        <span className="text-[11px] font-bold text-slate-400">Visa, Mastercard, Amex, RuPay, Discover</span>
+                        <span className="text-[10px] sm:text-[11px] font-bold text-slate-400">Visa, Mastercard, Amex, Discover</span>
                       )}
                     </div>
                     <div className="relative flex items-center">
@@ -1090,7 +1112,7 @@ export function BookingPage() {
                             setCardErrors((prev) => ({ ...prev, cardNumber: validateCardNumber(formatted) }));
                           }
                         }}
-                        className={`h-12 pl-11 pr-28 rounded-xl bg-background font-mono font-bold tracking-wider text-base ${
+                        className={`h-12 pl-11 pr-16 sm:pr-28 rounded-xl bg-background font-mono font-bold tracking-wider text-sm sm:text-base ${
                           touchedFields.cardNumber && cardErrors.cardNumber ? "border-red-500 ring-2 ring-red-500/20" : ""
                         }`}
                       />
@@ -1223,22 +1245,22 @@ export function BookingPage() {
             {paymentMethod === "nowpayments" ? (
               <Button
                 type="submit"
-                className="w-full h-14 text-lg font-black rounded-2xl bg-gradient-to-r from-emerald-600 via-green-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 shadow-xl shadow-emerald-600/20 hover:shadow-2xl hover:-translate-y-0.5 transition-all text-white flex items-center justify-center gap-2"
+                className="w-full min-h-[3.5rem] h-auto py-3.5 px-4 text-sm sm:text-base font-black rounded-2xl bg-gradient-to-r from-emerald-600 via-green-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 shadow-xl shadow-emerald-600/20 hover:shadow-2xl hover:-translate-y-0.5 transition-all text-white whitespace-normal text-center leading-snug flex items-center justify-center gap-2"
                 disabled={nowPaymentsLoading}
               >
                 {nowPaymentsLoading ? (
-                  "Generating Booking ID & Payment..."
+                  <span>Generating Booking ID &amp; Payment...</span>
                 ) : (
                   <>
-                    <Sparkles className="w-5 h-5" />
-                    <span>Pay with NOWPayments (30% Discount) • ${discountedDollars} USD</span>
+                    <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 shrink-0" />
+                    <span>Pay with NOWPayments (30% OFF) • ${discountedDollars} USD</span>
                   </>
                 )}
               </Button>
             ) : (
               <Button
                 type="submit"
-                className="w-full h-14 text-lg font-bold rounded-2xl bg-gradient-to-r from-primary to-cyan-600 shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all"
+                className="w-full min-h-[3.5rem] h-auto py-3.5 px-4 text-sm sm:text-base font-bold rounded-2xl bg-gradient-to-r from-primary to-cyan-600 shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all whitespace-normal text-center leading-snug"
                 disabled={bookingMutation.isPending}
               >
                 {bookingMutation.isPending ? "Processing Payment & Request..." : `Complete Booking & Confirm • ${totalFormattedPrice}`}

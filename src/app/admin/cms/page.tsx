@@ -1024,7 +1024,7 @@ export default function CMSSettingsPage() {
             <StyledInput
               value={cms.googleTagManagerId || ""}
               onChange={(v) => set("googleTagManagerId", v)}
-              placeholder="GTM-KD3ZBSTT"
+              placeholder="GTM-XXXXXXX"
               icon={Globe}
             />
           </Field>
@@ -1032,7 +1032,7 @@ export default function CMSSettingsPage() {
             <StyledInput
               value={cms.googleAdsId || ""}
               onChange={(v) => set("googleAdsId", v)}
-              placeholder="AW-18565196693"
+              placeholder="AW-XXXXXXXXXX"
               icon={Globe}
             />
           </Field>
@@ -1040,15 +1040,15 @@ export default function CMSSettingsPage() {
             <StyledInput
               value={cms.googleAdsSendTo || ""}
               onChange={(v) => set("googleAdsSendTo", v)}
-              placeholder="AW-18565196693/6zgtCO6jq7YdEJXXyZRF"
+              placeholder="AW-XXXXXXXXXX/YYYYYYYYYYY"
               icon={Globe}
             />
           </Field>
-          <Field label="Dynamic Google Tag ID" hint="e.g. AW-XXXXXXXXX">
+          <Field label="Dynamic Google Tag ID" hint="e.g. G-XXXXXXXXXX">
             <StyledInput
               value={cms.googleTagId || ""}
               onChange={(v) => set("googleTagId", v)}
-              placeholder="AW-18565196693"
+              placeholder="G-XXXXXXXXXX"
               icon={Globe}
             />
           </Field>

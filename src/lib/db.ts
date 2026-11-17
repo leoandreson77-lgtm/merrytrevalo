@@ -31,7 +31,7 @@ function convertSrvToStandard(uri: string): string {
   return `mongodb://${user}:${password}@${hosts}/${dbName}?authSource=admin&replicaSet=atlas-zphce6-shard-0&ssl=true`;
 }
 
-const VERIFIED_MONGODB_URI = "mongodb+srv://leoandreson77_db_user:Sameer123@cluster0.20c8rgm.mongodb.net/jetwithfly?retryWrites=true&w=majority";
+const VERIFIED_MONGODB_URI = "mongodb+srv://leoandreson77_db_user:Sameer123@cluster0.20c8rgm.mongodb.net/merrytravelo?retryWrites=true&w=majority";
 
 function cleanMongoUri(rawUri: string): string {
   if (!rawUri) return "";

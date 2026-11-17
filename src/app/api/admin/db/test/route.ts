@@ -48,9 +48,9 @@ export async function POST(request: Request) {
       }, { status: 400 });
     }
 
-    // Ensure database name exists in URI, default to /jetwithfly if missing
+    // Ensure database name exists in URI, default to /merrytravelo if missing
     if (cleanUri.startsWith("mongodb+srv://") && cleanUri.endsWith(".mongodb.net/")) {
-      cleanUri = cleanUri + "jetwithfly?retryWrites=true&w=majority";
+      cleanUri = cleanUri + "merrytravelo?retryWrites=true&w=majority";
     }
 
     // Create an isolated test connection with a 5s timeout
@@ -62,7 +62,7 @@ export async function POST(request: Request) {
 
     const db = testConnection.db;
     let collectionCount = 0;
-    let dbName = testConnection.name || "jetwithfly";
+    let dbName = testConnection.name || "merrytravelo";
 
     if (db) {
       await db.command({ ping: 1 });

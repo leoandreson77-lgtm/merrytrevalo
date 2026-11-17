@@ -153,56 +153,17 @@ const websiteSchema = {
 
 // ─────────────────────────────────────────────────────
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  let customHeadScript = process.env.CUSTOM_HEAD_SCRIPT || "";
-  const gtmId = process.env.NEXT_PUBLIC_GTM_ID || "GTM-KD3ZBSTT";
+  const customHeadScript = process.env.CUSTOM_HEAD_SCRIPT || "";
 
   return (
     <html lang="en" className={inter.variable}>
       <head>
-        {/* ── Google Tag Manager & Google Ads Tag (AW-18565196693) ── */}
-        <script async src={`https://www.googletagmanager.com/gtm.js?id=${gtmId}`} />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', '${gtmId}');
-              gtag('config', 'AW-18565196693');
-
-              function gtag_report_conversion(url) {
-                var callback = function () {
-                  if (typeof(url) != 'undefined') {
-                    window.location = url;
-                  }
-                };
-                if (typeof window.gtag === 'function') {
-                  window.gtag('event', 'conversion', {
-                    'send_to': 'AW-18565196693/6zgtCO6jq7YdEJXXyZRF',
-                    'event_callback': callback
-                  });
-                } else if (callback) {
-                  callback();
-                }
-                return false;
-              }
-              window.gtag_report_conversion = gtag_report_conversion;
-
-              (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-              j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-              'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-              })(window,document,'script','dataLayer','${gtmId}');
-            `,
-          }}
-        />
-
         {/* ── Custom Header Script from Admin Panel (if set) ── */}
         {customHeadScript && (
           <script dangerouslySetInnerHTML={{ __html: customHeadScript }} />
         )}
 
-        {/* ── CRM call click logging & Google Ads Call Conversion Dispatcher ── */}
+        {/* ── CRM call click logging ── */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -212,20 +173,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                   while (target && target !== document) {
                     if (target.tagName === 'A' && target.href && target.href.indexOf('tel:') === 0) {
                       try {
-                        // Dispatch Google Ads Click to Call Conversion
-                        if (typeof window.gtag === 'function') {
-                          window.gtag('event', 'conversion', {
-                            'send_to': 'AW-18565196693/6zgtCO6jq7YdEJXXyZRF'
-                          });
-                        }
-                        if (window.dataLayer) {
-                          window.dataLayer.push({
-                            event: 'phone_call_click',
-                            phone_number: target.href.replace('tel:', ''),
-                            page_path: window.location.pathname
-                          });
-                        }
-
                         var urlParams = new URLSearchParams(window.location.search);
                         fetch('/api/calls/click', {
                           method: 'POST',
@@ -280,15 +227,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       </head>
 
       <body className={inter.className}>
-        {/* ── Google Tag Manager (noscript) ── */}
-        <noscript>
-          <iframe
-            src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`}
-            height="0"
-            width="0"
-            style={{ display: "none", visibility: "hidden" }}
-          />
-        </noscript>
         <Providers>
           {children}
           <Toaster />

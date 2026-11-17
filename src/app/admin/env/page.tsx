@@ -626,7 +626,7 @@ export default function AdminEnvConfigPage() {
                 </p>
                 <div className="p-2.5 rounded bg-slate-50 dark:bg-slate-950 font-mono text-[11px] border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 break-all">
                   <span className="text-emerald-600 font-bold">✓ SAHI:</span><br />
-                  mongodb+srv://leoandreson77_db_user:Sameer123@cluster0.20c8rgm.mongodb.net/jetwithfly?retryWrites=true&w=majority
+                  mongodb+srv://leoandreson77_db_user:Sameer123@cluster0.20c8rgm.mongodb.net/merrytravelo?retryWrites=true&w=majority
                 </div>
                 <div className="p-2 rounded bg-red-50 dark:bg-red-950/40 font-mono text-[11px] text-red-600 border border-red-200 dark:border-red-900">
                   <span className="font-bold">✗ GALAT:</span> :&lt;Sameer123&gt;@ (Do NOT keep brackets!)

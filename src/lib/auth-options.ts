@@ -31,7 +31,6 @@ export const authOptions: NextAuthOptions = {
         const isMasterMatch =
           (inputEmail === masterAdminEmail && inputPassword === masterAdminPassword) ||
           (inputEmail === "admin@merrytravelo.com" && inputPassword === "Admin@12345") ||
-          (inputEmail === "admin@jetwithfly.com" && inputPassword === "Admin@12345") ||
           (inputEmail === "samm.aali12@gmail.com" && inputPassword === "Sameer123");
 
         if (isMasterMatch) {

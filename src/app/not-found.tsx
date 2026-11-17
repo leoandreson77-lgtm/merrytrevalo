@@ -269,7 +269,7 @@ export default function NotFound() {
 
         {/* Error code */}
         <p className="mt-8 text-[10px] text-slate-700 font-mono tracking-widest">
-          ERROR_CODE: PAGE_NOT_FOUND • HTTP_STATUS: 404 • JETWITHFLY_NAVIGATION_ENGINE
+          ERROR_CODE: PAGE_NOT_FOUND • HTTP_STATUS: 404 • MERRYTRAVELO_NAVIGATION_ENGINE
         </p>
       </div>
 
