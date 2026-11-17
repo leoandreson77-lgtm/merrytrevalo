@@ -75,6 +75,10 @@ export async function connectToDatabase() {
   if (!cached.promise) {
     const opts = {
       bufferCommands: false,
+      serverSelectionTimeoutMS: 8000,
+      connectTimeoutMS: 8000,
+      socketTimeoutMS: 15000,
+      maxPoolSize: 10,
     };
 
     const uri = getMongoUri();

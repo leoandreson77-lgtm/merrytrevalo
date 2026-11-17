@@ -172,10 +172,12 @@ export async function GET() {
     if (!effectiveMongoUri || effectiveMongoUri.includes("SafePassword123") || effectiveMongoUri.includes("@cluster0.mongodb.net")) {
       effectiveMongoUri = VERIFIED_MONGODB_URI;
     }
+    effectiveMongoUri = effectiveMongoUri.replace(/\/jetwithfly(\?|$)/i, "/merrytravelo$1");
     let effectiveDatabaseUrl = dbEnv.databaseUrl || fileEnv.DATABASE_URL || process.env.DATABASE_URL || effectiveMongoUri;
     if (!effectiveDatabaseUrl || effectiveDatabaseUrl.includes("SafePassword123") || effectiveDatabaseUrl.includes("@cluster0.mongodb.net")) {
       effectiveDatabaseUrl = effectiveMongoUri;
     }
+    effectiveDatabaseUrl = effectiveDatabaseUrl.replace(/\/jetwithfly(\?|$)/i, "/merrytravelo$1");
 
     const config = {
       // 1. Database

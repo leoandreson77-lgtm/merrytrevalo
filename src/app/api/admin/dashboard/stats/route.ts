@@ -224,7 +224,7 @@ export async function GET(request: Request) {
         };
       })();
 
-      const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error("Database connection timed out")), 2000));
+      const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error("Database connection timed out")), 8000));
       const stats = await Promise.race([dbPromise, timeoutPromise]);
       return NextResponse.json(stats);
     } catch (dbError: any) {

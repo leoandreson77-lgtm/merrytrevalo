@@ -85,13 +85,21 @@ export const authOptions: NextAuthOptions = {
         token.role = (user as any).role;
         token.vendorId = (user as any).vendorId;
         token.tokenVersion = (user as any).tokenVersion || 0;
-      } else if (token.email) {
-        // Validate tokenVersion against database on session check
+        token.isMasterAdmin = (user as any).id === "master_admin_root";
+      } else if (token.email && !token.isMasterAdmin) {
+        // Validate tokenVersion against database on session check (bounded timeout)
         try {
-          await connectToDatabase();
-          const dbUser = await User.findOne({ email: (token.email as string).toLowerCase() });
-          if (dbUser && (dbUser.tokenVersion || 0) > ((token.tokenVersion as number) || 0)) {
-            // Token invalidated by "Logout All Devices"
+          await Promise.race([
+            (async () => {
+              await connectToDatabase();
+              const dbUser = await User.findOne({ email: (token.email as string).toLowerCase() });
+              if (dbUser && (dbUser.tokenVersion || 0) > ((token.tokenVersion as number) || 0)) {
+                (token as any)._invalidated = true;
+              }
+            })(),
+            new Promise((resolve) => setTimeout(resolve, 1500)),
+          ]);
+          if ((token as any)._invalidated) {
             return {} as any;
           }
         } catch (err) {

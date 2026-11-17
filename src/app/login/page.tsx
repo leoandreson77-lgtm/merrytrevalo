@@ -56,13 +56,19 @@ function LoginPageContent() {
           description: res.error,
           variant: "destructive",
         });
-      } else {
+      } else if (res?.ok) {
         toast({
           title: "Welcome back!",
-          description: "Successfully signed in.",
+          description: "Opening Admin Console...",
         });
-        router.push(callbackUrl);
-        router.refresh();
+        const safeTarget = callbackUrl && callbackUrl.startsWith("/") ? callbackUrl : "/admin";
+        window.location.assign(safeTarget);
+      } else {
+        toast({
+          title: "Sign in failed",
+          description: "Unable to create session. Please check your credentials and try again.",
+          variant: "destructive",
+        });
       }
     } catch (err: any) {
       toast({
