@@ -1,7 +1,13 @@
 function sanitizeValue(val: string | undefined, fallback: string): string {
   if (!val || typeof val !== "string") return fallback;
   const lower = val.toLowerCase();
-  if (lower.includes("skyswift") || lower.includes("flightitude") || lower.includes("jetwithfly")) {
+  const digits = val.replace(/\D/g, "");
+  if (
+    lower.includes("skyswift") ||
+    lower.includes("flightitude") ||
+    lower.includes("jetwithfly") ||
+    digits.includes("8555106415")
+  ) {
     return fallback;
   }
   return val;

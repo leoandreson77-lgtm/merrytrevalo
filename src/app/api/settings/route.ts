@@ -15,8 +15,13 @@ export async function GET() {
     await connectToDatabase();
     
     const config = await CMSConfig.findOne({ key: SETTINGS_KEY });
+    const rawEnvPhone = process.env.NEXT_PUBLIC_COMPANY_PHONE || "";
+    const defaultPhone = rawEnvPhone && !rawEnvPhone.replace(/\D/g, "").includes("8555106415")
+      ? rawEnvPhone
+      : "+18772518760";
+
     const defaults = {
-      callNumber: process.env.NEXT_PUBLIC_COMPANY_PHONE || "+18772518760",
+      callNumber: defaultPhone,
       callLabel: "Call Now",
     };
     const settingsValue: Record<string, any> = config?.value ? { ...defaults, ...config.value } : { ...defaults };
@@ -27,17 +32,17 @@ export async function GET() {
     settingsValue.googleAdsId = null;
     settingsValue.googleAdsSendTo = null;
 
-    // If config has empty callNumber, update to active TFN or default
-    if (!settingsValue.callNumber) {
+    // If config has empty or stale JetWithFly phone, update to active TFN or default
+    if (!settingsValue.callNumber || String(settingsValue.callNumber).replace(/\D/g, "").includes("8555106415")) {
       const activeTfn = await TFN.findOne({ isDefault: true, status: "active" }) 
         || await TFN.findOne({ status: "active" });
-      settingsValue.callNumber = activeTfn?.number || process.env.NEXT_PUBLIC_COMPANY_PHONE || "+18772518760";
+      settingsValue.callNumber = activeTfn?.number || defaultPhone;
     }
 
     return NextResponse.json(settingsValue);
   } catch (error: any) {
     return NextResponse.json({
-      callNumber: process.env.NEXT_PUBLIC_COMPANY_PHONE || "+18772518760",
+      callNumber: "+18772518760",
       callLabel: "Call Now",
       googleTagId: null,
       gtmId: null,
