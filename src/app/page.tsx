@@ -70,55 +70,69 @@ const features = [
 export default function HomePage() {
   return (
     <Layout>
-      {/* ── 1. Hero Section ── */}
-      <section className="relative w-full overflow-hidden pt-14 pb-36 sm:pb-40 bg-[#102B4E]">
-        {/* Background Aviation Video with Navy Overlay */}
-        <video
-          className="absolute inset-0 w-full h-full object-cover z-0 opacity-25 mix-blend-luminosity pointer-events-none"
-          src="https://v.ftcdn.net/02/21/46/45/700_F_221464511_i2BmrjoVhnAWB4KFZqbNIut4a46H2gNa.mp4"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="none"
-          poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1' height='1'%3E%3Crect fill='%23102B4E'/%3E%3C/svg%3E"
+      {/* ── 1. Hero Section (Option 1: Bright, High-Energy Modern Travel Portal) ── */}
+      <section className="relative w-full overflow-hidden pt-14 pb-36 sm:pb-44 bg-[#091D38]">
+        {/* Cinematic High-Res Aviation Background Image */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=2600&q=85"
+          alt="Airliner wing flying over sunlit clouds and bright sky"
+          className="absolute inset-0 w-full h-full object-cover object-[center_35%] z-0 pointer-events-none select-none"
+          loading="eager"
         />
 
-        {/* Navy Gradient Overlay for high-contrast readability */}
-        <div className="absolute inset-0 z-10 bg-gradient-to-b from-[#102B4E]/95 via-[#102B4E]/80 to-[#102B4E]" />
+        {/* Vibrant Multi-Stop Sky Overlay (Maintains Sunlight & Cloud Detail) */}
+        <div className="absolute inset-0 z-10 bg-gradient-to-b from-[#07172E]/75 via-[#0C274E]/45 to-[#081B33]/85" />
+
+        {/* Ambient Sky Glow Accent */}
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-sky-400/25 blur-[130px] rounded-full pointer-events-none z-10" />
+
+        {/* Decorative Grid Mesh */}
+        <div 
+          className="absolute inset-0 z-10 opacity-15 pointer-events-none"
+          style={{
+            backgroundImage: "radial-gradient(circle at 50% 50%, rgba(255,255,255,0.25) 1px, transparent 1px)",
+            backgroundSize: "36px 36px"
+          }}
+        />
 
         {/* Hero Copy */}
         <div className="relative z-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white space-y-4">
           
           {/* US Domestic Reassurance Badge */}
-          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full shadow-sm">
-            <span className="w-2 h-2 rounded-full bg-[#3B82F6] animate-pulse"></span>
+          <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-md border border-white/30 text-white text-xs font-black uppercase tracking-widest px-4 py-2 rounded-full shadow-lg">
+            <span className="flex h-2.5 w-2.5 relative">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-cyan-400"></span>
+            </span>
             <span>United States Domestic Flight Search</span>
           </div>
 
-          {/* Primary H1 Heading for Google Ads Intent */}
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight leading-tight drop-shadow-sm text-white">
+          {/* Primary H1 Heading */}
+          <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight leading-[1.1] text-white drop-shadow-xl">
             Your Next Journey <br className="hidden sm:inline" />
-            <span className="text-[#3B82F6]">Starts Here.</span>
+            <span className="bg-gradient-to-r from-sky-200 via-cyan-100 to-white bg-clip-text text-transparent underline decoration-[#38BDF8]/40 decoration-wavy underline-offset-8">
+              Starts Here.
+            </span>
           </h1>
 
           {/* Supporting Copy */}
-          <p className="text-base sm:text-lg md:text-xl max-w-2xl mx-auto text-slate-200 font-medium leading-relaxed">
-            Explore domestic flights across the United States. Compare available options and book your next journey online with confidence.
+          <p className="text-base sm:text-lg md:text-xl max-w-2xl mx-auto text-slate-100 font-medium leading-relaxed drop-shadow-md">
+            Explore domestic flights across the United States. Compare live schedules, unlock exclusive fares, and book online with confidence.
           </p>
 
-          {/* Micro trust indicators */}
-          <div className="pt-2 flex flex-wrap items-center justify-center gap-4 sm:gap-8 text-xs text-slate-300 font-semibold">
-            <span className="flex items-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4 text-[#3B82F6]" />
+          {/* Micro trust indicators (Glass chips) */}
+          <div className="pt-2 flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs text-slate-100 font-bold">
+            <span className="inline-flex items-center gap-1.5 bg-black/25 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/20 shadow-xs">
+              <Sparkles className="w-4 h-4 text-amber-300" />
               500+ Airlines Compared
             </span>
-            <span className="flex items-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4 text-[#3B82F6]" />
+            <span className="inline-flex items-center gap-1.5 bg-black/25 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/20 shadow-xs">
+              <ShieldCheck className="w-4 h-4 text-emerald-400" />
               No Hidden Booking Fees
             </span>
-            <span className="flex items-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4 text-[#3B82F6]" />
+            <span className="inline-flex items-center gap-1.5 bg-black/25 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/20 shadow-xs">
+              <CheckCircle2 className="w-4 h-4 text-cyan-300" />
               Instant Confirmation
             </span>
           </div>

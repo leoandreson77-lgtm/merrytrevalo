@@ -257,7 +257,7 @@ export function SearchWidget() {
   return (
     <div id="search-flights" className="w-full max-w-6xl mx-auto -mt-20 sm:-mt-24 relative z-20 px-3 sm:px-4">
       {/* ── Main Container ── */}
-      <div className="bg-white rounded-3xl shadow-[0_20px_60px_-15px_rgba(16,43,78,0.18)] border border-slate-200/90 backdrop-blur-xl relative transition-all">
+      <div className="bg-white rounded-3xl shadow-[0_25px_60px_-15px_rgba(2,132,199,0.22)] border border-slate-200/90 backdrop-blur-xl relative transition-all">
         
         {/* ── Top Header: Trip Type Tabs + Popular Routes ── */}
         <div className="bg-[#F5F8FC] px-4 sm:px-6 py-3.5 border-b border-slate-200/80 rounded-t-3xl">
@@ -278,8 +278,8 @@ export function SearchWidget() {
                     className={cn(
                       "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer",
                       isActive
-                        ? "bg-[#102B4E] text-white shadow-sm"
-                        : "text-[#64748B] hover:text-[#102B4E]"
+                        ? "bg-gradient-to-r from-[#0284C7] to-[#0369A1] text-white shadow-md shadow-sky-500/25"
+                        : "text-[#64748B] hover:text-[#0284C7]"
                     )}
                   >
                     {type === "round" ? "Round Trip" : type === "oneway" ? "One Way" : "Multi-City"}
@@ -290,7 +290,7 @@ export function SearchWidget() {
 
             {/* Micro reassurance tag */}
             <div className="hidden md:flex items-center gap-2 text-xs text-[#64748B] font-semibold">
-              <span className="w-2 h-2 rounded-full bg-[#2676D9]"></span>
+              <span className="w-2 h-2 rounded-full bg-[#0284C7]"></span>
               <span>Search 500+ Airlines &bull; Real-Time US Domestic Fares &bull; No Booking Fees</span>
             </div>
           </div>
@@ -683,8 +683,8 @@ export function SearchWidget() {
                     className={cn(
                       "px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer",
                       selectedFare === fare
-                        ? "bg-[#102B4E] text-white shadow-xs"
-                        : "bg-white border border-slate-200 text-[#172B46] hover:border-[#2676D9]"
+                        ? "bg-[#0284C7] text-white shadow-xs"
+                        : "bg-white border border-slate-200 text-[#172B46] hover:border-[#0284C7]"
                     )}
                   >
                     {fare}
@@ -696,7 +696,7 @@ export function SearchWidget() {
               <Button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full sm:w-auto bg-[#2676D9] hover:bg-[#102B4E] text-white font-black text-base px-10 py-6 rounded-2xl shadow-lg shadow-[#2676D9]/25 hover:shadow-xl hover:scale-[1.01] active:scale-[0.99] transition-all cursor-pointer flex items-center justify-center gap-2"
+                className="w-full sm:w-auto bg-gradient-to-r from-[#0284C7] via-[#2563EB] to-[#1D4ED8] hover:from-[#0369A1] hover:to-[#1E40AF] text-white font-black text-base px-10 py-6 rounded-2xl shadow-xl shadow-blue-500/30 hover:shadow-2xl hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer flex items-center justify-center gap-2"
               >
                 {isSubmitting ? (
                   <>

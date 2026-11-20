@@ -37,12 +37,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
           
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5 group cursor-pointer">
-            <div className="w-10 h-10 rounded-xl bg-[#102B4E] text-white flex items-center justify-center font-black shadow-sm group-hover:bg-[#2676D9] transition-colors duration-200">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#0284C7] to-[#2563EB] text-white flex items-center justify-center font-black shadow-md shadow-blue-500/20 group-hover:scale-105 transition-transform duration-200">
               <Plane className="w-5 h-5 -rotate-45 text-white" />
             </div>
             <div className="flex flex-col">
-              <span className="font-black text-xl sm:text-2xl text-[#102B4E] tracking-tight leading-none">
-                MerryTravelo<span className="text-[#2676D9]">.</span>
+              <span className="font-black text-xl sm:text-2xl text-[#0F2744] tracking-tight leading-none">
+                MerryTravelo<span className="text-[#0284C7]">.</span>
               </span>
               <span className="text-[10px] font-bold text-[#64748B] tracking-wider uppercase mt-0.5">
                 US Flight Booking
@@ -93,16 +93,17 @@ export function Layout({ children }: { children: React.ReactNode }) {
           {/* Header Action: Secondary Support Call */}
           <div className="flex items-center gap-2.5">
             <CompanyPhone 
-              className="inline-flex items-center gap-2 bg-[#F5F8FC] hover:bg-slate-100 border border-slate-200 px-3.5 py-2 rounded-full text-xs font-bold text-[#102B4E] transition-all shadow-xs"
+              className="inline-flex items-center gap-2.5 bg-gradient-to-r from-sky-50 to-blue-50 hover:from-sky-100 hover:to-blue-100 border border-sky-200 px-4 py-2 rounded-full text-xs font-bold text-[#0F2744] transition-all shadow-xs group"
             >
               {(_rawNumber, displayVal) => (
                 <>
-                  <span className="flex items-center justify-center w-5 h-5 bg-[#2676D9] text-white rounded-full">
-                    <Phone className="w-3 h-3" />
+                  <span className="relative flex items-center justify-center w-6 h-6 bg-[#0284C7] text-white rounded-full shadow-xs">
+                    <span className="absolute inset-0 rounded-full bg-[#0284C7]/50 animate-ping opacity-50" />
+                    <Phone className="w-3 h-3 relative z-10" />
                   </span>
                   <div className="flex flex-col text-left leading-none">
-                    <span className="text-[10px] font-medium text-[#64748B] hidden lg:inline">Phone Support</span>
-                    <span className="font-bold text-[#102B4E] text-xs sm:text-sm">{displayVal}</span>
+                    <span className="text-[10px] font-bold text-[#0284C7] uppercase tracking-wider">24/7 Phone Desk</span>
+                    <span className="font-black text-[#0F2744] text-xs sm:text-sm font-mono mt-0.5">{displayVal}</span>
                   </div>
                 </>
               )}

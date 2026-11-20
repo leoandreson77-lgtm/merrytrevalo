@@ -252,12 +252,12 @@ export default async function DynamicLandingPage({ params }: PageProps) {
           
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5 group cursor-pointer">
-            <div className="w-10 h-10 rounded-xl bg-[#102B4E] text-white flex items-center justify-center font-black shadow-sm group-hover:bg-[#2676D9] transition-colors duration-200">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#0284C7] to-[#2563EB] text-white flex items-center justify-center font-black shadow-md shadow-blue-500/20 group-hover:scale-105 transition-transform duration-200">
               <Plane className="w-5 h-5 -rotate-45 text-white" />
             </div>
             <div className="flex flex-col">
-              <span className="font-black text-xl sm:text-2xl text-[#102B4E] tracking-tight leading-none">
-                MerryTravelo<span className="text-[#2676D9]">.</span>
+              <span className="font-black text-xl sm:text-2xl text-[#0F2744] tracking-tight leading-none">
+                MerryTravelo<span className="text-[#0284C7]">.</span>
               </span>
               <span className="text-[10px] font-bold text-[#64748B] tracking-wider uppercase mt-0.5">
                 US Flight Booking
@@ -310,14 +310,15 @@ export default async function DynamicLandingPage({ params }: PageProps) {
             <a
               href={`tel:${callPhone}`}
               id="lp-nav-call"
-              className="inline-flex items-center gap-2 bg-[#F5F8FC] hover:bg-slate-100 border border-slate-200 px-3.5 py-2 rounded-full text-xs font-bold text-[#102B4E] transition-all shadow-xs google-phone-number cursor-pointer"
+              className="inline-flex items-center gap-2.5 bg-gradient-to-r from-sky-50 to-blue-50 hover:from-sky-100 hover:to-blue-100 border border-sky-200 px-4 py-2 rounded-full text-xs font-bold text-[#0F2744] transition-all shadow-xs group cursor-pointer google-phone-number"
             >
-              <span className="flex items-center justify-center w-5 h-5 bg-[#2676D9] text-white rounded-full">
-                <Phone className="w-3 h-3" />
+              <span className="relative flex items-center justify-center w-6 h-6 bg-[#0284C7] text-white rounded-full shadow-xs">
+                <span className="absolute inset-0 rounded-full bg-[#0284C7]/50 animate-ping opacity-50" />
+                <Phone className="w-3 h-3 relative z-10" />
               </span>
               <div className="flex flex-col text-left leading-none">
-                <span className="text-[10px] font-medium text-[#64748B] hidden lg:inline">Phone Support</span>
-                <span className="font-bold text-[#102B4E] text-xs sm:text-sm font-mono">{formattedPhone}</span>
+                <span className="text-[10px] font-bold text-[#0284C7] uppercase tracking-wider">24/7 Phone Desk</span>
+                <span className="font-black text-[#0F2744] text-xs sm:text-sm font-mono mt-0.5">{formattedPhone}</span>
               </div>
             </a>
           </div>
@@ -327,54 +328,68 @@ export default async function DynamicLandingPage({ params }: PageProps) {
       {/* ── Main Content Body ── */}
       <main className="flex-1">
         
-        {/* ── 1. Hero Section (matching Image 1 visual style) ── */}
-        <section className="relative w-full overflow-hidden pt-14 pb-28 sm:pb-36 bg-[#102B4E]">
-          {/* Background Aviation Video with Navy Overlay matching Image 1 */}
-          <video
-            className="absolute inset-0 w-full h-full object-cover z-0 opacity-25 mix-blend-luminosity pointer-events-none"
-            src="https://v.ftcdn.net/02/21/46/45/700_F_221464511_i2BmrjoVhnAWB4KFZqbNIut4a46H2gNa.mp4"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="none"
-            poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1' height='1'%3E%3Crect fill='%23102B4E'/%3E%3C/svg%3E"
+        {/* ── 1. Hero Section (Option 1: Bright, High-Energy Modern Travel Portal) ── */}
+        <section className="relative w-full overflow-hidden pt-14 pb-28 sm:pb-36 bg-[#091D38]">
+          {/* Cinematic High-Res Aviation Background Image */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=2600&q=85"
+            alt="Commercial airliner flying through blue skies and clouds"
+            className="absolute inset-0 w-full h-full object-cover object-[center_35%] z-0 pointer-events-none select-none"
+            loading="eager"
           />
 
-          {/* Navy Gradient Overlay for high-contrast readability */}
-          <div className="absolute inset-0 z-10 bg-gradient-to-b from-[#102B4E]/95 via-[#102B4E]/80 to-[#102B4E]" />
+          {/* Vibrant Multi-Stop Sky Overlay (Maintains Sunlight & Cloud Detail) */}
+          <div className="absolute inset-0 z-10 bg-gradient-to-b from-[#07172E]/75 via-[#0C274E]/45 to-[#081B33]/85" />
+
+          {/* Ambient Sky Glow Accent */}
+          <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-sky-400/25 blur-[130px] rounded-full pointer-events-none z-10" />
+
+          {/* Decorative Grid Mesh */}
+          <div 
+            className="absolute inset-0 z-10 opacity-15 pointer-events-none"
+            style={{
+              backgroundImage: "radial-gradient(circle at 50% 50%, rgba(255,255,255,0.25) 1px, transparent 1px)",
+              backgroundSize: "36px 36px"
+            }}
+          />
 
           <div className="relative z-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white space-y-4">
             
             {/* Live Indicator Badge */}
-            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full shadow-sm">
-              <span className="w-2 h-2 rounded-full bg-[#3B82F6] animate-pulse"></span>
-              <span>United States Domestic Flight Assistance Desk</span>
+            <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-md border border-white/30 text-white text-xs font-black uppercase tracking-widest px-4 py-2 rounded-full shadow-lg">
+              <span className="flex h-2.5 w-2.5 relative">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-cyan-400"></span>
+              </span>
+              <span>Travel Specialists Online &bull; Direct Agent Connection</span>
             </div>
 
             {/* Exact Required Hero Headline */}
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight leading-tight drop-shadow-sm text-white">
+            <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight leading-[1.1] text-white drop-shadow-xl">
               Your Next Flight <br className="hidden sm:inline" />
-              <span className="text-[#3B82F6]">Starts With a Simple Call.</span>
+              <span className="bg-gradient-to-r from-sky-200 via-cyan-100 to-white bg-clip-text text-transparent underline decoration-[#38BDF8]/40 decoration-wavy underline-offset-8">
+                Starts With a Simple Call.
+              </span>
             </h1>
 
             {/* Exact Required Supporting Text */}
-            <p className="text-base sm:text-lg md:text-xl max-w-2xl mx-auto text-slate-200 font-medium leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl max-w-2xl mx-auto text-slate-100 font-medium leading-relaxed drop-shadow-md">
               Speak with our travel booking assistance team for help exploring domestic flights across the United States.
             </p>
 
             {/* Trust checkmarks */}
-            <div className="pt-2 flex flex-wrap items-center justify-center gap-4 sm:gap-8 text-xs text-slate-300 font-semibold">
-              <span className="flex items-center gap-1.5">
-                <CheckCircle2 className="w-4 h-4 text-[#3B82F6]" />
+            <div className="pt-2 flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs text-slate-100 font-bold">
+              <span className="inline-flex items-center gap-1.5 bg-black/25 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/20 shadow-xs">
+                <Sparkles className="w-4 h-4 text-amber-300" />
                 Unpublished Phone Fares
               </span>
-              <span className="flex items-center gap-1.5">
-                <CheckCircle2 className="w-4 h-4 text-[#3B82F6]" />
+              <span className="inline-flex items-center gap-1.5 bg-black/25 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/20 shadow-xs">
+                <ShieldCheck className="w-4 h-4 text-emerald-400" />
                 Zero Online Forms Required
               </span>
-              <span className="flex items-center gap-1.5">
-                <CheckCircle2 className="w-4 h-4 text-[#3B82F6]" />
+              <span className="inline-flex items-center gap-1.5 bg-black/25 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/20 shadow-xs">
+                <Zap className="w-4 h-4 text-cyan-300" />
                 Real-Time Seat Confirmation
               </span>
             </div>
@@ -382,23 +397,48 @@ export default async function DynamicLandingPage({ params }: PageProps) {
           </div>
         </section>
 
-        {/* ── 2. Primary Hero Conversion Card (Overlaps Hero like SearchWidget in Image 1) ── */}
+        {/* ── 2. Primary Hero Conversion Card (High-Conversion Concierge Ticket Style) ── */}
         <section className="px-3 sm:px-4">
-          <div className="w-full max-w-4xl mx-auto -mt-16 sm:-mt-20 relative z-30">
-            <div className="bg-white rounded-3xl p-6 sm:p-10 shadow-2xl border border-slate-200/90 text-center">
+          <div className="w-full max-w-4xl mx-auto -mt-16 sm:-mt-24 relative z-30 bg-white rounded-3xl shadow-[0_25px_60px_-15px_rgba(2,132,199,0.22)] border border-blue-100 overflow-hidden">
+            
+            {/* Top Ticket Header Bar */}
+            <div className="bg-gradient-to-r from-[#0C274E] via-[#0284C7] to-[#1E40AF] text-white px-6 py-4 flex flex-wrap items-center justify-between gap-3">
+              <div className="flex items-center gap-2 text-xs sm:text-sm font-black tracking-wide">
+                <Plane className="w-4 h-4 text-cyan-300" />
+                <span>Dedicated Flight Desk: <strong className="text-white underline decoration-cyan-400">{routeContext}</strong></span>
+              </div>
+              <div className="flex items-center gap-2 bg-black/25 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold border border-white/20">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                <span>Agents Live Now &bull; Toll-Free</span>
+              </div>
+            </div>
+
+            {/* Card Body */}
+            <div className="p-6 sm:p-10 text-center">
               
-              {/* Route Context Banner */}
-              <div className="inline-flex items-center gap-2 bg-[#F5F8FC] border border-slate-200 text-[#102B4E] px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-wider mb-4">
-                <Plane className="w-3.5 h-3.5 text-[#2676D9]" />
-                <span>Assistance Desk Dedicated For: <strong className="text-[#2676D9]">{routeContext}</strong></span>
-                <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse ml-1" />
+              {/* Route Summary Pill */}
+              <div className="bg-[#F5F8FC] rounded-2xl p-4 sm:p-5 border border-slate-200/80 mb-6 flex flex-wrap items-center justify-between gap-4">
+                <div className="flex items-center gap-3 text-left">
+                  <div className="w-10 h-10 rounded-xl bg-[#0284C7]/10 text-[#0284C7] flex items-center justify-center font-black">
+                    <Plane className="w-5 h-5 -rotate-45" />
+                  </div>
+                  <div>
+                    <div className="text-xs font-bold uppercase tracking-wider text-[#64748B]">Route Inquiry</div>
+                    <div className="text-base sm:text-lg font-black text-[#102B4E]">US Domestic &bull; {routeContext}</div>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="bg-emerald-100 text-emerald-800 text-xs font-extrabold px-3 py-1.5 rounded-full border border-emerald-300">
+                    ⚡ Up to 40% Unpublished Phone Savings
+                  </span>
+                </div>
               </div>
 
               <h3 className="text-xl sm:text-2xl font-black text-[#102B4E] mb-2">
                 Skip The Hold Times &bull; Connect Directly to a Specialist
               </h3>
-              <p className="text-xs sm:text-sm text-[#64748B] max-w-xl mx-auto mb-6">
-                Call our US domestic reservation hotline to check unpublished airline fares, compare nonstop flights, and lock in tickets immediately.
+              <p className="text-xs sm:text-sm text-[#64748B] max-w-xl mx-auto mb-6 leading-relaxed">
+                Call our US domestic reservation hotline to check unpublished airline fares, compare nonstop flights, and lock in tickets immediately with zero online checkout forms.
               </p>
 
               {/* Main Prominent Call Button */}
@@ -408,14 +448,30 @@ export default async function DynamicLandingPage({ params }: PageProps) {
                   phoneNumber={callPhone}
                   displayNumber={formattedPhone}
                   label="CALL NOW – SPEAK TO OUR TEAM"
-                  sublabel="Toll-free direct agent hotline &bull; Average wait under 30s &bull; No automated hold loops"
+                  sublabel="Toll-free direct agent hotline &bull; Average wait under 15s &bull; No automated hold loops"
                   destination={routeContext}
                   id="lp-hero-main-call"
                 />
               </div>
 
+              {/* Micro Trust Points */}
+              <div className="mt-6 pt-5 border-t border-slate-100 grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs text-[#64748B] font-bold">
+                <div className="flex items-center justify-center gap-1.5 text-emerald-700">
+                  <Check className="w-4 h-4 text-emerald-600" />
+                  <span>100% Free Consultation</span>
+                </div>
+                <div className="flex items-center justify-center gap-1.5 text-[#0284C7]">
+                  <Check className="w-4 h-4 text-[#0284C7]" />
+                  <span>Real Human Travel Agent</span>
+                </div>
+                <div className="flex items-center justify-center gap-1.5 text-[#102B4E]">
+                  <Check className="w-4 h-4 text-[#102B4E]" />
+                  <span>Instant E-Ticket Dispatch</span>
+                </div>
+              </div>
+
               {/* Popular Domestic Routes Shortcuts */}
-              <div className="mt-6 pt-5 border-t border-slate-100 flex flex-wrap items-center justify-center gap-2 text-xs">
+              <div className="mt-5 pt-4 border-t border-slate-100 flex flex-wrap items-center justify-center gap-2 text-xs">
                 <span className="text-[#64748B] font-bold mr-1">Popular Assistance Routes:</span>
                 {[
                   { from: "JFK", to: "MIA" },
@@ -427,10 +483,10 @@ export default async function DynamicLandingPage({ params }: PageProps) {
                   <a
                     key={`${route.from}-${route.to}`}
                     href={`tel:${callPhone}`}
-                    className="inline-flex items-center gap-1 bg-[#F5F8FC] hover:bg-blue-50 border border-slate-200 hover:border-[#2676D9] px-2.5 py-1 rounded-lg font-bold text-[#102B4E] transition-all google-phone-number text-[11px]"
+                    className="inline-flex items-center gap-1 bg-[#F5F8FC] hover:bg-sky-50 border border-slate-200 hover:border-[#0284C7] px-2.5 py-1 rounded-lg font-bold text-[#102B4E] transition-all google-phone-number text-[11px]"
                   >
                     <span>{route.from}</span>
-                    <ArrowRight className="w-3 h-3 text-[#2676D9]" />
+                    <ArrowRight className="w-3 h-3 text-[#0284C7]" />
                     <span>{route.to}</span>
                   </a>
                 ))}
