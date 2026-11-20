@@ -28,7 +28,7 @@ export async function GET() {
 
     // Google Ads and Tag Manager IDs
     settingsValue.googleTagId = "GTM-5T6F2H67";
-    settingsValue.gtmId = "GTM-5T6F2H67";
+    settingsValue.gtmId = "GTM-MM6FPFM5";
     settingsValue.googleAdsId = "AW-18576835283";
     settingsValue.googleAdsSendTo = "AW-18576835283/pdU-CKH4lbwdENOFkJpF";
 

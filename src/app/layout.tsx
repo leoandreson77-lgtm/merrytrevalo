@@ -158,7 +158,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="en" className={inter.variable}>
       <head>
-        {/* ── Google tag (gtag.js) ── */}
+        {/* ── Google Tag Manager & Google tag (gtag.js) ── */}
+        <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-MM6FPFM5" />
         <script async src="https://www.googletagmanager.com/gtag/js?id=GTM-5T6F2H67" />
         <script
           dangerouslySetInnerHTML={{
@@ -166,6 +167,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
+              gtag('config', 'GTM-MM6FPFM5');
               gtag('config', 'GTM-5T6F2H67');
               gtag('config', 'AW-18576835283');
 
@@ -266,6 +268,15 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       </head>
 
       <body className={inter.className}>
+        {/* Google Tag Manager (noscript) */}
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-MM6FPFM5"
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+          />
+        </noscript>
         <Providers>
           {children}
           <Toaster />
