@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { Phone, Headphones } from "lucide-react";
 
 export function CallNowButton() {
   const [mounted, setMounted] = useState(false);
@@ -20,28 +21,27 @@ export function CallNowButton() {
   });
 
   const callNumber = (mounted && settings?.callNumber) || "+18772518760";
-  const callLabel = (mounted && settings?.callLabel) || "Call Now";
+  const callLabel = (mounted && settings?.callLabel) || "Call Customer Support";
 
   return (
-    <div className="fixed bottom-6 right-5 z-[9999]">
-      {/* Main button */}
-      <div className="relative">
-        {/* Pulsing ring */}
-        <span className="absolute inset-0 rounded-full bg-green-400 opacity-40 animate-ping" />
+    <div className="fixed bottom-6 right-6 z-[9999] hidden sm:block">
+      <div className="relative group">
         <a
           href={`tel:${callNumber}`}
           title={`${callLabel}: ${callNumber}`}
-          className="relative flex items-center gap-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-full pl-4 pr-5 py-3 shadow-2xl hover:shadow-green-500/40 hover:scale-105 transition-all duration-200 font-bold text-sm border-2 border-white"
+          className="relative flex items-center gap-3 bg-[#102B4E] hover:bg-[#163A66] text-white rounded-full pl-4 pr-5 py-2.5 shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-200 border border-white/20"
         >
           {/* Phone icon */}
-          <span className="flex items-center justify-center w-8 h-8 bg-white/20 rounded-full shrink-0">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-            </svg>
+          <span className="flex items-center justify-center w-8 h-8 bg-[#2676D9] text-white rounded-full shrink-0 shadow-xs">
+            <Phone className="w-4 h-4" />
           </span>
-          <span className="flex flex-col leading-tight">
-            <span className="text-white/80 text-[10px] font-semibold uppercase tracking-wider">{callLabel}</span>
-            <span className="text-white font-extrabold text-sm">{callNumber}</span>
+          <span className="flex flex-col leading-tight text-left">
+            <span className="text-slate-300 text-[10px] font-semibold uppercase tracking-wider">
+              {callLabel}
+            </span>
+            <span className="text-white font-extrabold text-sm tracking-tight">
+              {callNumber}
+            </span>
           </span>
         </a>
       </div>

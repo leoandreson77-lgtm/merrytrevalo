@@ -14,6 +14,16 @@ export default {
         sm: ".1875rem", /* 3px */
       },
       colors: {
+        // Custom Brand Palette for US Domestic Flight Booking
+        brand: {
+          navy: "#102B4E",
+          navyLight: "#163A66",
+          blue: "#2676D9",
+          accent: "#3B82F6",
+          surface: "#F5F8FC",
+          text: "#172B46",
+          muted: "#64748B",
+        },
         // Flat / base colors (regular buttons)
         background: "hsl(var(--background) / <alpha-value>)",
         foreground: "hsl(var(--foreground) / <alpha-value>)",

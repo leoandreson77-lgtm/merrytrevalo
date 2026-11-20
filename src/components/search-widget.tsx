@@ -255,15 +255,15 @@ export function SearchWidget() {
   };
 
   return (
-    <div className="w-full max-w-6xl mx-auto -mt-20 sm:-mt-24 relative z-20 px-3 sm:px-4">
+    <div id="search-flights" className="w-full max-w-6xl mx-auto -mt-20 sm:-mt-24 relative z-20 px-3 sm:px-4">
       {/* ── Main Container ── */}
-      <div className="bg-white dark:bg-slate-900 rounded-3xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.25)] border border-slate-200/80 dark:border-slate-800 backdrop-blur-xl relative transition-all">
+      <div className="bg-white rounded-3xl shadow-[0_20px_60px_-15px_rgba(16,43,78,0.18)] border border-slate-200/90 backdrop-blur-xl relative transition-all">
         
         {/* ── Top Header: Trip Type Tabs + Popular Routes ── */}
-        <div className="bg-slate-50/90 dark:bg-slate-800/80 px-4 sm:px-6 py-3.5 border-b border-slate-200/80 dark:border-slate-700/80 rounded-t-3xl">
+        <div className="bg-[#F5F8FC] px-4 sm:px-6 py-3.5 border-b border-slate-200/80 rounded-t-3xl">
           <div className="flex flex-wrap items-center justify-between gap-3">
             {/* Segmented Trip Type */}
-            <div className="inline-flex items-center gap-1 bg-slate-200/80 dark:bg-slate-900/80 p-1 rounded-2xl">
+            <div className="inline-flex items-center gap-1 bg-slate-200/80 p-1 rounded-2xl">
               {(["round", "oneway", "multi"] as const).map((type) => {
                 const isActive = tripType === type;
                 return (
@@ -276,10 +276,10 @@ export function SearchWidget() {
                       else if (type === "round" && !returnDate) setReturnDate(defaultReturn);
                     }}
                     className={cn(
-                      "px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer",
+                      "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer",
                       isActive
-                        ? "bg-blue-600 text-white shadow-sm shadow-blue-600/30"
-                        : "text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-white"
+                        ? "bg-[#102B4E] text-white shadow-sm"
+                        : "text-[#64748B] hover:text-[#102B4E]"
                     )}
                   >
                     {type === "round" ? "Round Trip" : type === "oneway" ? "One Way" : "Multi-City"}
@@ -289,23 +289,23 @@ export function SearchWidget() {
             </div>
 
             {/* Micro reassurance tag */}
-            <div className="hidden md:flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 font-semibold">
-              <Plane className="w-3.5 h-3.5 text-blue-600" />
-              <span>Search 500+ Airlines • No Booking Fees</span>
+            <div className="hidden md:flex items-center gap-2 text-xs text-[#64748B] font-semibold">
+              <span className="w-2 h-2 rounded-full bg-[#2676D9]"></span>
+              <span>Search 500+ Airlines &bull; Real-Time US Domestic Fares &bull; No Booking Fees</span>
             </div>
           </div>
 
           {/* Quick Route Suggestions Bar */}
-          <div className="mt-2.5 flex items-center gap-2 overflow-x-auto pb-1 text-xs">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 shrink-0 flex items-center gap-1">
-              <Sparkles className="w-3 h-3 text-amber-500" /> Popular:
+          <div className="mt-3 flex items-center gap-2 overflow-x-auto pb-1 text-xs scrollbar-none">
+            <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#64748B] shrink-0 flex items-center gap-1">
+              <Sparkles className="w-3 h-3 text-amber-500" /> Popular Routes:
             </span>
             {POPULAR_ROUTES.map((route) => (
               <button
                 key={`${route.from}-${route.to}`}
                 type="button"
                 onClick={() => handleQuickRouteSelect(route)}
-                className="shrink-0 px-2.5 py-1 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-blue-400 dark:hover:border-blue-500 text-slate-700 dark:text-slate-300 font-medium hover:text-blue-600 transition-colors"
+                className="shrink-0 px-3 py-1 rounded-lg bg-white border border-slate-200 hover:border-[#2676D9] text-[#172B46] font-semibold hover:text-[#2676D9] transition-all shadow-2xs cursor-pointer"
               >
                 {route.from} ➔ {route.to}
               </button>
@@ -315,16 +315,16 @@ export function SearchWidget() {
 
         {/* ── Form Body ── */}
         <form onSubmit={handleSearch}>
-          <div className="grid grid-cols-1 lg:grid-cols-12 divide-y lg:divide-y-0 lg:divide-x divide-slate-200/80 dark:divide-slate-800">
+          <div className="grid grid-cols-1 lg:grid-cols-12 divide-y lg:divide-y-0 lg:divide-x divide-slate-200/90">
             
             {/* Origin & Destination (5 cols) */}
-            <div className="lg:col-span-5 relative grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-slate-200/80 dark:divide-slate-800">
+            <div className="lg:col-span-5 relative grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-slate-200/90">
               
               {/* From */}
-              <div className="p-3.5 sm:p-4 hover:bg-slate-50/50 dark:hover:bg-slate-800/40 transition-colors">
-                <div className="flex items-center gap-1.5 mb-1.5">
+              <div className="p-4 hover:bg-[#F5F8FC]/60 transition-colors">
+                <div className="flex items-center gap-1.5 mb-2">
                   <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
-                  <span className="text-[11px] font-extrabold uppercase tracking-wider text-slate-400">Flying From</span>
+                  <span className="text-[11px] font-black uppercase tracking-wider text-[#64748B]">Flying From</span>
                 </div>
                 <AirportAutocomplete
                   value={origin}
@@ -339,10 +339,10 @@ export function SearchWidget() {
               </div>
 
               {/* To */}
-              <div className="p-3.5 sm:p-4 hover:bg-slate-50/50 dark:hover:bg-slate-800/40 transition-colors">
-                <div className="flex items-center gap-1.5 mb-1.5">
+              <div className="p-4 hover:bg-[#F5F8FC]/60 transition-colors">
+                <div className="flex items-center gap-1.5 mb-2">
                   <span className="w-2 h-2 rounded-full bg-rose-500"></span>
-                  <span className="text-[11px] font-extrabold uppercase tracking-wider text-slate-400">Flying To</span>
+                  <span className="text-[11px] font-black uppercase tracking-wider text-[#64748B]">Flying To</span>
                 </div>
                 <AirportAutocomplete
                   value={destination}
@@ -351,7 +351,7 @@ export function SearchWidget() {
                     setDestination(code);
                     setDestinationDisplay(display);
                   }}
-                  placeholder="Where to? (e.g. Miami, London)"
+                  placeholder="Where to? (e.g. Miami, Las Vegas)"
                   size="compact"
                 />
               </div>
@@ -362,38 +362,38 @@ export function SearchWidget() {
                 onClick={handleSwapAirports}
                 aria-label="Swap Origin and Destination"
                 className={cn(
-                  "absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-8 w-8 sm:h-9 sm:w-9 rounded-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 text-blue-600 shadow-md hover:shadow-lg hover:border-blue-500 hover:scale-105 active:scale-95 flex items-center justify-center transition-all z-20 cursor-pointer",
+                  "absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-9 w-9 rounded-full bg-white border border-slate-300 text-[#102B4E] shadow-md hover:shadow-lg hover:border-[#2676D9] hover:text-[#2676D9] hover:scale-105 active:scale-95 flex items-center justify-center transition-all z-20 cursor-pointer",
                   isSwapping && "rotate-180"
                 )}
               >
-                <ArrowRightLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-600" />
+                <ArrowRightLeft className="w-4 h-4" />
               </button>
             </div>
 
             {/* Dates & Passengers (7 cols) */}
-            <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-slate-200/80 dark:divide-slate-800">
+            <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-slate-200/90">
               
               {/* Departure Date */}
-              <div className="p-3.5 sm:p-4 hover:bg-slate-50/50 dark:hover:bg-slate-800/40 transition-colors">
-                <div className="flex items-center gap-1.5 mb-1.5">
-                  <CalendarIcon className="w-3.5 h-3.5 text-blue-500" />
-                  <span className="text-[11px] font-extrabold uppercase tracking-wider text-slate-400">Departure</span>
+              <div className="p-4 hover:bg-[#F5F8FC]/60 transition-colors">
+                <div className="flex items-center gap-1.5 mb-2">
+                  <CalendarIcon className="w-3.5 h-3.5 text-[#2676D9]" />
+                  <span className="text-[11px] font-black uppercase tracking-wider text-[#64748B]">Departure</span>
                 </div>
                 <Popover open={departureOpen} onOpenChange={setDepartureOpen}>
                   <PopoverTrigger asChild>
                     <button
                       type="button"
-                      className="w-full text-left flex items-center justify-between p-1.5 rounded-xl hover:bg-slate-100/60 dark:hover:bg-slate-800 cursor-pointer transition-colors"
+                      className="w-full text-left flex items-center justify-between p-2 rounded-xl hover:bg-slate-100/70 cursor-pointer transition-colors"
                     >
                       <div>
-                        <div className="text-lg sm:text-xl font-black text-slate-900 dark:text-white leading-tight">
+                        <div className="text-lg sm:text-xl font-black text-[#172B46] leading-tight">
                           {date ? format(date, "MMM dd") : "--"}
                         </div>
-                        <div className="text-xs font-medium text-slate-500 dark:text-slate-400">
+                        <div className="text-xs font-medium text-[#64748B]">
                           {date ? format(date, "EEEE, yyyy") : "Pick date"}
                         </div>
                       </div>
-                      <ChevronDown className="w-4 h-4 text-slate-400 shrink-0" />
+                      <ChevronDown className="w-4 h-4 text-[#64748B] shrink-0" />
                     </button>
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0 z-[9999]" align="start">
@@ -403,12 +403,10 @@ export function SearchWidget() {
                       onSelect={(newDate) => {
                         setDate(newDate);
                         setDepartureOpen(false);
-                        // If round trip and returnDate is before newDate, adjust return date
                         if (tripType === "round") {
                           if (newDate && (!returnDate || returnDate < newDate)) {
                             setReturnDate(addDays(newDate, 7));
                           }
-                          // Guide user to pick return date
                           setTimeout(() => setReturnOpen(true), 150);
                         }
                       }}
@@ -422,12 +420,12 @@ export function SearchWidget() {
 
               {/* Return Date */}
               <div className={cn(
-                "p-3.5 sm:p-4 transition-colors",
-                tripType === "oneway" ? "opacity-60 bg-slate-50/40 dark:bg-slate-800/20" : "hover:bg-slate-50/50 dark:hover:bg-slate-800/40"
+                "p-4 transition-colors",
+                tripType === "oneway" ? "opacity-60 bg-slate-50/50" : "hover:bg-[#F5F8FC]/60"
               )}>
-                <div className="flex items-center gap-1.5 mb-1.5">
-                  <CalendarIcon className="w-3.5 h-3.5 text-blue-500" />
-                  <span className="text-[11px] font-extrabold uppercase tracking-wider text-slate-400">Return</span>
+                <div className="flex items-center gap-1.5 mb-2">
+                  <CalendarIcon className="w-3.5 h-3.5 text-[#2676D9]" />
+                  <span className="text-[11px] font-black uppercase tracking-wider text-[#64748B]">Return</span>
                 </div>
                 {tripType === "oneway" ? (
                   <button
@@ -436,27 +434,27 @@ export function SearchWidget() {
                       setTripType("round");
                       setReturnDate(addDays(date || new Date(), 7));
                     }}
-                    className="w-full text-left p-1.5 rounded-xl hover:bg-slate-100/60 dark:hover:bg-slate-800 cursor-pointer"
+                    className="w-full text-left p-2 rounded-xl hover:bg-slate-100/70 cursor-pointer"
                   >
                     <div className="text-lg sm:text-xl font-bold text-slate-400 leading-tight">--</div>
-                    <div className="text-xs font-semibold text-blue-600 dark:text-blue-400">+ Add Return</div>
+                    <div className="text-xs font-bold text-[#2676D9]">+ Add Return Flight</div>
                   </button>
                 ) : (
                   <Popover open={returnOpen} onOpenChange={setReturnOpen}>
                     <PopoverTrigger asChild>
                       <button
                         type="button"
-                        className="w-full text-left flex items-center justify-between p-1.5 rounded-xl hover:bg-slate-100/60 dark:hover:bg-slate-800 cursor-pointer transition-colors"
+                        className="w-full text-left flex items-center justify-between p-2 rounded-xl hover:bg-slate-100/70 cursor-pointer transition-colors"
                       >
                         <div>
-                          <div className="text-lg sm:text-xl font-black text-slate-900 dark:text-white leading-tight">
+                          <div className="text-lg sm:text-xl font-black text-[#172B46] leading-tight">
                             {returnDate ? format(returnDate, "MMM dd") : "--"}
                           </div>
-                          <div className="text-xs font-medium text-slate-500 dark:text-slate-400">
+                          <div className="text-xs font-medium text-[#64748B]">
                             {returnDate ? format(returnDate, "EEEE, yyyy") : "Pick date"}
                           </div>
                         </div>
-                        <ChevronDown className="w-4 h-4 text-slate-400 shrink-0" />
+                        <ChevronDown className="w-4 h-4 text-[#64748B] shrink-0" />
                       </button>
                     </PopoverTrigger>
                     <PopoverContent className="w-auto p-0 z-[9999]" align="start">
@@ -477,30 +475,30 @@ export function SearchWidget() {
               </div>
 
               {/* Travellers & Cabin Class */}
-              <div className="p-3.5 sm:p-4 hover:bg-slate-50/50 dark:hover:bg-slate-800/40 transition-colors">
-                <div className="flex items-center gap-1.5 mb-1.5">
-                  <Users className="w-3.5 h-3.5 text-blue-500" />
-                  <span className="text-[11px] font-extrabold uppercase tracking-wider text-slate-400">Travellers & Class</span>
+              <div className="p-4 hover:bg-[#F5F8FC]/60 transition-colors">
+                <div className="flex items-center gap-1.5 mb-2">
+                  <Users className="w-3.5 h-3.5 text-[#2676D9]" />
+                  <span className="text-[11px] font-black uppercase tracking-wider text-[#64748B]">Travellers & Class</span>
                 </div>
                 <Popover open={travellersOpen} onOpenChange={setTravellersOpen}>
                   <PopoverTrigger asChild>
                     <button
                       type="button"
-                      className="w-full text-left flex items-center justify-between p-1.5 rounded-xl hover:bg-slate-100/60 dark:hover:bg-slate-800 cursor-pointer transition-colors"
+                      className="w-full text-left flex items-center justify-between p-2 rounded-xl hover:bg-slate-100/70 cursor-pointer transition-colors"
                     >
                       <div>
-                        <div className="text-lg sm:text-xl font-black text-slate-900 dark:text-white leading-tight">
-                          {totalTravellers} <span className="text-sm font-semibold text-slate-500">Traveler{totalTravellers > 1 ? "s" : ""}</span>
+                        <div className="text-lg sm:text-xl font-black text-[#172B46] leading-tight">
+                          {totalTravellers} <span className="text-sm font-semibold text-[#64748B]">Passenger{totalTravellers > 1 ? "s" : ""}</span>
                         </div>
-                        <div className="text-xs font-medium text-blue-600 dark:text-blue-400">
+                        <div className="text-xs font-semibold text-[#2676D9]">
                           {travelClass}
                         </div>
                       </div>
-                      <ChevronDown className="w-4 h-4 text-slate-400 shrink-0" />
+                      <ChevronDown className="w-4 h-4 text-[#64748B] shrink-0" />
                     </button>
                   </PopoverTrigger>
                   <PopoverContent className="w-80 p-4 space-y-4 z-[9999]" align="end">
-                    <div className="font-bold text-sm text-slate-900 dark:text-white pb-2 border-b border-slate-100 dark:border-slate-800">
+                    <div className="font-bold text-sm text-[#172B46] pb-2 border-b border-slate-100">
                       Passengers
                     </div>
 
@@ -513,24 +511,24 @@ export function SearchWidget() {
                       ].map((item) => (
                         <div key={item.label} className="flex items-center justify-between">
                           <div>
-                            <div className="font-bold text-sm text-slate-900 dark:text-white">{item.label}</div>
-                            <div className="text-xs text-slate-400">{item.desc}</div>
+                            <div className="font-bold text-sm text-[#172B46]">{item.label}</div>
+                            <div className="text-xs text-[#64748B]">{item.desc}</div>
                           </div>
                           <div className="flex items-center gap-2">
                             <button
                               type="button"
                               onClick={() => updateCounter(item.setter, item.value - 1, item.min)}
                               disabled={item.value <= item.min}
-                              className="w-8 h-8 rounded-lg border border-slate-200 dark:border-slate-700 font-bold text-slate-600 dark:text-slate-300 disabled:opacity-40 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                              className="w-8 h-8 rounded-lg border border-slate-200 font-bold text-[#172B46] disabled:opacity-40 hover:bg-slate-100 transition-colors"
                             >
                               −
                             </button>
-                            <span className="w-6 text-center font-bold text-sm text-slate-900 dark:text-white">{item.value}</span>
+                            <span className="w-6 text-center font-bold text-sm text-[#172B46]">{item.value}</span>
                             <button
                               type="button"
                               onClick={() => updateCounter(item.setter, item.value + 1, item.min)}
                               disabled={item.value >= 9}
-                              className="w-8 h-8 rounded-lg border border-slate-200 dark:border-slate-700 font-bold text-slate-600 dark:text-slate-300 disabled:opacity-40 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                              className="w-8 h-8 rounded-lg border border-slate-200 font-bold text-[#172B46] disabled:opacity-40 hover:bg-slate-100 transition-colors"
                             >
                               +
                             </button>
@@ -540,8 +538,8 @@ export function SearchWidget() {
                     </div>
 
                     {/* Cabin Class Selection */}
-                    <div className="pt-2 border-t border-slate-100 dark:border-slate-800">
-                      <div className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Cabin Class</div>
+                    <div className="pt-2 border-t border-slate-100">
+                      <div className="text-xs font-bold uppercase tracking-wider text-[#64748B] mb-2">Cabin Class</div>
                       <div className="grid grid-cols-2 gap-1.5">
                         {["Economy", "Premium Economy", "Business", "First Class"].map((cls) => (
                           <button
@@ -551,8 +549,8 @@ export function SearchWidget() {
                             className={cn(
                               "px-2.5 py-1.5 rounded-lg text-xs font-bold text-left transition-colors",
                               travelClass === cls
-                                ? "bg-blue-600 text-white shadow-xs"
-                                : "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700"
+                                ? "bg-[#102B4E] text-white shadow-xs"
+                                : "bg-slate-100 text-[#172B46] hover:bg-slate-200"
                             )}
                           >
                             {cls}
@@ -563,7 +561,7 @@ export function SearchWidget() {
 
                     <Button
                       type="button"
-                      className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-xs py-2"
+                      className="w-full bg-[#2676D9] hover:bg-[#102B4E] text-white font-bold rounded-xl text-xs py-2 cursor-pointer"
                       onClick={() => setTravellersOpen(false)}
                     >
                       Done
@@ -670,12 +668,12 @@ export function SearchWidget() {
           )}
 
           {/* ── Bottom Action Bar: Special Fares & Search CTA ── */}
-          <div className="border-t border-slate-200/80 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/60 px-4 sm:px-6 py-3.5 rounded-b-3xl">
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div className="border-t border-slate-200/90 bg-[#F5F8FC]/80 px-4 sm:px-6 py-4 rounded-b-3xl">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
               {/* Special Fares */}
-              <div className="flex items-center gap-1.5 flex-wrap">
-                <span className="text-[11px] font-extrabold uppercase tracking-wider text-slate-400 mr-1">
-                  Fare:
+              <div className="flex items-center gap-2 flex-wrap w-full sm:w-auto">
+                <span className="text-[11px] font-black uppercase tracking-wider text-[#64748B] mr-1">
+                  Special Fares:
                 </span>
                 {["Regular", "Student", "Senior", "Military"].map((fare) => (
                   <button
@@ -683,10 +681,10 @@ export function SearchWidget() {
                     type="button"
                     onClick={() => setSelectedFare(fare)}
                     className={cn(
-                      "px-3 py-1 rounded-full text-xs font-bold transition-all",
+                      "px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer",
                       selectedFare === fare
-                        ? "bg-blue-600 text-white shadow-xs"
-                        : "bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:border-blue-400"
+                        ? "bg-[#102B4E] text-white shadow-xs"
+                        : "bg-white border border-slate-200 text-[#172B46] hover:border-[#2676D9]"
                     )}
                   >
                     {fare}
@@ -698,17 +696,17 @@ export function SearchWidget() {
               <Button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-black text-sm sm:text-base px-8 py-5 rounded-2xl shadow-lg shadow-blue-600/30 hover:shadow-blue-600/50 hover:scale-[1.01] active:scale-[0.99] transition-all cursor-pointer"
+                className="w-full sm:w-auto bg-[#2676D9] hover:bg-[#102B4E] text-white font-black text-base px-10 py-6 rounded-2xl shadow-lg shadow-[#2676D9]/25 hover:shadow-xl hover:scale-[1.01] active:scale-[0.99] transition-all cursor-pointer flex items-center justify-center gap-2"
               >
                 {isSubmitting ? (
                   <>
-                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                    Searching Flights...
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                    <span>Searching Available Flights...</span>
                   </>
                 ) : (
                   <>
-                    <Search className="w-4 h-4 mr-2" />
-                    SEARCH FLIGHTS
+                    <Search className="w-5 h-5" />
+                    <span>SEARCH FLIGHTS</span>
                   </>
                 )}
               </Button>

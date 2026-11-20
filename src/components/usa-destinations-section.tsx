@@ -172,50 +172,50 @@ export function UsaDestinationsSection() {
   const phoneIsValid = formData.phone.length > 0 && isValidPhone(formData.phone);
 
   return (
-    <section className="py-20 bg-gradient-to-b from-white via-blue-50/30 to-white dark:from-slate-950 dark:via-slate-900/50 dark:to-slate-950">
+    <section id="destinations" className="py-20 bg-white border-b border-slate-200/80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* ── Section Header ── */}
         <div className="text-center mb-14">
-          <div className="inline-flex items-center gap-2 bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400 px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest mb-4">
-            <TrendingDown className="w-3.5 h-3.5" />
-            Limited Time Deals
+          <div className="inline-flex items-center gap-2 bg-[#F5F8FC] border border-slate-200 text-[#102B4E] px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest mb-3 shadow-2xs">
+            <TrendingDown className="w-3.5 h-3.5 text-[#2676D9]" />
+            Popular US Domestic Travel Corridors
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 dark:text-white tracking-tight">
-            Explore <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Famous USA</span> Destinations
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#102B4E] tracking-tight">
+            Explore <span className="text-[#2676D9]">Top USA</span> Destinations
           </h2>
-          <p className="mt-4 text-lg text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">
-            Click any destination below to lock in contract fares & save up to 50% on flights.
+          <p className="mt-3 text-base sm:text-lg text-[#64748B] max-w-2xl mx-auto">
+            Compare available flight options, transparent domestic fares, and reserve with confidence.
           </p>
         </div>
 
         {/* ── Destinations Grid ── */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7">
           {destinations.map((dest) => (
             <div
               key={dest.code}
               onClick={() => handleOpenForm(dest)}
-              className="group relative bg-white dark:bg-slate-900 rounded-2xl overflow-hidden border border-slate-200/60 dark:border-slate-700/50 shadow-md hover:shadow-2xl hover:shadow-blue-500/10 hover:-translate-y-2 transition-all duration-500 cursor-pointer"
+              className="group relative bg-[#F5F8FC] rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl hover:border-[#2676D9]/50 hover:-translate-y-1.5 transition-all duration-300 cursor-pointer"
             >
               {/* Image */}
-              <div className="relative h-52 overflow-hidden">
+              <div className="relative h-56 overflow-hidden">
                 <Image
                   src={dest.image}
-                  alt={`Fly to ${dest.city}`}
+                  alt={`Flights to ${dest.city}`}
                   fill
-                  className="object-cover group-hover:scale-110 transition-transform duration-700"
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#102B4E]/80 via-[#102B4E]/20 to-transparent" />
 
                 {/* Discount Badge */}
-                <div className="absolute top-4 left-4 bg-gradient-to-r from-orange-500 to-red-500 text-white px-3 py-1 rounded-full text-xs font-black shadow-lg shadow-orange-500/30 flex items-center gap-1">
-                  <TrendingDown className="w-3 h-3" />
-                  {dest.discount}% OFF
+                <div className="absolute top-4 left-4 bg-[#102B4E] text-white px-3 py-1 rounded-full text-xs font-black shadow-md flex items-center gap-1 border border-white/20">
+                  <TrendingDown className="w-3 h-3 text-[#3B82F6]" />
+                  Save up to {dest.discount}%
                 </div>
 
                 {/* Rating */}
-                <div className="absolute top-4 right-4 bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm text-slate-900 dark:text-white px-2.5 py-1 rounded-full text-xs font-bold flex items-center gap-1 shadow-sm">
-                  <Star className="w-3 h-3 text-yellow-500 fill-yellow-500" />
+                <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-sm text-[#102B4E] px-2.5 py-1 rounded-full text-xs font-bold flex items-center gap-1 shadow-sm">
+                  <Star className="w-3 h-3 text-amber-500 fill-amber-500" />
                   {dest.rating} ({dest.reviews})
                 </div>
 
@@ -223,10 +223,10 @@ export function UsaDestinationsSection() {
                 <div className="absolute bottom-4 left-4 right-4">
                   <div className="flex items-end justify-between">
                     <div>
-                      <h3 className="text-white text-2xl font-black tracking-tight drop-shadow-lg">{dest.city}</h3>
-                      <p className="text-white/80 text-xs font-medium mt-0.5">{dest.tagline}</p>
+                      <h3 className="text-white text-2xl font-black tracking-tight drop-shadow-sm">{dest.city}</h3>
+                      <p className="text-slate-200 text-xs font-medium mt-0.5">{dest.tagline}</p>
                     </div>
-                    <span className="bg-white/20 backdrop-blur-sm text-white px-2.5 py-1 rounded-lg text-sm font-black border border-white/20">
+                    <span className="bg-white/20 backdrop-blur-md text-white px-2.5 py-1 rounded-lg text-sm font-black border border-white/30">
                       {dest.code}
                     </span>
                   </div>
@@ -234,26 +234,26 @@ export function UsaDestinationsSection() {
               </div>
 
               {/* Content */}
-              <div className="p-5">
+              <div className="p-5 bg-white">
                 {/* Highlights */}
                 <div className="flex flex-wrap gap-1.5 mb-4">
                   {dest.highlights.map((h) => (
-                    <span key={h} className="inline-flex items-center gap-1 text-[11px] font-semibold text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded-full">
-                      <MapPin className="w-2.5 h-2.5" />
+                    <span key={h} className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#64748B] bg-[#F5F8FC] px-2.5 py-1 rounded-full border border-slate-100">
+                      <MapPin className="w-2.5 h-2.5 text-[#2676D9]" />
                       {h}
                     </span>
                   ))}
                 </div>
 
                 {/* Price Row */}
-                <div className="flex items-end justify-between">
+                <div className="flex items-end justify-between pt-2 border-t border-slate-100">
                   <div>
-                    <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Starting from</p>
-                    <div className="flex items-baseline gap-2 mt-1">
-                      <span className="text-2xl font-black text-slate-900 dark:text-white">${dest.discountedPrice}</span>
-                      <span className="text-sm font-semibold text-slate-400 line-through">${dest.originalPrice}</span>
+                    <p className="text-[10px] font-black text-[#64748B] uppercase tracking-wider">Estimated Fare From</p>
+                    <div className="flex items-baseline gap-2 mt-0.5">
+                      <span className="text-2xl font-black text-[#102B4E]">${dest.discountedPrice}</span>
+                      <span className="text-xs font-semibold text-[#64748B] line-through">${dest.originalPrice}</span>
                     </div>
-                    <p className="text-[10px] text-slate-400 mt-0.5">per person, round trip*</p>
+                    <p className="text-[10px] text-[#64748B] mt-0.5">per traveler, round trip*</p>
                   </div>
                   <button
                     type="button"
@@ -261,10 +261,10 @@ export function UsaDestinationsSection() {
                       e.stopPropagation();
                       handleOpenForm(dest);
                     }}
-                    className="flex items-center gap-1.5 bg-blue-600 text-white px-4 py-2.5 rounded-xl text-sm font-bold group-hover:bg-blue-700 group-hover:shadow-lg group-hover:shadow-blue-600/30 transition-all duration-300"
+                    className="flex items-center gap-1.5 bg-[#2676D9] hover:bg-[#102B4E] text-white px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold shadow-xs hover:shadow-md transition-all duration-200 cursor-pointer"
                   >
-                    Book Now
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                    <span>Book Route</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
                   </button>
                 </div>
               </div>
@@ -272,10 +272,10 @@ export function UsaDestinationsSection() {
           ))}
         </div>
 
-        {/* ── Bottom CTA ── */}
+        {/* ── Bottom Disclaimer ── */}
         <div className="mt-12 text-center">
-          <p className="text-sm text-slate-400 dark:text-slate-500">
-            * Fares are indicative and subject to availability. Additional taxes and fees may apply.
+          <p className="text-xs text-[#64748B] max-w-xl mx-auto">
+            * Sample roundtrip fares for general guidance. Actual fares are subject to real-time seat availability, travel dates, and carrier inventory.
           </p>
         </div>
       </div>
@@ -292,14 +292,14 @@ export function UsaDestinationsSection() {
               <p className="text-slate-600 dark:text-slate-300 text-sm max-w-sm mx-auto">
                 Thank you <strong>{formData.name || "valued customer"}</strong>! Your special contract fare rate of <strong>${selectedDest?.discountedPrice}</strong> for <strong>{selectedDest?.city}</strong> has been locked{maskedCardLast4 ? ` with card ending in **** ${maskedCardLast4}` : ""}.
               </p>
-              <div className="p-4 bg-blue-50 dark:bg-blue-950/50 border border-blue-200 dark:border-blue-800 rounded-2xl space-y-2">
-                <p className="text-xs font-bold text-blue-700 dark:text-blue-300">Need Immediate Booking Confirmation?</p>
+              <div className="p-4 bg-[#F5F8FC] border border-slate-200 rounded-2xl space-y-2">
+                <p className="text-xs font-bold text-[#102B4E]">Need Immediate Booking Confirmation?</p>
                 <a
                   href="tel:+18772518760"
-                  className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-black text-base px-6 py-3 rounded-xl shadow-lg shadow-green-600/30 transition-all"
+                  className="inline-flex items-center gap-2 bg-[#102B4E] hover:bg-[#163A66] text-white font-black text-sm px-6 py-3 rounded-xl shadow-md transition-all"
                 >
-                  <Phone className="w-5 h-5" />
-                  Call Live Desk: +1 (877) 251-8760
+                  <Phone className="w-4 h-4 text-[#3B82F6]" />
+                  Call Support: +1 (877) 251-8760
                 </a>
               </div>
               <Button
@@ -500,10 +500,10 @@ export function UsaDestinationsSection() {
                 <Button
                   type="submit"
                   disabled={isSubmitting || (formData.phone.length > 0 && !phoneIsValid)}
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-black py-3 rounded-xl shadow-lg shadow-blue-600/30 text-base flex items-center justify-center gap-2 mt-3 disabled:opacity-50"
+                  className="w-full bg-[#2676D9] hover:bg-[#102B4E] text-white font-black py-3 rounded-xl shadow-md text-sm sm:text-base flex items-center justify-center gap-2 mt-3 disabled:opacity-50 cursor-pointer"
                 >
                   <Send className="w-4 h-4" />
-                  {isSubmitting ? "Locking Fare & Card..." : `Lock In $${selectedDest?.discountedPrice} Fare Deal`}
+                  {isSubmitting ? "Locking Fare & Details..." : `Confirm Booking for $${selectedDest?.discountedPrice}`}
                 </Button>
 
                 <p className="text-[10px] text-center text-slate-400 mt-1">

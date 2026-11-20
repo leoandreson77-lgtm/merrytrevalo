@@ -84,119 +84,95 @@ export function LandingPagesSection() {
 
   return (
     <section
-      id="special-deals"
-      className="py-20 px-4"
-      style={{
-        background:
-          "linear-gradient(180deg, #f8fafc 0%, #eff6ff 50%, #f8fafc 100%)",
-      }}
+      id="deals"
+      className="py-20 px-4 bg-[#F5F8FC] border-b border-slate-200/80"
     >
       <div className="max-w-7xl mx-auto">
         {/* ── Section Header ── */}
         <div className="text-center mb-14">
-          <div className="inline-flex items-center gap-2 bg-blue-100 text-blue-700 border border-blue-200 text-xs font-black uppercase tracking-widest px-4 py-1.5 rounded-full mb-4">
-            <Sparkles className="w-3.5 h-3.5" />
-            Exclusive Flight Deals
-            <Sparkles className="w-3.5 h-3.5" />
+          <div className="inline-flex items-center gap-2 bg-white text-[#102B4E] border border-slate-200 text-xs font-black uppercase tracking-widest px-4 py-1.5 rounded-full mb-3 shadow-2xs">
+            <Sparkles className="w-3.5 h-3.5 text-[#2676D9]" />
+            Curated Domestic Deals
+            <Sparkles className="w-3.5 h-3.5 text-[#2676D9]" />
           </div>
-          <h2 className="text-3xl md:text-5xl font-black text-slate-900 leading-tight">
+          <h2 className="text-3xl md:text-5xl font-black text-[#102B4E] tracking-tight">
             Handpicked Routes &amp;{" "}
-            <span
-              className="bg-clip-text text-transparent"
-              style={{
-                backgroundImage:
-                  "linear-gradient(135deg, #1d4ed8, #7c3aed)",
-              }}
-            >
+            <span className="text-[#2676D9]">
               Special Offers
             </span>
           </h2>
-          <p className="text-slate-500 mt-4 max-w-xl mx-auto text-lg">
-            Browse our curated flight deals and call us directly to book at the
-            best available fare.
+          <p className="text-[#64748B] mt-3 max-w-xl mx-auto text-base sm:text-lg">
+            Browse our curated domestic flight routes and compare competitive airline fares across the United States.
           </p>
         </div>
 
         {/* ── Cards Grid ── */}
         {loading ? (
           /* Skeleton loader */
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {Array.from({ length: 4 }).map((_, i) => (
               <div
                 key={i}
-                className="h-64 rounded-3xl bg-slate-200 animate-pulse"
+                className="h-64 rounded-2xl bg-white border border-slate-200 animate-pulse"
               />
             ))}
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {displayPages.map((page, i) => {
-              const gradient = CARD_GRADIENTS[i % CARD_GRADIENTS.length];
               const icon = CARD_ICONS[i % CARD_ICONS.length];
               const callPhone = page.callPhone || "+18772518760";
-              const callDisplay = callPhone
-                .replace(/^\+1/, "+1 ")
-                .replace(/(\d{3})(\d{3})(\d{4})$/, "$1 $2 $3");
 
               return (
                 <div
                   key={page._id}
-                  className="group relative rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1.5 border border-white/60"
+                  className="group relative bg-white rounded-2xl p-6 flex flex-col justify-between border border-slate-200 shadow-sm hover:shadow-xl hover:border-[#2676D9]/50 hover:-translate-y-1 transition-all duration-300"
                 >
-                  {/* Gradient background */}
-                  <div
-                    className="absolute inset-0 rounded-3xl"
-                    style={{ background: gradient }}
-                  />
-                  {/* Decorative circle */}
-                  <div className="absolute -top-10 -right-10 w-36 h-36 bg-white/10 rounded-full" />
-                  <div className="absolute -bottom-6 -left-6 w-24 h-24 bg-white/10 rounded-full" />
-
-                  <div className="relative z-10 p-6 flex flex-col justify-between h-full min-h-[250px]">
+                  <div>
                     {/* Top row */}
                     <div className="flex items-start justify-between mb-4">
-                      <span className="text-4xl">{icon}</span>
-                      <div className="flex items-center gap-1.5 bg-white/20 backdrop-blur-sm text-white text-[10px] font-black uppercase tracking-wider px-3 py-1.5 rounded-full border border-white/30">
-                        <TrendingDown className="w-3 h-3" />
-                        Best Fare
+                      <span className="text-3xl">{icon}</span>
+                      <div className="flex items-center gap-1.5 bg-[#F5F8FC] border border-slate-200 text-[#102B4E] text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full">
+                        <TrendingDown className="w-3 h-3 text-[#2676D9]" />
+                        Featured Fare
                       </div>
                     </div>
 
                     {/* Title */}
-                    <h3 className="text-xl font-black text-white leading-snug mb-2 flex-1">
+                    <h3 className="text-lg font-black text-[#102B4E] leading-snug mb-2 group-hover:text-[#2676D9] transition-colors">
                       {page.title}
                     </h3>
 
                     {/* Description */}
                     {page.description && (
-                      <p className="text-white/75 text-sm leading-relaxed line-clamp-2 mb-5">
+                      <p className="text-[#64748B] text-xs sm:text-sm leading-relaxed line-clamp-3 mb-6">
                         {page.description}
                       </p>
                     )}
+                  </div>
 
-                    {/* CTA buttons */}
-                    <div className="flex gap-2 mt-auto">
-                      {/* View Deal */}
-                      <Link
-                        href={`/lp/${page.slug}`}
-                        className="flex-1 flex items-center justify-center gap-1.5 bg-white/15 hover:bg-white/25 active:scale-95 backdrop-blur-sm border border-white/30 text-white font-bold text-sm py-2.5 rounded-2xl transition-all duration-200"
-                      >
-                        View Deal
-                        <ArrowRight className="w-4 h-4" />
-                      </Link>
+                  {/* CTA buttons */}
+                  <div className="flex gap-2 pt-4 border-t border-slate-100 mt-auto">
+                    {/* View Deal */}
+                    <Link
+                      href={`/lp/${page.slug}`}
+                      className="flex-1 flex items-center justify-center gap-1.5 bg-[#2676D9] hover:bg-[#102B4E] text-white font-bold text-xs py-2.5 rounded-xl shadow-xs transition-colors"
+                    >
+                      <span>View Route</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
 
-                      {/* Direct Call — tel: link */}
-                      <CompanyPhone
-                        className="flex items-center justify-center gap-1.5 bg-white hover:bg-green-50 active:scale-95 text-green-700 font-black text-sm px-4 py-2.5 rounded-2xl transition-all duration-200 shadow-lg shadow-black/20"
-                      >
-                        {() => (
-                          <>
-                            <Phone className="w-4 h-4" />
-                            <span className="hidden sm:inline">Call</span>
-                          </>
-                        )}
-                      </CompanyPhone>
-                    </div>
+                    {/* Direct Call Button */}
+                    <CompanyPhone
+                      className="flex items-center justify-center gap-1.5 bg-[#F5F8FC] hover:bg-slate-100 border border-slate-200 text-[#102B4E] font-bold text-xs px-3.5 py-2.5 rounded-xl transition-colors shadow-2xs"
+                    >
+                      {() => (
+                        <>
+                          <Phone className="w-3.5 h-3.5 text-[#2676D9]" />
+                          <span className="hidden sm:inline">Call</span>
+                        </>
+                      )}
+                    </CompanyPhone>
                   </div>
                 </div>
               );
@@ -204,25 +180,30 @@ export function LandingPagesSection() {
           </div>
         )}
 
-        {/* ── Bottom CTA ── */}
-        {!loading && pages.length > 0 && (
-          <div className="text-center mt-12">
-            <p className="text-slate-500 text-sm mb-4">
-              Don't see your destination? Call us — we search every airline.
-            </p>
+        {/* ── Bottom Reassurance ── */}
+        <div className="mt-14 text-center bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 max-w-3xl mx-auto shadow-2xs">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="text-left">
+              <h4 className="font-bold text-[#102B4E] text-base">
+                Looking for custom or multi-city itineraries?
+              </h4>
+              <p className="text-xs text-[#64748B] mt-0.5">
+                Our support desk searches unpublished carrier inventory across all US domestic airports.
+              </p>
+            </div>
             <CompanyPhone
               asLink={true}
-              className="inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 to-violet-600 hover:from-blue-500 hover:to-violet-500 active:scale-95 text-white font-black px-8 py-4 rounded-full text-lg shadow-xl shadow-blue-500/30 transition-all duration-200"
+              className="inline-flex items-center gap-2 bg-[#102B4E] hover:bg-[#163A66] text-white font-black px-5 py-3 rounded-xl text-xs sm:text-sm shadow-md transition-all shrink-0"
             >
               {(rawNumber, displayVal) => (
                 <>
-                  <Phone className="w-5 h-5" />
-                  {displayVal}
+                  <Phone className="w-4 h-4 text-[#3B82F6]" />
+                  <span>Call {displayVal}</span>
                 </>
               )}
             </CompanyPhone>
           </div>
-        )}
+        </div>
       </div>
     </section>
   );
