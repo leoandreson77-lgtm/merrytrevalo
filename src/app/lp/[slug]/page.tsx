@@ -136,6 +136,11 @@ export default async function DynamicLandingPage({ params }: PageProps) {
     callPhone = process.env.NEXT_PUBLIC_COMPANY_PHONE || "+18772518760";
   }
 
+  // Force override any legacy stale 855 numbers to MerryTravelo verified desk
+  if (callPhone.includes("855") || callPhone.includes("510") || callPhone.includes("6415")) {
+    callPhone = "+18772518760";
+  }
+
   // Format phone display: +18772518760 -> +1 (877) 251-8760
   const digits = callPhone.replace(/[^0-9]/g, "");
   const formattedPhone = digits.length === 11 && digits.startsWith("1")
@@ -229,15 +234,18 @@ export default async function DynamicLandingPage({ params }: PageProps) {
       <main className="flex-1">
         
         {/* ── 1. Hero Section (PHONE-CALL-ONLY Above-The-Fold) ── */}
-        <section className="relative w-full overflow-hidden pt-16 sm:pt-20 pb-20 sm:pb-24 bg-[#102B4E] text-white">
-          {/* Aviation Background Image with Navy Gradient Overlay */}
-          <div 
-            className="absolute inset-0 z-0 bg-cover bg-center opacity-30 mix-blend-luminosity scale-105 pointer-events-none"
-            style={{
-              backgroundImage: "url('https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=2000&q=80')"
-            }}
+        <section className="relative w-full overflow-hidden pt-18 sm:pt-24 pb-22 sm:pb-28 bg-[#0D223D] text-white">
+          {/* High-Resolution Commercial Jet Aviation Background */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=2200&q=85"
+            alt="USA Domestic Flight Aviation Sky Background"
+            className="absolute inset-0 w-full h-full object-cover object-[center_35%] z-0 pointer-events-none select-none"
+            loading="eager"
           />
-          <div className="absolute inset-0 z-10 bg-gradient-to-b from-[#102B4E]/95 via-[#102B4E]/85 to-[#102B4E]" />
+
+          {/* Transparent Gradient Overlay — preserves vivid clouds & airplane wing while keeping text crisp */}
+          <div className="absolute inset-0 z-10 bg-gradient-to-b from-[#0D223D]/80 via-[#102B4E]/50 to-[#0D223D]/95" />
 
           <div className="relative z-20 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
             
@@ -553,8 +561,17 @@ export default async function DynamicLandingPage({ params }: PageProps) {
         </section>
 
         {/* ── 5. Professional Customer Support Section ── */}
-        <section className="py-16 sm:py-20 bg-[#102B4E] text-white">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
+        <section className="relative overflow-hidden py-16 sm:py-20 bg-[#0D223D] text-white">
+          {/* Subtle Aviation Sky Atmosphere */}
+          <div 
+            className="absolute inset-0 z-0 bg-cover bg-center opacity-20 pointer-events-none"
+            style={{
+              backgroundImage: "url('https://images.unsplash.com/photo-1508873696983-2df5293cb395?auto=format&fit=crop&w=2000&q=80')"
+            }}
+          />
+          <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#0D223D] via-transparent to-[#0D223D]" />
+
+          <div className="relative z-20 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
             
             <div className="w-16 h-16 rounded-2xl bg-[#2676D9] text-white flex items-center justify-center mx-auto shadow-lg">
               <Headphones className="w-8 h-8 text-white" />
