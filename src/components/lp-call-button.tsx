@@ -129,28 +129,32 @@ export function LpCallButton({
 
   // Primary Hero & Main Section Call Button
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center w-full sm:w-auto">
       <a
         href={`tel:${cleanPhone}`}
         id={id || "lp-primary-call-btn"}
         onClick={handleClick}
         className={cn(
-          "group relative inline-flex items-center justify-center gap-3 bg-[#2676D9] hover:bg-[#1D60B5] active:scale-[0.98] text-white font-black text-base sm:text-lg md:text-xl px-8 sm:px-12 py-5 sm:py-6 rounded-2xl shadow-xl hover:shadow-2xl hover:shadow-[#2676D9]/40 transition-all duration-300 border-2 border-white/20 google-phone-number cursor-pointer",
+          "group relative w-full sm:w-auto inline-flex items-center justify-center gap-3.5 bg-gradient-to-r from-[#2676D9] via-[#3B82F6] to-[#1D60B5] hover:from-[#1D60B5] hover:to-[#2676D9] active:scale-[0.98] text-white font-black text-sm sm:text-lg md:text-xl px-6 sm:px-10 py-4 sm:py-5 rounded-2xl shadow-[0_12px_36px_rgba(38,118,217,0.45)] hover:shadow-[0_16px_48px_rgba(38,118,217,0.6)] transition-all duration-300 border-2 border-white/30 google-phone-number cursor-pointer",
           className
         )}
       >
-        <span className="flex items-center justify-center w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-white text-[#2676D9] shadow-md group-hover:scale-110 transition-transform shrink-0">
-          <Phone className="w-5 h-5 sm:w-6 sm:h-6" />
+        {/* Ringing Phone Icon with Pulsing Halo */}
+        <span className="relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white text-[#2676D9] shadow-md group-hover:scale-105 transition-transform shrink-0">
+          <span className="absolute inset-0 rounded-full bg-white/60 animate-ping opacity-75 pointer-events-none" />
+          <Phone className="w-5 h-5 sm:w-6 sm:h-6 relative z-10" />
         </span>
         <div className="flex flex-col text-left">
-          <span className="tracking-wide uppercase leading-tight">{label}</span>
-          <span className="text-xs sm:text-sm text-white/90 font-bold tracking-normal font-mono">
+          <span className="tracking-wide uppercase leading-tight font-black text-xs sm:text-base md:text-lg">
+            {label}
+          </span>
+          <span className="text-xs sm:text-sm text-cyan-200 font-extrabold tracking-wider font-mono">
             {formattedDisplay}
           </span>
         </div>
       </a>
       {sublabel && (
-        <p className="mt-2 text-xs text-slate-300 font-medium text-center">
+        <p className="mt-2 text-[11px] sm:text-xs text-slate-300 font-medium text-center">
           {sublabel}
         </p>
       )}
