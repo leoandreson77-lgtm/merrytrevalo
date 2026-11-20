@@ -57,8 +57,13 @@ export function LpCallButton({
         console.warn("dataLayer call tracking dispatch skipped", e);
       }
 
-      // 3. Trigger Google Ads call conversion report if defined
+      // 3. Trigger Google Ads call conversion report directly
       try {
+        if (typeof (window as any).gtag === "function") {
+          (window as any).gtag("event", "conversion", {
+            send_to: "AW-18576835283/pdU-CKH4lbwdENOFkJpF",
+          });
+        }
         if (typeof (window as any).gtag_report_conversion === "function") {
           (window as any).gtag_report_conversion(`tel:${cleanPhone}`);
         }

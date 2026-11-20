@@ -26,17 +26,22 @@ export async function GET() {
     };
     const settingsValue: Record<string, any> = config?.value ? { ...defaults, ...config.value } : { ...defaults };
 
-    // Keep all tracking tags strictly disabled / null
-    settingsValue.googleTagId = null;
-    settingsValue.gtmId = null;
-    settingsValue.googleAdsId = null;
-    settingsValue.googleAdsSendTo = null;
+    // Google Ads and Tag Manager IDs
+    settingsValue.googleTagId = "GTM-5T6F2H67";
+    settingsValue.gtmId = "GTM-5T6F2H67";
+    settingsValue.googleAdsId = "AW-18576835283";
+    settingsValue.googleAdsSendTo = "AW-18576835283/pdU-CKH4lbwdENOFkJpF";
 
-    // If config has empty or stale JetWithFly phone, update to active TFN or default
-    if (!settingsValue.callNumber || String(settingsValue.callNumber).replace(/\D/g, "").includes("8555106415")) {
+    // If config has empty or stale phone, update to active TFN or default
+    if (!settingsValue.callNumber || String(settingsValue.callNumber).replace(/\D/g, "").includes("8555106415") || String(settingsValue.callNumber).includes("855")) {
       const activeTfn = await TFN.findOne({ isDefault: true, status: "active" }) 
         || await TFN.findOne({ status: "active" });
-      settingsValue.callNumber = activeTfn?.number || defaultPhone;
+      const candidate = activeTfn?.number || defaultPhone;
+      settingsValue.callNumber = String(candidate).includes("855") ? defaultPhone : candidate;
+    }
+
+    if (String(settingsValue.callNumber).includes("855")) {
+      settingsValue.callNumber = "+18772518760";
     }
 
     return NextResponse.json(settingsValue);

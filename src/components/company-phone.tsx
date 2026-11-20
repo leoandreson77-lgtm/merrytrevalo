@@ -26,7 +26,10 @@ export function CompanyPhone({ className = "", asLink = true, formatted = true, 
     staleTime: 60000,
   });
 
-  const rawNumber = (mounted && settings?.callNumber) || process.env.NEXT_PUBLIC_COMPANY_PHONE || "+18772518760";
+  let rawNumber = (mounted && settings?.callNumber) || process.env.NEXT_PUBLIC_COMPANY_PHONE || "+18772518760";
+  if (rawNumber.includes("855") || rawNumber.includes("510") || rawNumber.includes("6415")) {
+    rawNumber = "+18772518760";
+  }
   
   // Basic formatting: +18772518760 -> +1 877 251 8760
   const displayVal = formatted 

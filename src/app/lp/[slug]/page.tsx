@@ -222,23 +222,23 @@ export default async function DynamicLandingPage({ params }: PageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
       />
 
-      {/* ── Top Reassurance Ticker ── */}
-      <div className="bg-[#0B1E36] text-white text-xs py-2 px-4 border-b border-white/10">
+      {/* ── Top Reassurance Ticker matching Image 1 ── */}
+      <div className="bg-[#102B4E] text-white/90 text-xs py-1.5 px-4 border-b border-white/10 hidden sm:block">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="flex h-2 w-2 relative">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-            </span>
-            <span className="font-semibold text-slate-200 text-[11px] sm:text-xs">
-              Live Flight Booking Assistance Desk &bull; Wait Time: <strong className="text-emerald-400">Under 30 Seconds</strong>
+            <span className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-[#2676D9] text-[10px] font-bold text-white">✓</span>
+            <span className="font-medium text-slate-200">
+              Trusted US Domestic Flight Assistance Desk &bull; Unpublished Phone Rates &bull; Zero Online Forms
             </span>
           </div>
-          <div className="hidden sm:flex items-center gap-2 text-slate-300 text-xs">
-            <span>Direct Agent Line:</span>
+          <div className="flex items-center gap-4 text-slate-300 text-xs">
+            <span className="flex items-center gap-1.5">
+              <Headphones className="w-3.5 h-3.5 text-[#3B82F6]" />
+              Customer Support:
+            </span>
             <a
               href={`tel:${callPhone}`}
-              className="font-bold text-white hover:text-[#3B82F6] transition-colors underline underline-offset-2 google-phone-number font-mono"
+              className="font-bold text-white hover:text-[#3B82F6] transition-colors google-phone-number font-mono"
             >
               {formattedPhone}
             </a>
@@ -246,13 +246,13 @@ export default async function DynamicLandingPage({ params }: PageProps) {
         </div>
       </div>
 
-      {/* ── Main Header ── */}
+      {/* ── Main Header matching Image 1 ── */}
       <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/90 shadow-xs">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between">
           
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5 group cursor-pointer">
-            <div className="w-10 h-10 rounded-xl bg-[#102B4E] text-white flex items-center justify-center font-black shadow-sm group-hover:bg-[#2676D9] transition-colors">
+            <div className="w-10 h-10 rounded-xl bg-[#102B4E] text-white flex items-center justify-center font-black shadow-sm group-hover:bg-[#2676D9] transition-colors duration-200">
               <Plane className="w-5 h-5 -rotate-45 text-white" />
             </div>
             <div className="flex flex-col">
@@ -260,118 +260,183 @@ export default async function DynamicLandingPage({ params }: PageProps) {
                 MerryTravelo<span className="text-[#2676D9]">.</span>
               </span>
               <span className="text-[10px] font-bold text-[#64748B] tracking-wider uppercase mt-0.5">
-                Flight Booking Assistance
+                US Flight Booking
               </span>
             </div>
           </Link>
 
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center gap-7 font-semibold text-sm text-[#172B46]">
+            <Link 
+              href="/#search-flights" 
+              className="text-[#102B4E] hover:text-[#2676D9] transition-colors flex items-center gap-1 cursor-pointer"
+            >
+              Flights
+            </Link>
+            <Link 
+              href="#destinations" 
+              className="text-[#64748B] hover:text-[#102B4E] transition-colors cursor-pointer"
+            >
+              Destinations
+            </Link>
+            <Link 
+              href="#why-call" 
+              className="text-[#64748B] hover:text-[#102B4E] transition-colors cursor-pointer"
+            >
+              Why Call Us
+            </Link>
+            <Link 
+              href="/about" 
+              className="text-[#64748B] hover:text-[#102B4E] transition-colors cursor-pointer"
+            >
+              About Us
+            </Link>
+            <Link 
+              href="/contact" 
+              className="text-[#64748B] hover:text-[#102B4E] transition-colors cursor-pointer"
+            >
+              Contact
+            </Link>
+            <Link 
+              href="#faq" 
+              className="text-[#64748B] hover:text-[#102B4E] transition-colors cursor-pointer"
+            >
+              Customer Support
+            </Link>
+          </nav>
+
           {/* Header Call CTA */}
-          <LpCallButton
-            variant="header"
-            phoneNumber={callPhone}
-            displayNumber={formattedPhone}
-            destination={routeContext}
-            id="lp-nav-call"
-          />
+          <div className="flex items-center gap-2.5">
+            <a
+              href={`tel:${callPhone}`}
+              id="lp-nav-call"
+              className="inline-flex items-center gap-2 bg-[#F5F8FC] hover:bg-slate-100 border border-slate-200 px-3.5 py-2 rounded-full text-xs font-bold text-[#102B4E] transition-all shadow-xs google-phone-number cursor-pointer"
+            >
+              <span className="flex items-center justify-center w-5 h-5 bg-[#2676D9] text-white rounded-full">
+                <Phone className="w-3 h-3" />
+              </span>
+              <div className="flex flex-col text-left leading-none">
+                <span className="text-[10px] font-medium text-[#64748B] hidden lg:inline">Phone Support</span>
+                <span className="font-bold text-[#102B4E] text-xs sm:text-sm font-mono">{formattedPhone}</span>
+              </div>
+            </a>
+          </div>
         </div>
       </header>
 
       {/* ── Main Content Body ── */}
       <main className="flex-1">
         
-        {/* ── 1. Hero Section (PHONE-CALL-ONLY Above-The-Fold) ── */}
-        <section className="relative w-full overflow-hidden pt-12 sm:pt-18 pb-20 sm:pb-28 bg-[#0D223D] text-white">
-          
-          {/* ── Realistic Photographic Aviation Sky Background ── */}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=2200&q=85"
-            alt="Airplane in flight above blue sky and clouds"
-            className="absolute inset-0 w-full h-full object-cover object-[center_30%] z-0 pointer-events-none select-none"
-            loading="eager"
+        {/* ── 1. Hero Section (matching Image 1 visual style) ── */}
+        <section className="relative w-full overflow-hidden pt-14 pb-28 sm:pb-36 bg-[#102B4E]">
+          {/* Background Aviation Video with Navy Overlay matching Image 1 */}
+          <video
+            className="absolute inset-0 w-full h-full object-cover z-0 opacity-25 mix-blend-luminosity pointer-events-none"
+            src="https://v.ftcdn.net/02/21/46/45/700_F_221464511_i2BmrjoVhnAWB4KFZqbNIut4a46H2gNa.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="none"
+            poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1' height='1'%3E%3Crect fill='%23102B4E'/%3E%3C/svg%3E"
           />
 
-          {/* ── Rich Multi-Stop Sky Gradient & Radar Path Lines ── */}
-          <div className="absolute inset-0 z-10 bg-gradient-to-b from-[#0B1E36]/80 via-[#102B4E]/60 to-[#0B1E36]/95" />
-          
-          {/* Subtle Decorative Radar & Flight Coordinate Grid */}
-          <div 
-            className="absolute inset-0 z-10 opacity-15 pointer-events-none"
-            style={{
-              backgroundImage: "radial-gradient(circle at 50% 50%, rgba(255,255,255,0.2) 1px, transparent 1px)",
-              backgroundSize: "32px 32px"
-            }}
-          />
+          {/* Navy Gradient Overlay for high-contrast readability */}
+          <div className="absolute inset-0 z-10 bg-gradient-to-b from-[#102B4E]/95 via-[#102B4E]/80 to-[#102B4E]" />
 
-          <div className="relative z-20 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6 sm:space-y-7">
+          <div className="relative z-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white space-y-4">
             
-            {/* Live Indicator Pill */}
-            <div className="inline-flex items-center gap-2 bg-[#102B4E]/90 backdrop-blur-md border border-white/20 text-white text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full shadow-lg">
-              <span className="flex h-2 w-2 relative">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-              </span>
-              <span>Travel Specialists Online &bull; Direct Agent Connection</span>
+            {/* Live Indicator Badge */}
+            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full shadow-sm">
+              <span className="w-2 h-2 rounded-full bg-[#3B82F6] animate-pulse"></span>
+              <span>United States Domestic Flight Assistance Desk</span>
             </div>
 
             {/* Exact Required Hero Headline */}
-            <h1 className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tight text-white leading-[1.15] drop-shadow-md">
-              Your Next Flight Starts With <br className="hidden sm:inline" />
-              <span className="bg-gradient-to-r from-sky-300 via-blue-200 to-white bg-clip-text text-transparent">
-                a Simple Call.
-              </span>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight leading-tight drop-shadow-sm text-white">
+              Your Next Flight <br className="hidden sm:inline" />
+              <span className="text-[#3B82F6]">Starts With a Simple Call.</span>
             </h1>
 
             {/* Exact Required Supporting Text */}
-            <p className="text-base sm:text-lg md:text-xl text-slate-100 font-medium max-w-2xl mx-auto leading-relaxed drop-shadow-sm">
+            <p className="text-base sm:text-lg md:text-xl max-w-2xl mx-auto text-slate-200 font-medium leading-relaxed">
               Speak with our travel booking assistance team for help exploring domestic flights across the United States.
             </p>
 
-            {/* ── Premium Hero Boarding Card with Glowing Call CTA ── */}
-            <div className="pt-2 max-w-2xl mx-auto">
-              <div className="bg-[#102B4E]/85 backdrop-blur-xl border border-white/25 rounded-3xl p-6 sm:p-8 shadow-[0_20px_50px_rgba(0,0,0,0.5)] relative">
-                
-                {/* Route Context Banner inside card */}
-                <div className="flex flex-wrap items-center justify-between gap-2 pb-4 mb-5 border-b border-white/15 text-xs text-slate-300">
-                  <div className="flex items-center gap-1.5 font-bold text-white">
-                    <Plane className="w-4 h-4 text-[#3B82F6]" />
-                    <span>Assistance Desk: <strong className="text-cyan-200">{routeContext}</strong></span>
-                  </div>
-                  <span className="bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2.5 py-0.5 rounded-full text-[11px] font-bold">
-                    ● Phone Rates Active
-                  </span>
-                </div>
+            {/* Trust checkmarks */}
+            <div className="pt-2 flex flex-wrap items-center justify-center gap-4 sm:gap-8 text-xs text-slate-300 font-semibold">
+              <span className="flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4 text-[#3B82F6]" />
+                Unpublished Phone Fares
+              </span>
+              <span className="flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4 text-[#3B82F6]" />
+                Zero Online Forms Required
+              </span>
+              <span className="flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4 text-[#3B82F6]" />
+                Real-Time Seat Confirmation
+              </span>
+            </div>
 
-                {/* Main Prominent Call Button */}
+          </div>
+        </section>
+
+        {/* ── 2. Primary Hero Conversion Card (Overlaps Hero like SearchWidget in Image 1) ── */}
+        <section className="px-3 sm:px-4">
+          <div className="w-full max-w-4xl mx-auto -mt-16 sm:-mt-20 relative z-30">
+            <div className="bg-white rounded-3xl p-6 sm:p-10 shadow-2xl border border-slate-200/90 text-center">
+              
+              {/* Route Context Banner */}
+              <div className="inline-flex items-center gap-2 bg-[#F5F8FC] border border-slate-200 text-[#102B4E] px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-wider mb-4">
+                <Plane className="w-3.5 h-3.5 text-[#2676D9]" />
+                <span>Assistance Desk Dedicated For: <strong className="text-[#2676D9]">{routeContext}</strong></span>
+                <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse ml-1" />
+              </div>
+
+              <h3 className="text-xl sm:text-2xl font-black text-[#102B4E] mb-2">
+                Skip The Hold Times &bull; Connect Directly to a Specialist
+              </h3>
+              <p className="text-xs sm:text-sm text-[#64748B] max-w-xl mx-auto mb-6">
+                Call our US domestic reservation hotline to check unpublished airline fares, compare nonstop flights, and lock in tickets immediately.
+              </p>
+
+              {/* Main Prominent Call Button */}
+              <div className="max-w-xl mx-auto">
                 <LpCallButton
                   variant="primary"
                   phoneNumber={callPhone}
                   displayNumber={formattedPhone}
                   label="CALL NOW – SPEAK TO OUR TEAM"
-                  sublabel="Direct line to live domestic flight ticketing desk • Toll-free • Zero hold queues"
+                  sublabel="Toll-free direct agent hotline &bull; Average wait under 30s &bull; No automated hold loops"
                   destination={routeContext}
                   id="lp-hero-main-call"
                 />
-
-                {/* Micro trust icons */}
-                <div className="mt-6 pt-4 border-t border-white/10 grid grid-cols-3 gap-2 text-center text-[11px] sm:text-xs text-slate-200 font-semibold">
-                  <div className="flex items-center justify-center gap-1">
-                    <Check className="w-3.5 h-3.5 text-cyan-300 shrink-0" />
-                    <span>Unpublished Fares</span>
-                  </div>
-                  <div className="flex items-center justify-center gap-1">
-                    <Check className="w-3.5 h-3.5 text-cyan-300 shrink-0" />
-                    <span>No Online Forms</span>
-                  </div>
-                  <div className="flex items-center justify-center gap-1">
-                    <Check className="w-3.5 h-3.5 text-cyan-300 shrink-0" />
-                    <span>Instant Seat Lock</span>
-                  </div>
-                </div>
-
               </div>
-            </div>
 
+              {/* Popular Domestic Routes Shortcuts */}
+              <div className="mt-6 pt-5 border-t border-slate-100 flex flex-wrap items-center justify-center gap-2 text-xs">
+                <span className="text-[#64748B] font-bold mr-1">Popular Assistance Routes:</span>
+                {[
+                  { from: "JFK", to: "MIA" },
+                  { from: "LAX", to: "JFK" },
+                  { from: "ORD", to: "LAS" },
+                  { from: "SFO", to: "HNL" },
+                  { from: "DFW", to: "MCO" },
+                ].map((route) => (
+                  <a
+                    key={`${route.from}-${route.to}`}
+                    href={`tel:${callPhone}`}
+                    className="inline-flex items-center gap-1 bg-[#F5F8FC] hover:bg-blue-50 border border-slate-200 hover:border-[#2676D9] px-2.5 py-1 rounded-lg font-bold text-[#102B4E] transition-all google-phone-number text-[11px]"
+                  >
+                    <span>{route.from}</span>
+                    <ArrowRight className="w-3 h-3 text-[#2676D9]" />
+                    <span>{route.to}</span>
+                  </a>
+                ))}
+              </div>
+
+            </div>
           </div>
         </section>
 
@@ -514,7 +579,7 @@ export default async function DynamicLandingPage({ params }: PageProps) {
         </section>
 
         {/* ── 4. Why Call Us vs Online Search Engines (Side-by-Side CRO Comparison) ── */}
-        <section className="py-16 sm:py-20 bg-[#F5F8FC] border-b border-slate-200/80">
+        <section id="why-call" className="py-16 sm:py-20 bg-[#F5F8FC] border-b border-slate-200/80">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             
             <div className="text-center mb-12">
@@ -595,7 +660,7 @@ export default async function DynamicLandingPage({ params }: PageProps) {
         </section>
 
         {/* ── 5. Popular Flight Routes Assistance Grid (With Real Local Images) ── */}
-        <section className="py-16 sm:py-20 bg-white border-b border-slate-200/80">
+        <section id="destinations" className="py-16 sm:py-20 bg-white border-b border-slate-200/80">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
             <div className="text-center mb-14">
@@ -743,7 +808,7 @@ export default async function DynamicLandingPage({ params }: PageProps) {
         </section>
 
         {/* ── 7. Frequently Asked Questions (FAQ) ── */}
-        <section className="py-16 sm:py-20 bg-white border-b border-slate-200/80">
+        <section id="faq" className="py-16 sm:py-20 bg-white border-b border-slate-200/80">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             
             <div className="text-center mb-12">

@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState } from "react";
 import { Layout } from "@/components/layout";
@@ -39,6 +39,17 @@ export function ContactPage() {
       }
 
       setSubmitted(true);
+
+      // Google Ads Contact conversion tracking
+      try {
+        if (typeof window !== "undefined" && typeof (window as any).gtag === "function") {
+          (window as any).gtag("event", "conversion", {
+            send_to: "AW-18576835283/pdU-CKH4lbwdENOFkJpF",
+          });
+        }
+      } catch (e) {
+        // Safe fallback
+      }
     } catch (err: any) {
       setErrorMsg(err.message || "Something went wrong. Please try calling our 24/7 hotline.");
     } finally {

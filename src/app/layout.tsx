@@ -158,12 +158,42 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="en" className={inter.variable}>
       <head>
+        {/* ── Google tag (gtag.js) ── */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=GTM-5T6F2H67" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'GTM-5T6F2H67');
+              gtag('config', 'AW-18576835283');
+
+              function gtag_report_conversion(url) {
+                var callback = function () {
+                  if (typeof(url) != 'undefined') {
+                    window.location = url;
+                  }
+                };
+                if (typeof gtag === 'function') {
+                  gtag('event', 'conversion', {
+                    'send_to': 'AW-18576835283/pdU-CKH4lbwdENOFkJpF',
+                    'event_callback': callback
+                  });
+                }
+                return false;
+              }
+              window.gtag_report_conversion = gtag_report_conversion;
+            `,
+          }}
+        />
+
         {/* ── Custom Header Script from Admin Panel (if set) ── */}
         {customHeadScript && (
           <script dangerouslySetInnerHTML={{ __html: customHeadScript }} />
         )}
 
-        {/* ── CRM call click logging ── */}
+        {/* ── CRM call click logging & Google Ads Call Conversion ── */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -172,6 +202,15 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                   var target = e.target;
                   while (target && target !== document) {
                     if (target.tagName === 'A' && target.href && target.href.indexOf('tel:') === 0) {
+                      // Fire Google Ads conversion tracking on call click
+                      try {
+                        if (typeof window.gtag === 'function') {
+                          window.gtag('event', 'conversion', {
+                            'send_to': 'AW-18576835283/pdU-CKH4lbwdENOFkJpF'
+                          });
+                        }
+                      } catch(convErr) {}
+
                       try {
                         var urlParams = new URLSearchParams(window.location.search);
                         fetch('/api/calls/click', {
