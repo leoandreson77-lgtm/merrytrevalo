@@ -308,7 +308,7 @@ export default async function DynamicLandingPage({ params }: PageProps) {
           {/* Header Call CTA */}
           <div className="flex items-center gap-2.5">
             <a
-              href={`tel:${callPhone}`}
+              href="tel:+18555106415"
               id="lp-nav-call"
               className="inline-flex items-center gap-2.5 bg-gradient-to-r from-sky-50 to-blue-50 hover:from-sky-100 hover:to-blue-100 border border-sky-200 px-4 py-2 rounded-full text-xs font-bold text-[#0F2744] transition-all shadow-xs group cursor-pointer google-phone-number"
             >
@@ -318,7 +318,7 @@ export default async function DynamicLandingPage({ params }: PageProps) {
               </span>
               <div className="flex flex-col text-left leading-none">
                 <span className="text-[10px] font-bold text-[#0284C7] uppercase tracking-wider">24/7 Phone Desk</span>
-                <span className="font-black text-[#0F2744] text-xs sm:text-sm font-mono mt-0.5">{formattedPhone}</span>
+                <span className="font-black text-[#0F2744] text-xs sm:text-sm font-mono mt-0.5">+1 855 510 6415</span>
               </div>
             </a>
           </div>

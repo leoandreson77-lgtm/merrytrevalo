@@ -92,22 +92,19 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
           {/* Header Action: Secondary Support Call */}
           <div className="flex items-center gap-2.5">
-            <CompanyPhone 
-              className="inline-flex items-center gap-2.5 bg-gradient-to-r from-sky-50 to-blue-50 hover:from-sky-100 hover:to-blue-100 border border-sky-200 px-4 py-2 rounded-full text-xs font-bold text-[#0F2744] transition-all shadow-xs group"
+            <a
+              href="tel:+18555106415"
+              className="inline-flex items-center gap-2.5 bg-gradient-to-r from-sky-50 to-blue-50 hover:from-sky-100 hover:to-blue-100 border border-sky-200 px-4 py-2 rounded-full text-xs font-bold text-[#0F2744] transition-all shadow-xs group cursor-pointer"
             >
-              {(_rawNumber, displayVal) => (
-                <>
-                  <span className="relative flex items-center justify-center w-6 h-6 bg-[#0284C7] text-white rounded-full shadow-xs">
-                    <span className="absolute inset-0 rounded-full bg-[#0284C7]/50 animate-ping opacity-50" />
-                    <Phone className="w-3 h-3 relative z-10" />
-                  </span>
-                  <div className="flex flex-col text-left leading-none">
-                    <span className="text-[10px] font-bold text-[#0284C7] uppercase tracking-wider">24/7 Phone Desk</span>
-                    <span className="font-black text-[#0F2744] text-xs sm:text-sm font-mono mt-0.5">{displayVal}</span>
-                  </div>
-                </>
-              )}
-            </CompanyPhone>
+              <span className="relative flex items-center justify-center w-6 h-6 bg-[#0284C7] text-white rounded-full shadow-xs">
+                <span className="absolute inset-0 rounded-full bg-[#0284C7]/50 animate-ping opacity-50" />
+                <Phone className="w-3 h-3 relative z-10" />
+              </span>
+              <div className="flex flex-col text-left leading-none">
+                <span className="text-[10px] font-bold text-[#0284C7] uppercase tracking-wider">24/7 Phone Desk</span>
+                <span className="font-black text-[#0F2744] text-xs sm:text-sm font-mono mt-0.5">+1 855 510 6415</span>
+              </div>
+            </a>
 
             {/* Mobile Menu Hamburger */}
             <button
