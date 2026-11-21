@@ -61,7 +61,8 @@ export function LpCallButton({
       try {
         if (typeof (window as any).gtag === "function") {
           (window as any).gtag("event", "conversion", {
-            send_to: "AW-18576835283/pdU-CKH4lbwdENOFkJpF",
+            send_to: "AW-18576835283/bF7OCNH-5rwdENOFkJpF",
+            value: 1.0,
           });
         }
         if (typeof (window as any).gtag_report_conversion === "function") {

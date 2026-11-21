@@ -30,7 +30,7 @@ export async function GET() {
     settingsValue.googleTagId = "GTM-5T6F2H67";
     settingsValue.gtmId = "GTM-MM6FPFM5";
     settingsValue.googleAdsId = "AW-18576835283";
-    settingsValue.googleAdsSendTo = "AW-18576835283/pdU-CKH4lbwdENOFkJpF";
+    settingsValue.googleAdsSendTo = "AW-18576835283/bF7OCNH-5rwdENOFkJpF";
 
     // If config has empty or stale phone, update to active TFN or default
     if (!settingsValue.callNumber || String(settingsValue.callNumber).replace(/\D/g, "").includes("8555106415") || String(settingsValue.callNumber).includes("855")) {

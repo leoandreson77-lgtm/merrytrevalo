@@ -179,7 +179,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                 };
                 if (typeof gtag === 'function') {
                   gtag('event', 'conversion', {
-                    'send_to': 'AW-18576835283/pdU-CKH4lbwdENOFkJpF',
+                    'send_to': 'AW-18576835283/bF7OCNH-5rwdENOFkJpF',
+                    'value': 1.0,
                     'event_callback': callback
                   });
                 }
@@ -208,7 +209,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                       try {
                         if (typeof window.gtag === 'function') {
                           window.gtag('event', 'conversion', {
-                            'send_to': 'AW-18576835283/pdU-CKH4lbwdENOFkJpF'
+                            'send_to': 'AW-18576835283/bF7OCNH-5rwdENOFkJpF',
+                            'value': 1.0
                           });
                         }
                       } catch(convErr) {}
