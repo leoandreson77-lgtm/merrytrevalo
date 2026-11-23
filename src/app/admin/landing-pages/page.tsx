@@ -22,6 +22,8 @@ interface LandingPageItem {
   _id: string;
   title: string;
   slug: string;
+  category?: string;
+  templateId?: string;
   description?: string;
   callPhone?: string;
   seoTitle?: string;
@@ -35,8 +37,68 @@ interface LandingPageItem {
 /* ── Templates ── */
 const TEMPLATES = [
   {
+    id: "flight-changes-desk",
+    name: "✈️ Flight Changes & Cancellations Desk",
+    category: "changesncancellation",
+    desc: "Gemini Share 1: High-converting CRO phone desk with interactive situation tabs, domestic/international toggle, and CRO comparison table",
+    gradient: "from-sky-600 via-blue-800 to-slate-900",
+    preview: [
+      "🛡️ Independent Non-Affiliation Compliance Banner",
+      "📞 Zero-Leak 24/7 Phone Desk Header (+1 855 510 6415)",
+      "⚡ High-Urgency Assistance Hero (<60s pickup)",
+      "🎛️ Interactive Situation & Route Selector Widget",
+      "🛠️ Core Services Cards (Changes, Cancellations, Upgrades)",
+      "🪜 3-Step Phone Resolution Flow",
+      "📊 CRO Airline Queue vs Desk Comparison Table",
+      "⭐ Verified Caller Reviews (4.8/5 rating)",
+      "❓ Policy FAQs & Sticky Mobile Call Bar",
+    ],
+    blocks: ["hero", "features", "testimonials", "faq", "cta"],
+    ctaText: "TAP NOW FOR PRIORITY DESK",
+  },
+  {
+    id: "airline-carrier-desk",
+    name: "🏢 Multi-Airline Assistance Desk (Delta, United, American)",
+    category: "airline",
+    desc: "Gemini Share 2: Carrier-focused CRO phone desk with interactive airline selector, carrier policy guidance, and quick-directory cards",
+    gradient: "from-blue-700 via-indigo-900 to-slate-950",
+    preview: [
+      "🛡️ Airline Non-Affiliation Compliance Banner",
+      "📞 Zero-Leak Independent Desk Header (+1 855 510 6415)",
+      "✈️ Carrier Assistance Hero (Delta, United, American)",
+      "🏢 Interactive Airline & Request Selector",
+      "📋 Dynamic Carrier Policy Guidance Card",
+      "🗂️ 6-Carrier Quick Support Directory (DL, UA, AA, WN, B6, AS)",
+      "🪜 3-Step How Our Independent Desk Works",
+      "❓ Carrier Credit & Cancellation FAQs",
+      "🚨 Urgent Bottom Call CTA & Mobile Sticky Bar",
+    ],
+    blocks: ["hero", "features", "testimonials", "faq", "cta"],
+    ctaText: "TAP NOW FOR LIVE US AGENT",
+  },
+  {
+    id: "flight-sale-deals",
+    name: "🏷️ US Domestic Flight Sale & Deals Desk",
+    category: "sale",
+    desc: "Sale Category: Unpublished phone-only airfare discounts, flash fare route cards, and up to 40% savings",
+    gradient: "from-emerald-700 via-teal-900 to-slate-950",
+    preview: [
+      "🔥 Unpublished Phone-Only Airfare Banner",
+      "📞 Zero-Leak 24/7 Phone Desk Header (+1 855 510 6415)",
+      "⚡ Flight Sale & Instant Booking Hero",
+      "🗺️ Custom Route Cards & Discount Pills",
+      "💡 Airfare Guarantee & Fare Rules Comparison",
+      "⭐ Verified Traveler Savings Reviews",
+      "❓ Unpublished Fare & Booking FAQs",
+      "🚨 Mobile Sticky Bottom Call Now Bar",
+    ],
+    blocks: ["hero", "routes", "features", "testimonials", "faq", "cta"],
+    ctaText: "CALL NOW FOR SALE FARES",
+  },
+  {
     id: "boarding-pass",
     name: "🎫 Boarding Pass",
+    category: "other",
     desc: "Psychologically compelling boarding-pass ticket layout",
     gradient: "from-slate-900 via-blue-950 to-slate-900",
     preview: ["🎫 Interactive Boarding Pass", "✈️ Dynamic Route Cards", "🤝 Partners & Logos", "💡 Why Us Features", "👥 Live customer reviews", "❓ FAQ", "📝 Contact Query Form"],
@@ -46,15 +108,17 @@ const TEMPLATES = [
   {
     id: "flight-deals",
     name: "✈️ Flight Deals",
+    category: "sale",
     desc: "Best for cheap flights & deals landing pages",
     gradient: "from-blue-600 to-violet-600",
     preview: ["🦸 Hero with call button", "✈️ Dynamic Route Cards", "🛫 Airline logos", "💡 Why Us Features", "⭐ Reviews", "❓ FAQ", "📝 Contact Query Form"],
-    blocks: ["hero", "boarding_pass_routes", "partners", "features", "testimonials", "faq", "form"],
+    blocks: ["hero", "routes", "partners", "features", "testimonials", "faq", "form"],
     ctaText: "Call for Best Fares",
   },
   {
     id: "luxury-travel",
     name: "👑 Luxury Travel",
+    category: "other",
     desc: "Premium first class & business class campaigns",
     gradient: "from-amber-500 to-orange-600",
     preview: ["💎 Premium hero", "✈️ Dynamic Route Cards", "🛫 Airline logos", "🥂 Luxury features", "⭐ Elite reviews", "📞 VIP call strip", "📝 Contact Query Form"],
@@ -64,15 +128,17 @@ const TEMPLATES = [
   {
     id: "budget-explorer",
     name: "🎒 Budget Explorer",
+    category: "sale",
     desc: "For budget travelers & student deals",
     gradient: "from-green-500 to-teal-600",
     preview: ["🎯 Price-focused hero", "✈️ Dynamic Route Cards", "🛫 Airline logos", "💸 Savings breakdown", "👥 Traveler reviews", "❓ FAQ", "📝 Contact Query Form"],
-    blocks: ["hero", "boarding_pass_routes", "partners", "features", "testimonials", "faq", "form"],
+    blocks: ["hero", "routes", "partners", "features", "testimonials", "faq", "form"],
     ctaText: "Get Cheapest Price",
   },
   {
     id: "business-class",
     name: "💼 Business Class",
+    category: "other",
     desc: "Corporate travel & business booking pages",
     gradient: "from-slate-600 to-slate-800",
     preview: ["🏢 Corporate hero", "✈️ Dynamic Route Cards", "🛫 Airline logos", "✅ Business features", "💬 Corporate reviews", "📞 Direct call", "📝 Contact Query Form"],
@@ -82,6 +148,7 @@ const TEMPLATES = [
   {
     id: "airlines-helpdesk",
     name: "📞 Airlines Connection & Help Desk",
+    category: "changesncancellation",
     desc: "Optimized for reservations, cancellations, flight changes, & premium class upgrades",
     gradient: "from-blue-900 via-indigo-950 to-slate-900",
     preview: ["✈️ Multi-Airline Support", "⚡ Zero Hold Time Indicator", "🛠️ Changes & Cancellations Desk", "👑 Premium Cabin Upgrades", "👥 Trustpilot & Live Reviews", "❓ Travel FAQ", "📝 Request Call Back Form"],
@@ -139,18 +206,15 @@ function EditLandingPageDialog({ isOpen, onOpenChange, editingPage, onSave, isSa
   };
 
   const BLOCK_LABELS: Record<string, string> = {
-    hero: "✈️ Hero",
+    hero: "✈️ Hero Section",
+    routes: "🗺️ Extra Routes & Sale Deals",
+    features: "💡 Extra Service Features",
+    faq: "❓ FAQ Accordion",
+    testimonials: "⭐ Customer Reviews",
+    cta: "📣 Custom Urgency Banner",
     boarding_pass_hero: "🎫 Boarding Pass Hero",
-    partners: "🤝 Partners",
-    testimonials: "⭐ Testimonials",
-    faq: "❓ FAQ",
-    features: "💡 Features",
-    form: "📝 Form",
-    routes_table: "🗺️ Routes Table",
     boarding_pass_routes: "🎫 Route Cards",
-    cta: "📣 CTA",
-    reviews: "💬 Reviews",
-    videos: "🎬 Videos",
+    partners: "🤝 Partners",
   };
 
   return (
@@ -162,7 +226,7 @@ function EditLandingPageDialog({ isOpen, onOpenChange, editingPage, onSave, isSa
             Edit Landing Page
           </DialogTitle>
           <DialogDescription className="text-slate-400">
-            Update all settings, content blocks, and sections for this landing page.
+            Update settings, categories, extra routes, and content blocks.
           </DialogDescription>
         </DialogHeader>
 
@@ -176,6 +240,8 @@ function EditLandingPageDialog({ isOpen, onOpenChange, editingPage, onSave, isSa
               _id: editingPage._id,
               title: data.title,
               slug: data.slug,
+              category: data.category || editingPage.category || "changesncancellation",
+              templateId: data.templateId || editingPage.templateId || "flight-changes-desk",
               callPhone: data.callPhone,
               description: data.description,
               seoTitle: data.seoTitle,
@@ -186,9 +252,38 @@ function EditLandingPageDialog({ isOpen, onOpenChange, editingPage, onSave, isSa
           className="space-y-4 mt-2"
         >
           {/* Page Details */}
-          <div className="space-y-1">
-            <Label className="text-slate-300">Page Title *</Label>
-            <Input required name="title" defaultValue={editingPage.title} placeholder="e.g. Cheap Flights to Paris" className="bg-slate-900 border-slate-700 text-white placeholder:text-slate-500" />
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div className="space-y-1">
+              <Label className="text-slate-300 text-xs">Page Title *</Label>
+              <Input required name="title" defaultValue={editingPage.title} placeholder="e.g. Flight Changes Desk" className="bg-slate-900 border-slate-700 text-white text-xs h-9" />
+            </div>
+            <div className="space-y-1">
+              <Label className="text-slate-300 text-xs">Category *</Label>
+              <select
+                name="category"
+                defaultValue={editingPage.category || "changesncancellation"}
+                className="bg-slate-900 border border-slate-700 text-white text-xs rounded-lg block w-full p-2 h-9"
+              >
+                <option value="sale">🏷️ SALE (Deals &amp; Bookings)</option>
+                <option value="changesncancellation">🔄 CHANGES &amp; CANCELLATIONS</option>
+                <option value="airline">🏢 AIRLINE CARRIER DESK</option>
+                <option value="other">🌐 OTHER / VIP TRAVEL</option>
+              </select>
+            </div>
+            <div className="space-y-1">
+              <Label className="text-slate-300 text-xs">CRO Template</Label>
+              <select
+                name="templateId"
+                defaultValue={editingPage.templateId || "flight-changes-desk"}
+                className="bg-slate-900 border border-slate-700 text-white text-xs rounded-lg block w-full p-2 h-9"
+              >
+                <option value="flight-changes-desk">✈️ Flight Changes Desk (Gemini 1)</option>
+                <option value="airline-carrier-desk">🏢 Multi-Airline Desk (Gemini 2)</option>
+                <option value="flight-sale-deals">🏷️ Flight Sale &amp; Deals Desk</option>
+                <option value="boarding-pass">🎫 Boarding Pass Concierge</option>
+                <option value="luxury-travel">👑 Luxury Travel</option>
+              </select>
+            </div>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
@@ -225,7 +320,7 @@ function EditLandingPageDialog({ isOpen, onOpenChange, editingPage, onSave, isSa
             <div className="flex justify-between items-center">
               <h3 className="text-sm font-bold text-primary uppercase tracking-wider">Content Blocks</h3>
               <div className="flex gap-1 flex-wrap">
-                {["testimonials", "faq", "features", "partners", "boarding_pass_routes"].filter(t => !editBlocks.some(b => b.type === t)).map(t => (
+                {["routes", "features", "faq", "testimonials", "cta", "partners", "boarding_pass_routes"].filter(t => !editBlocks.some(b => b.type === t)).map(t => (
                   <Button key={t} type="button" size="sm" variant="outline" className="text-[10px] h-7 border-slate-700 text-slate-300" onClick={() => addBlock(t)}>
                     <Plus className="w-3.5 h-3.5 mr-1" /> {BLOCK_LABELS[t] || t}
                   </Button>
@@ -524,6 +619,66 @@ function EditLandingPageDialog({ isOpen, onOpenChange, editingPage, onSave, isSa
                   </div>
                 )}
 
+                {/* ── Custom Routes / Sale Deals Editor ── */}
+                {block.type === "routes" && (
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-center">
+                      <span className="text-xs font-bold text-sky-400">Custom Routes &amp; Flash Fare Deals</span>
+                      <Button
+                        type="button"
+                        size="sm"
+                        variant="outline"
+                        className="border-slate-700 text-slate-300 text-xs h-7"
+                        onClick={() => {
+                          const items = [...(block.content?.routes || []), { city: "", from: "", to: "", price: "", tagline: "" }];
+                          updateBlock(idx, "routes", items);
+                        }}
+                      >
+                        <Plus className="w-3.5 h-3.5 mr-1" /> Add Route Deal
+                      </Button>
+                    </div>
+                    {(block.content?.routes || [{ city: "Miami", from: "JFK", to: "MIA", price: "Save 40%", tagline: "Nonstop daily flights" }]).map((r: any, rIdx: number) => (
+                      <div key={rIdx} className="bg-slate-950/50 rounded-xl p-3 space-y-2 border border-slate-800">
+                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                          <Input value={r.city || ""} onChange={(e) => {
+                            const items = [...(block.content?.routes || [])];
+                            items[rIdx] = { ...items[rIdx], city: e.target.value };
+                            updateBlock(idx, "routes", items);
+                          }} placeholder="City (Miami)" className="bg-slate-900 border-slate-700 text-white text-xs" />
+                          <Input value={r.from || ""} onChange={(e) => {
+                            const items = [...(block.content?.routes || [])];
+                            items[rIdx] = { ...items[rIdx], from: e.target.value };
+                            updateBlock(idx, "routes", items);
+                          }} placeholder="From (JFK)" className="bg-slate-900 border-slate-700 text-white text-xs" />
+                          <Input value={r.to || ""} onChange={(e) => {
+                            const items = [...(block.content?.routes || [])];
+                            items[rIdx] = { ...items[rIdx], to: e.target.value };
+                            updateBlock(idx, "routes", items);
+                          }} placeholder="To (MIA)" className="bg-slate-900 border-slate-700 text-white text-xs" />
+                          <Input value={r.price || ""} onChange={(e) => {
+                            const items = [...(block.content?.routes || [])];
+                            items[rIdx] = { ...items[rIdx], price: e.target.value };
+                            updateBlock(idx, "routes", items);
+                          }} placeholder="Deal (Save 40% / $189)" className="bg-slate-900 border-slate-700 text-white text-xs" />
+                        </div>
+                        <div className="grid grid-cols-3 gap-2">
+                          <Input value={r.tagline || ""} onChange={(e) => {
+                            const items = [...(block.content?.routes || [])];
+                            items[rIdx] = { ...items[rIdx], tagline: e.target.value };
+                            updateBlock(idx, "routes", items);
+                          }} placeholder="Tagline or airport details" className="bg-slate-900 border-slate-700 text-white text-xs col-span-2" />
+                          <Button type="button" size="sm" variant="ghost" className="text-red-400 hover:text-red-300 h-8" onClick={() => {
+                            const items = (block.content?.routes || []).filter((_: any, i: number) => i !== rIdx);
+                            updateBlock(idx, "routes", items);
+                          }}>
+                            <Trash2 className="w-3.5 h-3.5 mr-1" /> Del
+                          </Button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
                 {/* ── Partners / Boarding Pass Routes / Simple blocks ── */}
                 {(block.type === "partners" || block.type === "boarding_pass_routes") && (
                   <p className="text-xs text-slate-500">This block auto-renders from your active landing pages and route configuration.</p>
@@ -556,6 +711,7 @@ export default function AdminLandingPagesPage() {
   const [createOpen, setCreateOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
   const [editingPage, setEditingPage] = useState<LandingPageItem | null>(null);
+  const [activeCategory, setActiveCategory] = useState<string>("all");
 
   /* ── Fetch ── */
   const { data: pages, isLoading, refetch } = useQuery<LandingPageItem[]>({
@@ -571,40 +727,132 @@ export default function AdminLandingPagesPage() {
   const createPageMutation = useMutation({
     mutationFn: async (newPage: any) => {
       const template = TEMPLATES.find((t) => t.id === newPage.templateId) || TEMPLATES[0];
+      const category = newPage.category || template.category || "changesncancellation";
       const res = await fetch("/api/admin/landing-pages", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...newPage,
+          category,
           blocks: template.blocks.map((type) => {
             let content: any = {};
             if (type === "hero" || type === "boarding_pass_hero") {
-              content = { 
-                title: newPage.title || "Direct Airline Connection & Reservation Desk", 
-                subtitle: newPage.description || "Avoid long hold times. Speak directly to a ticketing specialist for instant flight bookings, modifications, or cancellations.", 
-                ctaText: template.ctaText,
-                badgeText: newPage.templateId === "airlines-helpdesk" ? "24/7 AIRLINE CONNECTION DESK" : "VIP FIRST CLASS"
-              };
+              if (newPage.templateId === "flight-changes-desk") {
+                content = { 
+                  title: newPage.title || "Need to Change, Cancel, or Reschedule Your Flight? Speak to a Live US Flight Specialist in Under 60 Seconds.", 
+                  subtitle: newPage.description || "Skip 3-hour airline hold queues. Get immediate 24/7 phone assistance for same-day flight changes, ticket cancellations, travel credits, and missed-flight rebooking across all major US & international carriers.", 
+                  ctaText: "TAP NOW FOR PRIORITY DESK",
+                  badgeText: "UNITED STATES FLIGHT CHANGES & RESCHEDULING DESK"
+                };
+              } else if (newPage.templateId === "airline-carrier-desk") {
+                content = { 
+                  title: newPage.title || "Need to Change or Cancel Your Delta, United, or American Flight?", 
+                  subtitle: newPage.description || "Speak directly with a live US-based travel specialist for urgent date changes, ticket cancellations, eCredit preservation, and same-day rebooking across Delta, United, American, Southwest, JetBlue, and Alaska Airlines.", 
+                  ctaText: "TAP NOW FOR LIVE US AGENT",
+                  badgeText: "24/7 MAJOR CARRIER FLIGHT ASSISTANCE"
+                };
+              } else if (newPage.templateId === "flight-sale-deals") {
+                content = { 
+                  title: newPage.title || "Exclusive Unpublished Airline Fares & Flash Deals — Call Direct & Save", 
+                  subtitle: newPage.description || "Access wholesale airline seat inventory not published online. Speak with our flight booking desk to lock in flash discounts across all major US carriers.", 
+                  ctaText: "CALL FOR UNPUBLISHED RATES",
+                  badgeText: "EXCLUSIVE UNPUBLISHED AIRLINE PHONE RATES"
+                };
+              } else {
+                content = { 
+                  title: newPage.title || "Direct Airline Connection & Reservation Desk", 
+                  subtitle: newPage.description || "Avoid long hold times. Speak directly to a ticketing specialist for instant flight bookings, modifications, or cancellations.", 
+                  ctaText: template.ctaText,
+                  badgeText: newPage.templateId === "airlines-helpdesk" ? "24/7 AIRLINE CONNECTION DESK" : "VIP FIRST CLASS"
+                };
+              }
               if (newPage.templateId === "airlines-helpdesk" && type === "boarding_pass_hero") {
                 content.topAlertText = "AIRLINE SUPPORT HOTLINE: Call Connection Desk for Direct Reservations, Cancellations & Ticket Changes";
               }
-            } else if (type === "features" && newPage.templateId === "airlines-helpdesk") {
+            } else if (type === "routes") {
               content = {
-                features: [
-                  { icon: "📞", title: "Zero Hold Times", desc: "Skip hold queues and get directly connected to a live support desk agent." },
-                  { icon: "✈️", title: "500+ Airlines Support", desc: "Instant support and reservation assistance across all global and local carriers." },
-                  { icon: "🛠️", title: "Cancellations & Changes", desc: "Quickly modify, rebook, or process cancellations with professional desk support." },
-                  { icon: "👑", title: "Premium Cabin Upgrades", desc: "Get bulk discounts and upgrade your tickets to Premium Economy or Business Class." },
+                routes: [
+                  { city: "Miami", from: "JFK / LGA", to: "MIA", price: "Save 40%", tagline: "Nonstop daily flight desk" },
+                  { city: "Orlando", from: "EWR / PHL", to: "MCO", price: "From $129", tagline: "Family vacation packages" },
+                  { city: "Las Vegas", from: "ORD / DFW", to: "LAS", price: "Save 35%", tagline: "Weekend getaway specials" },
+                  { city: "Los Angeles", from: "BOS / JFK", to: "LAX", price: "From $189", tagline: "Coast-to-coast nonstop" },
+                  { city: "San Juan", from: "MIA / FLL", to: "SJU", price: "Save 45%", tagline: "Tropical island getaways" },
+                  { city: "Cancun", from: "IAH / DFW", to: "CUN", price: "Unpublished", tagline: "International resort deals" },
                 ]
               };
-            } else if (type === "faq" && newPage.templateId === "airlines-helpdesk") {
-              content = {
-                faqs: [
-                  { q: "How do I change my flight booking?", a: "Call our helpdesk agent. We will handle all details, rebooking options, and seat modifications directly with the carrier." },
-                  { q: "Can I upgrade my cabin to Business Class?", a: "Yes, call our specialists to access exclusive contract rates for Premium Economy and Business Class seats." },
-                  { q: "How quickly can I cancel or refund a ticket?", a: "Our connection desk agent will check refund eligibility and process cancellations in under 5 minutes over the phone." }
-                ]
-              };
+            } else if (type === "features") {
+              if (newPage.templateId === "flight-changes-desk") {
+                content = {
+                  features: [
+                    { icon: "⚡", title: "24/7 US-Based Support", desc: "Day, night, weekends & holidays with real human flight specialists." },
+                    { icon: "🎫", title: "Instant E-Ticket Re-Issuance", desc: "Updated itinerary dispatched to your email while on the call." },
+                    { icon: "✈️", title: "All Major Airlines Supported", desc: "Domestic US & international flight date switches and cancellations." },
+                    { icon: "🛡️", title: "Credit & Waiver Protection", desc: "Preserve full ticket value and secure future airline eCredits." },
+                  ]
+                };
+              } else if (newPage.templateId === "airline-carrier-desk") {
+                content = {
+                  features: [
+                    { icon: "🔺", title: "Delta Air Lines Help", desc: "Main Cabin date switches, Comfort+ upgrades, and Delta eCredit preservation." },
+                    { icon: "🌐", title: "United Airlines Help", desc: "Future Flight Credit re-issuance, Economy Plus seating, and rerouting." },
+                    { icon: "🦅", title: "American Airlines Help", desc: "Trip Credit recovery, same-day flight changes, and standby options." },
+                    { icon: "💛", title: "Southwest & JetBlue Help", desc: "Travel Bank credits, 10-minute flight cutoff rules, and name fixes." },
+                  ]
+                };
+              } else if (newPage.templateId === "flight-sale-deals") {
+                content = {
+                  features: [
+                    { icon: "🏷️", title: "Unpublished Phone Rates", desc: "Wholesale consolidated airline contracts not visible on public search engines." },
+                    { icon: "⚡", title: "Immediate Seat Locking", desc: "Lock promotional domestic fares instantly before airline algorithm resets." },
+                    { icon: "🛡️", title: "Price Match Guarantee", desc: "Direct specialist negotiation to beat or match standard online retail pricing." },
+                    { icon: "✈️", title: "All Major Airlines Covered", desc: "Delta, United, American, Southwest, JetBlue, and regional US connections." },
+                  ]
+                };
+              } else if (newPage.templateId === "airlines-helpdesk") {
+                content = {
+                  features: [
+                    { icon: "📞", title: "Zero Hold Times", desc: "Skip hold queues and get directly connected to a live support desk agent." },
+                    { icon: "✈️", title: "500+ Airlines Support", desc: "Instant support and reservation assistance across all global and local carriers." },
+                    { icon: "🛠️", title: "Cancellations & Changes", desc: "Quickly modify, rebook, or process cancellations with professional desk support." },
+                    { icon: "👑", title: "Premium Cabin Upgrades", desc: "Get bulk discounts and upgrade your tickets to Premium Economy or Business Class." },
+                  ]
+                };
+              }
+            } else if (type === "faq") {
+              if (newPage.templateId === "flight-changes-desk") {
+                content = {
+                  faqs: [
+                    { q: "Are you an airline or an independent travel agency?", a: "MerryTravelo is an independent third-party travel assistance desk, not an airline. We provide dedicated 24/7 phone support to help travelers modify, cancel, or rebook flights without waiting in carrier hold lines." },
+                    { q: "What information do I need before calling?", a: "Please have your 6-character PNR booking code, passenger last name, and desired new flight date or destination ready." },
+                    { q: "How fast can my flight ticket be updated?", a: "Most modifications and rebookings are completed in under 5 minutes while you are on the phone." },
+                    { q: "What fees apply for flight changes or cancellations?", a: "Applicable carrier penalties, fare differences, and our independent concierge fee are fully disclosed before processing." },
+                  ]
+                };
+              } else if (newPage.templateId === "airline-carrier-desk") {
+                content = {
+                  faqs: [
+                    { q: "Are you affiliated with Delta, United, or American?", a: "No. MerryTravelo is a fully independent third-party travel agency. We are not affiliated with, endorsed by, or an official customer support department for any commercial airline." },
+                    { q: "How do airline eCredits and flight credits work?", a: "When a non-refundable ticket is canceled prior to departure, airlines issue travel credits. We verify the terms and apply them toward new flights." },
+                    { q: "Is there a service fee for independent booking assistance?", a: "Yes, an independent concierge service fee and any airline fare differences apply and are disclosed in full over the phone before you confirm." },
+                  ]
+                };
+              } else if (newPage.templateId === "flight-sale-deals") {
+                content = {
+                  faqs: [
+                    { q: "Why are these flight deals only available by phone?", a: "Airlines restrict third-party agencies from publicly displaying heavily discounted consolidator fares online. Calling our desk allows our agents to access contracted rates directly." },
+                    { q: "Can I book same-day or last-minute flights?", a: "Yes. Our agents specialize in finding seat releases for urgent, same-day, and weekend emergency flights." },
+                    { q: "Are tickets confirmed immediately upon booking?", a: "Yes. You receive an official airline PNR locator code and e-ticket itinerary via email while on the phone with our agent." },
+                  ]
+                };
+              } else if (newPage.templateId === "airlines-helpdesk") {
+                content = {
+                  faqs: [
+                    { q: "How do I change my flight booking?", a: "Call our helpdesk agent. We will handle all details, rebooking options, and seat modifications directly with the carrier." },
+                    { q: "Can I upgrade my cabin to Business Class?", a: "Yes, call our specialists to access exclusive contract rates for Premium Economy and Business Class seats." },
+                    { q: "How quickly can I cancel or refund a ticket?", a: "Our connection desk agent will check refund eligibility and process cancellations in under 5 minutes over the phone." }
+                  ]
+                };
+              }
             }
             return { type, content };
           }),
@@ -689,7 +937,11 @@ export default function AdminLandingPagesPage() {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const data = Object.fromEntries(formData.entries());
-    createPageMutation.mutate({ ...data, templateId: selectedTemplate?.id });
+    createPageMutation.mutate({
+      ...data,
+      templateId: selectedTemplate?.id,
+      category: data.category || selectedTemplate?.category || "changesncancellation",
+    });
   };
 
   /* ── Open Dialog Reset ── */
@@ -803,16 +1055,19 @@ export default function AdminLandingPagesPage() {
                   />
                 </div>
 
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="space-y-1">
-                    <Label className="text-slate-300">URL Slug *</Label>
-                    <Input
-                      required
-                      name="slug"
-                      placeholder="cheap-flights-paris"
-                      className="bg-slate-900 border-slate-700 text-white placeholder:text-slate-500"
-                    />
-                    <p className="text-[11px] text-slate-500">merrytravelo.com/lp/your-slug</p>
+                    <Label className="text-slate-300">Category *</Label>
+                    <select
+                      name="category"
+                      defaultValue={selectedTemplate.category || "changesncancellation"}
+                      className="bg-slate-900 border border-slate-700 text-white text-xs rounded-lg block w-full p-2.5 h-10"
+                    >
+                      <option value="sale">🏷️ SALE (Deals &amp; Unpublished Fares)</option>
+                      <option value="changesncancellation">🔄 CHANGES &amp; CANCELLATIONS</option>
+                      <option value="airline">🏢 AIRLINE CARRIER DESK</option>
+                      <option value="other">🌐 OTHER / VIP TRAVEL</option>
+                    </select>
                   </div>
                   <div className="space-y-1">
                     <Label className="text-slate-300 flex items-center gap-1">
@@ -825,6 +1080,17 @@ export default function AdminLandingPagesPage() {
                     />
                     <p className="text-[11px] text-slate-500">All Call Now buttons use this</p>
                   </div>
+                </div>
+
+                <div className="space-y-1">
+                  <Label className="text-slate-300">URL Slug *</Label>
+                  <Input
+                    required
+                    name="slug"
+                    placeholder="cheap-flights-paris"
+                    className="bg-slate-900 border-slate-700 text-white placeholder:text-slate-500"
+                  />
+                  <p className="text-[11px] text-slate-500">merrytravelo.com/lp/your-slug</p>
                 </div>
 
                 <div className="space-y-1">
@@ -908,6 +1174,35 @@ export default function AdminLandingPagesPage() {
         ))}
       </div>
 
+      {/* ── Category Filter Tabs ── */}
+      <div className="flex items-center gap-2 overflow-x-auto pb-1">
+        {[
+          { id: "all", label: "All Pages", count: pages?.length || 0 },
+          { id: "sale", label: "🏷️ Sale & Flash Deals", count: pages?.filter((p) => p.category === "sale").length || 0 },
+          { id: "changesncancellation", label: "🔄 Changes & Cancellations", count: pages?.filter((p) => p.category === "changesncancellation" || (!p.category && p.templateId === "flight-changes-desk") || !p.category).length || 0 },
+          { id: "airline", label: "🏢 Multi-Airline Desks", count: pages?.filter((p) => p.category === "airline").length || 0 },
+          { id: "other", label: "👑 Other / Concierge", count: pages?.filter((p) => p.category === "other").length || 0 },
+        ].map((tab) => (
+          <button
+            key={tab.id}
+            type="button"
+            onClick={() => setActiveCategory(tab.id)}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 whitespace-nowrap ${
+              activeCategory === tab.id
+                ? "bg-primary text-white shadow-md shadow-primary/20"
+                : "bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:bg-slate-800"
+            }`}
+          >
+            <span>{tab.label}</span>
+            <span className={`px-1.5 py-0.2 rounded-full text-[10px] ${
+              activeCategory === tab.id ? "bg-white/20 text-white" : "bg-slate-800 text-slate-400"
+            }`}>
+              {tab.count}
+            </span>
+          </button>
+        ))}
+      </div>
+
       {/* ── Pages Table ── */}
       <div className="border border-slate-800 bg-slate-900/10 rounded-2xl overflow-hidden">
         <Table>
@@ -930,20 +1225,56 @@ export default function AdminLandingPagesPage() {
                     ))}
                   </TableRow>
                 ))
-              : pages?.length === 0
+              : (pages?.filter((p) => {
+                  if (activeCategory === "all") return true;
+                  if (activeCategory === "changesncancellation") {
+                    return p.category === "changesncancellation" || (!p.category && p.templateId === "flight-changes-desk") || !p.category;
+                  }
+                  return p.category === activeCategory;
+                }) || []).length === 0
               ? (
                 <TableRow>
                   <TableCell colSpan={6} className="text-center py-16 text-slate-500">
                     <Sparkles className="w-12 h-12 mx-auto mb-4 opacity-20" />
-                    <p className="font-bold text-lg">No landing pages yet</p>
+                    <p className="font-bold text-lg">No landing pages in this category</p>
                     <p className="text-sm">Click "Create Page" and pick a template to get started!</p>
                   </TableCell>
                 </TableRow>
               )
-              : pages?.map((page) => (
+              : pages
+                  ?.filter((p) => {
+                    if (activeCategory === "all") return true;
+                    if (activeCategory === "changesncancellation") {
+                      return p.category === "changesncancellation" || (!p.category && p.templateId === "flight-changes-desk") || !p.category;
+                    }
+                    return p.category === activeCategory;
+                  })
+                  .map((page) => (
                 <TableRow key={page._id} className="border-slate-800/50 hover:bg-slate-900/30">
                   <TableCell>
-                    <div className="font-bold text-slate-100">{page.title}</div>
+                    <div className="font-bold text-slate-100 flex items-center gap-2 flex-wrap">
+                      <span>{page.title}</span>
+                      {page.category === "sale" && (
+                        <span className="text-[10px] font-bold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded-full">
+                          🏷️ Sale &amp; Deals
+                        </span>
+                      )}
+                      {(page.category === "changesncancellation" || (!page.category && page.templateId === "flight-changes-desk")) && (
+                        <span className="text-[10px] font-bold bg-sky-500/15 text-sky-300 border border-sky-500/30 px-2 py-0.5 rounded-full">
+                          🔄 Changes &amp; Cancel
+                        </span>
+                      )}
+                      {page.category === "airline" && (
+                        <span className="text-[10px] font-bold bg-indigo-500/15 text-indigo-300 border border-indigo-500/30 px-2 py-0.5 rounded-full">
+                          🏢 Airline Desk
+                        </span>
+                      )}
+                      {page.category === "other" && (
+                        <span className="text-[10px] font-bold bg-purple-500/15 text-purple-300 border border-purple-500/30 px-2 py-0.5 rounded-full">
+                          🌐 Other / VIP
+                        </span>
+                      )}
+                    </div>
                     <div className="text-xs text-slate-500 max-w-xs truncate mt-0.5">{page.description || "No description"}</div>
                     {page.callPhone && (
                       <a href={`tel:${page.callPhone}`} className="text-xs text-green-400 flex items-center gap-1 mt-1 hover:text-green-300 w-fit">

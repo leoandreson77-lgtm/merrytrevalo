@@ -23,7 +23,7 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json();
-    const { title, slug, description, callPhone, seoTitle, seoDescription, schemaMarkup, blocks = [], isPublished = false } = body;
+    const { title, slug, category, templateId, description, callPhone, seoTitle, seoDescription, schemaMarkup, blocks = [], isPublished = false } = body;
 
     if (!title || !slug) {
       return NextResponse.json({ message: "Missing required fields (title, slug)" }, { status: 400 });
@@ -41,6 +41,8 @@ export async function POST(request: Request) {
     const newPage = await LandingPage.create({
       title,
       slug: cleanSlug,
+      category: category || "changesncancellation",
+      templateId: templateId || "flight-changes-desk",
       description,
       callPhone: callPhone || "",
       seoTitle: seoTitle || title,
