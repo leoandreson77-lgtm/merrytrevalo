@@ -312,7 +312,7 @@ export function LpGeminiExperience({
       {/* ─────────────────────────────────────────────────────────────
           3. HERO SECTION (High-Intent Aviation Visual & Direct Call CTA)
       ───────────────────────────────────────────────────────────── */}
-      <section className="relative w-full overflow-hidden pt-12 pb-24 sm:pb-32 bg-[#091D38]">
+      <section className="relative w-full overflow-hidden pt-7 pb-14 sm:pt-9 sm:pb-18 bg-[#091D38]">
         {/* Aviation Background Image */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -328,13 +328,13 @@ export function LpGeminiExperience({
         {/* Ambient Sky Glow Accent */}
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-sky-400/20 blur-[140px] rounded-full pointer-events-none z-10" />
 
-        <div className="relative z-20 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white space-y-5">
+        <div className="relative z-20 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white space-y-4">
           
           {/* Badge Pill */}
-          <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-md border border-white/30 text-white text-xs font-black uppercase tracking-widest px-4 py-2 rounded-full shadow-lg">
-            <span className="flex h-2.5 w-2.5 relative">
+          <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-md border border-white/30 text-white text-[11px] sm:text-xs font-black uppercase tracking-wider px-3.5 py-1.5 rounded-full shadow-lg">
+            <span className="flex h-2 w-2 relative">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-cyan-400"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-400"></span>
             </span>
             <span>
               {badgeText || (category === "sale"
@@ -346,35 +346,35 @@ export function LpGeminiExperience({
           </div>
 
           {/* Main Headline */}
-          <h1 className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tight leading-[1.12] text-white drop-shadow-xl">
+          <h1 className="text-2xl sm:text-4xl md:text-5xl font-black tracking-tight leading-[1.18] text-white drop-shadow-xl">
             {title ? (
               title
             ) : category === "sale" ? (
               <>
                 Exclusive Unpublished Flight Fares <br className="hidden sm:inline" />
                 <span className="bg-gradient-to-r from-sky-200 via-cyan-100 to-white bg-clip-text text-transparent underline decoration-[#38BDF8]/40 decoration-wavy underline-offset-8">
-                  Save Up to 40% Over The Phone.
+                  Save Up to 40% Over The Phone
                 </span>
               </>
             ) : activeMode === "airline-carrier-desk" ? (
               <>
-                Need to Change or Cancel Your <br className="hidden sm:inline" />
+                Need to Change or Cancel Your Flight? <br className="hidden sm:inline" />
                 <span className="bg-gradient-to-r from-sky-200 via-cyan-100 to-white bg-clip-text text-transparent underline decoration-[#38BDF8]/40 decoration-wavy underline-offset-8">
-                  Delta, United, or American
-                </span> Flight?
+                  Delta, United, American &amp; More
+                </span>
               </>
             ) : (
               <>
-                Need to Change, Cancel, or Reschedule Your Flight? <br className="hidden sm:inline" />
+                Need to Change, Cancel, or Reschedule? <br className="hidden sm:inline" />
                 <span className="bg-gradient-to-r from-sky-200 via-cyan-100 to-white bg-clip-text text-transparent underline decoration-[#38BDF8]/40 decoration-wavy underline-offset-8">
-                  Speak to a Live Specialist in &lt;60s.
+                  Live US Assistance in &lt;60 Seconds
                 </span>
               </>
             )}
           </h1>
 
           {/* Subtitle */}
-          <p className="text-base sm:text-lg md:text-xl max-w-2xl mx-auto text-slate-100 font-medium leading-relaxed drop-shadow-md">
+          <p className="text-sm sm:text-base md:text-lg max-w-2xl mx-auto text-slate-200 font-medium leading-relaxed drop-shadow-md">
             {subtitle || (category === "sale"
               ? "Call our US reservation desk to check unpublished airfare discounts, private contracted airline rates, and locked seat inventory before public fares increase."
               : activeMode === "airline-carrier-desk"
@@ -383,60 +383,51 @@ export function LpGeminiExperience({
           </p>
 
           {/* Primary Call CTA Button */}
-          <div className="pt-2 flex flex-col items-center">
+          <div className="pt-1 flex flex-col items-center">
             <a
               href={`tel:${cleanPhone}`}
               id="lp-hero-prominent-call"
               onClick={() => handleCallClick("Hero Primary Call Button")}
-              className="group relative inline-flex items-center justify-center gap-4 bg-gradient-to-r from-[#0284C7] via-[#2563EB] to-[#1D4ED8] hover:from-[#0369A1] hover:to-[#1E40AF] active:scale-[0.98] text-white px-8 sm:px-12 py-4 sm:py-5 rounded-2xl shadow-[0_14px_45px_rgba(37,99,235,0.45)] hover:shadow-[0_18px_55px_rgba(37,99,235,0.65)] hover:-translate-y-0.5 transition-all duration-300 border-2 border-white/30 cursor-pointer"
+              className="group relative inline-flex items-center justify-center gap-3.5 bg-gradient-to-r from-[#0284C7] via-[#2563EB] to-[#1D4ED8] hover:from-[#0369A1] hover:to-[#1E40AF] active:scale-[0.98] text-white px-7 sm:px-11 py-3.5 sm:py-4.5 rounded-2xl shadow-[0_14px_45px_rgba(37,99,235,0.45)] hover:shadow-[0_18px_55px_rgba(37,99,235,0.65)] hover:-translate-y-0.5 transition-all duration-300 border-2 border-white/30 cursor-pointer"
             >
-              <span className="relative flex items-center justify-center w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-white text-[#0284C7] shadow-md group-hover:scale-105 transition-transform shrink-0">
+              <span className="relative flex items-center justify-center w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white text-[#0284C7] shadow-md group-hover:scale-105 transition-transform shrink-0">
                 <span className="absolute inset-0 rounded-full bg-white/60 animate-ping opacity-75 pointer-events-none" />
-                <Phone className="w-5 h-5 sm:w-6 sm:h-6 relative z-10" />
+                <Phone className="w-5 h-5 relative z-10" />
               </span>
               <div className="flex flex-col text-left">
-                <span className="tracking-wide uppercase leading-tight font-black text-xs sm:text-base md:text-lg">
+                <span className="tracking-wide uppercase leading-tight font-black text-xs sm:text-base">
                   {category === "sale" ? "CALL NOW FOR SALE FARES" : "TAP NOW FOR PRIORITY DESK"}
                 </span>
-                <span className="text-sm sm:text-lg text-cyan-200 font-black tracking-wider font-mono">
+                <span className="text-sm sm:text-base md:text-lg text-cyan-200 font-black tracking-wider font-mono">
                   Call {formattedPhone}
                 </span>
               </div>
             </a>
-            <p className="mt-2.5 text-xs text-slate-300 font-semibold text-center">
+            <p className="mt-2 text-[11px] sm:text-xs text-slate-300 font-semibold text-center">
               No Automated Phone Trees &bull; Direct Human Specialist &bull; Avg. Pickup &lt; 28s
             </p>
           </div>
 
-          {/* 3 Reassurance Badges */}
-          <div className="pt-4 grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-3xl mx-auto text-left">
-            <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-3 flex items-center gap-3">
-              <Clock className="w-5 h-5 text-sky-300 shrink-0" />
-              <div>
-                <h4 className="text-xs font-bold text-white">24/7 US-Based Support</h4>
-                <p className="text-[11px] text-slate-300">Day, night, weekends &amp; holidays</p>
-              </div>
-            </div>
-            <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-3 flex items-center gap-3">
-              <FileText className="w-5 h-5 text-emerald-300 shrink-0" />
-              <div>
-                <h4 className="text-xs font-bold text-white">Instant E-Ticket Re-Issuance</h4>
-                <p className="text-[11px] text-slate-300">Updated itinerary sent while on call</p>
-              </div>
-            </div>
-            <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-3 flex items-center gap-3">
-              <Plane className="w-5 h-5 text-amber-300 shrink-0" />
-              <div>
-                <h4 className="text-xs font-bold text-white">All Major Airlines Supported</h4>
-                <p className="text-[11px] text-slate-300">Domestic US &amp; International flights</p>
-              </div>
-            </div>
+          {/* Key Value Reassurance Pills */}
+          <div className="pt-1 flex flex-wrap items-center justify-center gap-2 max-w-2xl mx-auto text-xs font-semibold text-slate-200">
+            <span className="inline-flex items-center gap-1.5 bg-white/10 backdrop-blur-md border border-white/20 px-3 py-1.5 rounded-full text-[11px] sm:text-xs">
+              <Clock className="w-3.5 h-3.5 text-sky-300" />
+              24/7 Live US Desk
+            </span>
+            <span className="inline-flex items-center gap-1.5 bg-white/10 backdrop-blur-md border border-white/20 px-3 py-1.5 rounded-full text-[11px] sm:text-xs">
+              <FileText className="w-3.5 h-3.5 text-emerald-300" />
+              Instant E-Ticket Re-Issuance
+            </span>
+            <span className="inline-flex items-center gap-1.5 bg-white/10 backdrop-blur-md border border-white/20 px-3 py-1.5 rounded-full text-[11px] sm:text-xs">
+              <Plane className="w-3.5 h-3.5 text-amber-300" />
+              All Major Airlines Supported
+            </span>
           </div>
 
-          {/* Google Ads Compliance Box */}
-          <div className="mt-4 p-3.5 bg-black/35 backdrop-blur-md rounded-xl border border-white/15 text-[11px] text-slate-300 max-w-3xl mx-auto leading-relaxed text-left">
-            <strong>Disclosure:</strong> MerryTravelo operates as an independent third-party travel assistance desk and is not affiliated with, endorsed by, or an official booking office for Delta, United, American, Southwest, or any commercial airline. Standard airline fare differences, carrier penalties, and agency service fees may apply.
-          </div>
+          {/* Google Ads Compliance Notice */}
+          <p className="pt-1 text-[11px] text-slate-300/80 max-w-2xl mx-auto leading-relaxed">
+            <strong className="text-white">Notice:</strong> MerryTravelo is an independent travel assistance desk and is not affiliated with, endorsed by, or an official booking office for Delta, United, American, Southwest, or any commercial airline. Standard airline fare differences &amp; agency service fees may apply.
+          </p>
 
         </div>
       </section>
@@ -444,7 +435,7 @@ export function LpGeminiExperience({
       {/* ─────────────────────────────────────────────────────────────
           4. INTERACTIVE ISSUE & AIRLINE SELECTOR (FAST-TRACK WIDGET)
       ───────────────────────────────────────────────────────────── */}
-      <section className="px-3 sm:px-4 -mt-10 sm:-mt-14 relative z-30">
+      <section id="selector-widget" className="px-3 sm:px-4 -mt-8 sm:-mt-10 relative z-30">
         <div className="w-full max-w-4xl mx-auto bg-white rounded-3xl shadow-[0_25px_60px_-15px_rgba(2,132,199,0.22)] border border-blue-100 overflow-hidden">
           
           {/* Top Widget Header */}
