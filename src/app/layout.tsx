@@ -165,6 +165,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           dangerouslySetInnerHTML={{
             __html: `
               window.dataLayer = window.dataLayer || [];
+              window.uetq = window.uetq || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
               gtag('config', 'GTM-MM6FPFM5');
@@ -214,6 +215,12 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                           });
                         }
                       } catch(convErr) {}
+
+                      // Fire Microsoft / Bing UET call conversion event
+                      try {
+                        window.uetq = window.uetq || [];
+                        window.uetq.push('event', 'phone_call_click', {});
+                      } catch(uetErr) {}
 
                       try {
                         var urlParams = new URLSearchParams(window.location.search);

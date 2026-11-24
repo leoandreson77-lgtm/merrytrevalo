@@ -68,6 +68,11 @@ export function LpCallButton({
         if (typeof (window as any).gtag_report_conversion === "function") {
           (window as any).gtag_report_conversion(`tel:${cleanPhone}`);
         }
+        // 4. Trigger Microsoft / Bing UET call conversion event
+        try {
+          (window as any).uetq = (window as any).uetq || [];
+          (window as any).uetq.push("event", "phone_call_click", {});
+        } catch (uetErr) {}
       } catch (e) {
         // Safe fallback
       }
